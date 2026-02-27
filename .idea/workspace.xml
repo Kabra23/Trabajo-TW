@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Comienza el proyecto">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Cambios en restaurante.css">
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +144,7 @@
       <workItem from="1771845996060" duration="4684000" />
       <workItem from="1771927153865" duration="5708000" />
       <workItem from="1772020237611" duration="1254000" />
-      <workItem from="1772179602114" duration="3396000" />
+      <workItem from="1772179602114" duration="3473000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -202,7 +194,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772182768102</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Comienza el proyecto">
+      <option name="closed" value="true" />
+      <created>1772183043646</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1772183043646</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Cambios en restaurante.css">
+      <option name="closed" value="true" />
+      <created>1772183073662</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1772183073662</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,7 +230,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Inicio del proyecto" />
     <MESSAGE value="Comienza el proyecto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Comienza el proyecto" />
+    <MESSAGE value="Cambios en restaurante.css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambios en restaurante.css" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
