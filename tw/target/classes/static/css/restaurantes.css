@@ -212,7 +212,7 @@ body {
 /* Star Rating Filter - Estilo Just Eat */
 .star-rating-filter {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.3rem;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -235,15 +235,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
     cursor: pointer;
-    padding: 6px 8px;
+    padding: 4px;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
 
 .star-label:hover {
-    background-color: #fff3e0;
+    background-color: transparent;
 }
 
 .star-icon {
@@ -259,37 +258,16 @@ body {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.star-count {
-    font-size: 0.85rem;
-    color: #666;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
 /* Estado hover */
 .star-label:hover .star-icon svg {
     color: #ffa726;
-    transform: scale(1.05);
-}
-
-.star-label:hover .star-count {
-    color: #ff9800;
+    transform: scale(1.1);
 }
 
 /* Estado checked */
 .star-checkbox:checked + .star-label .star-icon svg {
-    color: #ff9800;
-    filter: drop-shadow(0 0 4px rgba(255, 152, 0, 0.4));
-}
-
-.star-checkbox:checked + .star-label {
-    background-color: #fff3e0;
-    border-radius: 6px;
-}
-
-.star-checkbox:checked + .star-label .star-count {
-    color: #ff9800;
-    font-weight: 600;
+    color: #ffd700;
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
 }
 
 /* Animación al hacer click */
@@ -302,7 +280,7 @@ body {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.15);
+        transform: scale(1.2);
     }
     100% {
         transform: scale(1);
