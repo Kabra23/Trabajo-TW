@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Just Eat CUMe</title>
+    <link rel="stylesheet" th:href="@{/css/registro.css}">
+</head>
+<body>
+<header class="simple-header">
+    <div class="container">
+        <a th:href="@{/}" class="back-link">← Volver</a>
+        <div class="logo">
+            <h1>
+                <span class="logo-main">CUMe</span>
+                <span class="logo-separator">y</span>
+                <span class="logo-secondary">Calla</span>
+            </h1>
+        </div>
+    </div>
+</header>
+
+<main class="auth-page">
+    <section class="auth-container">
+        <div class="auth-card">
+            <h2>Crear cuenta</h2>
+
+            <form id="registerForm" th:action="@{/registro}" method="post" novalidate>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            placeholder="Tu nombre"
+                            required
+                    >
+                    <span class="error-message" id="nombreError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="apellidos">Apellidos</label>
+                    <input
+                            type="text"
+                            id="apellidos"
+                            name="apellidos"
+                            placeholder="Tus apellidos"
+                            required
+                    >
+                    <span class="error-message" id="apellidosError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailRegistro">Correo electrónico</label>
+                    <input
+                            type="email"
+                            id="emailRegistro"
+                            name="emailRegistro"
+                            placeholder="correo@ejemplo.com"
+                            required
+                    >
+                    <span class="error-message" id="emailRegistroError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordRegistro">Contraseña</label>
+                    <div class="password-wrapper">
+                        <input
+                                type="password"
+                                id="passwordRegistro"
+                                name="passwordRegistro"
+                                placeholder="Crea una contraseña segura"
+                                required
+                        >
+                        <button type="button" class="toggle-password" data-target="passwordRegistro" aria-label="Mostrar contraseña">
+                            <span>👁</span>
+                        </button>
+                    </div>
+                    <span class="password-requirements">
+                        Mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial
+                    </span>
+                    <span class="error-message" id="passwordRegistroError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar contraseña</label>
+                    <div class="password-wrapper">
+                        <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Repite tu contraseña"
+                                required
+                        >
+                        <button type="button" class="toggle-password" data-target="confirmPassword" aria-label="Mostrar contraseña">
+                            <span>👁</span>
+                        </button>
+                    </div>
+                    <span class="error-message" id="confirmPasswordError"></span>
+                </div>
+
+                <button type="submit" class="btn-submit">Registrarse</button>
+
+                <div class="auth-footer">
+                    <p>¿Ya tienes cuenta? <a th:href="@{/login}" class="register-link">Inicia sesión</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <p>&copy; 2026 Just Eat CUMe - Proyecto Tecnologías Web</p>
+    </div>
+</footer>
+
+<script>
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const passwordInput = document.getElementById(targetId);
+            const icon = this.querySelector('span');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                icon.textContent = '👁';
+            }
+        });
+    });
+
+    // Form validation
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const nombre = document.getElementById('nombre').value.trim();
+        const apellidos = document.getElementById('apellidos').value.trim();
+        const email = document.getElementById('emailRegistro').value.trim();
+        const password = document.getElementById('passwordRegistro').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        let isValid = true;
+
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(error => error.textContent = '');
+
+        // Validate nombre
+        if (!nombre) {
+            document.getElementById('nombreError').textContent = 'El nombre es obligatorio';
+            isValid = false;
+        }
+
+        // Validate apellidos
+        if (!apellidos) {
+            document.getElementById('apellidosError').textContent = 'Los apellidos son obligatorios';
+            isValid = false;
+        }
+
+        // Validate email
+        if (!email) {
+            document.getElementById('emailRegistroError').textContent = 'El correo electrónico es obligatorio';
+            isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            document.getElementById('emailRegistroError').textContent = 'Introduce un correo electrónico válido';
+            isValid = false;
+        }
+
+        // Validate password
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!password) {
+            document.getElementById('passwordRegistroError').textContent = 'La contraseña es obligatoria';
+            isValid = false;
+        } else if (!passwordRegex.test(password)) {
+            document.getElementById('passwordRegistroError').textContent = 'La contraseña debe tener al menos 8 caracteres, mayúscula, minúscula, número y carácter especial';
+            isValid = false;
+        }
+
+        // Validate confirm password
+        if (!confirmPassword) {
+            document.getElementById('confirmPasswordError').textContent = 'Debes confirmar tu contraseña';
+            isValid = false;
+        } else if (password !== confirmPassword) {
+            document.getElementById('confirmPasswordError').textContent = 'Las contraseñas no coinciden';
+            isValid = false;
+        }
+
+        if (isValid) {
+
+            // Enviar el formulario al servidor
+            this.submit();
+
+        }
+    });
+</script>
+
+</body>
+</html>
+

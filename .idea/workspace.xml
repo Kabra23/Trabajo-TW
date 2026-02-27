@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Comienza el proyecto">
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/TwApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/WebController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/registro.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/tostada.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/registro.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/imagenes/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/imagenes/tostada.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/negro/OneDrive/Desktop/tw" value="39W6QM3ppACrj8HMmrbpW9DoT3X" />
+      <entry key="_C:/Users/negro/OneDrive/Desktop/tw/tw" value="39kReFg9qzddtIVhub7dNkHyHWA" />
+    </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="chat-panel" value="Claude Sonnet 4.5" />
+      <entry key="agent-panel" value="Claude Sonnet 4.5" />
+    </selectedModels>
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/tw">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/tw">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="tw" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Kabra23&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kabra23/ProyectoTW.git&quot;,
+    &quot;accountId&quot;: &quot;9844e257-e01d-41f1-9f6e-3358fbcbc22b&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="39W6QM3ppACrj8HMmrbpW9DoT3X" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.TwApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/negro/OneDrive/Desktop/tw/tw/src/main/resources/static/imagenes",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.editor",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\negro\OneDrive\Desktop\tw\tw\src\main\resources\static\imagenes" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="tw" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="tw" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TwApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="tw.tw" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.tw.TwApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="" />
+      <created>1770799463825</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770799463825</updated>
+      <workItem from="1770799464973" duration="346000" />
+      <workItem from="1770799848532" duration="1305000" />
+      <workItem from="1770823543374" duration="3004000" />
+      <workItem from="1771238175649" duration="2103000" />
+      <workItem from="1771319075985" duration="1644000" />
+      <workItem from="1771404938301" duration="6274000" />
+      <workItem from="1771435284819" duration="3000" />
+      <workItem from="1771492289068" duration="873000" />
+      <workItem from="1771845996060" duration="4684000" />
+      <workItem from="1771927153865" duration="5708000" />
+      <workItem from="1772020237611" duration="1254000" />
+      <workItem from="1772179602114" duration="1834000" />
+    </task>
+    <task id="LOCAL-00001" summary="Inicio del proyecto">
+      <option name="closed" value="true" />
+      <created>1770799789476</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1770799789478</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Inicio del proyecto">
+      <option name="closed" value="true" />
+      <created>1770800609170</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1770800609170</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Inicio del proyecto">
+      <option name="closed" value="true" />
+      <created>1770825450261</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1770825450261</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Inicio del proyecto" />
+    <MESSAGE value="Comienza el proyecto" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comienza el proyecto" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería CUMe - Just Eat</title>
+    <link rel="stylesheet" th:href="@{/css/detalle-restaurante.css}">
+</head>
+<body>
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <h1>
+                <span class="logo-main">CUMe</span>
+                <span class="logo-separator">y</span>
+                <span class="logo-secondary">Calla</span>
+            </h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/editar-restaurante}" class="btn-secondary">Editar restaurante</a></li>
+                <li><a th:href="@{/login}" class="btn-primary">Inicia sesión</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="restaurant-detail">
+    <section class="restaurant-hero">
+        <div class="hero-image-large">
+            <span class="large-placeholder">[CAFETERIA]</span>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="detail-layout">
+            <section class="restaurant-main">
+                <div class="restaurant-header">
+                    <h1>Cafetería CUMe</h1>
+                    <div class="restaurant-meta">
+                        <span class="rating">[ESTRELLA] <strong>4.7</strong> (250+) · más de 100 €</span>
+                    </div>
+                    <address class="restaurant-address">
+                        [UBICACION] Centro Universitario de Mérida, 06800 Mérida, España
+                    </address>
+                    <div class="restaurant-contact">
+                        <p>[TELEFONO] <a href="tel:+34924123456">+34 924 12 34 56</a></p>
+                        <p>[EMAIL] <a href="mailto:contacto@cafeteriacume.com">contacto@cafeteriacume.com</a></p>
+                    </div>
+                    <div class="restaurant-tags">
+                        <span class="tag tag-traditional">Tradicional</span>
+                        <span class="tag tag-tapas">Tapas</span>
+                        <span class="tag tag-cafe">Cafetería</span>
+                    </div>
+                    <div class="restaurant-features">
+                        <span class="feature">[BICI] Bike Friendly: Sí</span>
+                        <span class="feature">[DINERO] Rango de precio: 5€ - 15€</span>
+                    </div>
+                </div>
+
+                <nav class="menu-tabs">
+                    <button class="tab-btn active" data-category="destacados">Destacados</button>
+                    <button class="tab-btn" data-category="desayunos">Desayunos</button>
+                    <button class="tab-btn" data-category="bocadillos">Bocadillos y Montaditos</button>
+                    <button class="tab-btn" data-category="bebidas">Bebidas</button>
+                    <button class="tab-btn" data-category="vinos">Vinos del Mesón</button>
+                </nav>
+
+                <div class="search-menu">
+                    <label for="searchDish" class="sr-only">Buscar en Cafetería CUMe</label>
+                    <input
+                            type="search"
+                            id="searchDish"
+                            name="searchDish"
+                            placeholder="Buscar en Cafetería CUMe"
+                    >
+                </div>
+
+                <section class="menu-section">
+                    <h2>Destacados</h2>
+                    <p class="section-subtitle">20 productos</p>
+
+                    <div class="menu-grid">
+                        <article class="dish-card">
+                            <div class="dish-info">
+                                <h3>Tostada Completa con Tomate</h3>
+                                <p class="dish-description">
+                                    Pan tostado con aceite de oliva virgen extra, tomate natural rallado, jamón ibérico y queso manchego
+                                </p>
+                                <p class="dish-price">4,50 €</p>
+                            </div>
+                            <div class="dish-image">
+                                <span class="dish-placeholder">🍞</span>
+                            </div>
+                        </article>
+
+                        <article class="dish-card">
+                            <div class="dish-info">
+                                <h3>Café con Leche y Tostada</h3>
+                                <p class="dish-description">
+                                    Café con leche recién hecho acompañado de tostada con aceite y tomate
+                                </p>
+                                <p class="dish-price">3,20 €</p>
+                            </div>
+                            <div class="dish-image">
+                                <span class="dish-placeholder">☕</span>
+                            </div>
+                        </article>
+
+                        <article class="dish-card">
+                            <div class="dish-info">
+                                <h3>Bocadillo de Tortilla Española</h3>
+                                <p class="dish-description">
+                                    Bocadillo de barra con tortilla española casera, hecha al momento
+                                </p>
+                                <p class="dish-price">5,00 €</p>
+                            </div>
+                            <div class="dish-image">
+                                <span class="dish-placeholder">🥖</span>
+                            </div>
+                        </article>
+
+                        <article class="dish-card">
+                            <div class="dish-info">
+                                <h3>Montadito de Lomo con Pimientos</h3>
+                                <p class="dish-description">
+                                    Pan especial con lomo ibérico a la plancha y pimientos asados
+                                </p>
+                                <p class="dish-price">4,80 €</p>
+                            </div>
+                            <div class="dish-image">
+                                <span class="dish-placeholder">🥪</span>
+                            </div>
+                        </article>
+
+                        <article class="dish-card">
+                            <div class="dish-info">
+                                <h3>Ensalada César con Pollo</h3>
+                                <p class="dish-description">
+                                    Lechuga romana, pollo a la parrilla, queso parmesano, crutones y salsa césar casera
+                                </p>
+                                <p class="dish-price">7,50 €</p>
+                            </div>
+                            <div class="dish-image">
+                                <span class="dish-placeholder">🥗</span>
+                            </div>
+                        </article>
+
+                        <article class="dish-card">
+                            <div class="dish-info">
+                                <h3>Zumo Natural de Naranja</h3>
+                                <p class="dish-description">
+                                    Zumo de naranja recién exprimido (500ml)
+                                </p>
+                                <p class="dish-price">3,50 €</p>
+                            </div>
+                            <div class="dish-image">
+                                <span class="dish-placeholder">🍊</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </section>
+
+            <aside class="cart-sidebar">
+                <div class="cart-sticky">
+                    <div class="cart-header">
+                        <h2>Cesta</h2>
+                        <p class="delivery-info">
+                            [RELOJ] Entrega<br>
+                            <strong>15-25 min</strong>
+                        </p>
+                        <p class="pickup-info">
+                            [UBICACION] Recogida<br>
+                            <strong>10-15 min</strong>
+                        </p>
+                    </div>
+                    <div class="cart-content">
+                        <div class="empty-cart">
+                            [CARRITO]
+                            <h3>Llena tu cesta</h3>
+                            <p>Tu cesta está vacía</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <p>&copy; 2026 Just Eat CUMe - Proyecto Tecnologías Web</p>
+    </div>
+</footer>
+
+</body>
+</html>

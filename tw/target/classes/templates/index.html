@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUMe y Calla - Pide comida a domicilio</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <h1>
+                <span class="logo-main">CUMe</span>
+                <span class="logo-separator">y</span>
+                <span class="logo-secondary">Calla</span>
+            </h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a href="#" class="btn-secondary">Pedidos de empresa</a></li>
+                <li><a href="#" class="btn-secondary">Trabaja como repartidor</a></li>
+                <li><a href="#" class="btn-secondary">Registra tu negocio</a></li>
+                <li><a th:href="@{/login}" class="btn-primary">Inicia sesión</a></li>
+                <li><a th:href="@{/registro}" class="btn-primary"> Registrate</a> </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2>Pide comida y mucho más</h2>
+                <p class="subtitle">Restaurantes y tiendas de alimentación que realizan entregas cerca de ti</p>
+
+                <form class="search-form" id="searchForm" th:action="@{/restaurantes}" method="get">
+                    <div class="search-box">
+                        <label for="address" class="sr-only">Dirección de entrega</label>
+                        <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                placeholder="Calle Santa Eulalia 2, 06800 Mérida"
+                                autocomplete="off"
+                                required
+                        >
+                        <button type="submit" class="btn-search">Buscar</button>
+                    </div>
+                    <div id="autocomplete-results" class="autocomplete-results"></div>
+                </form>
+            </div>
+
+            <div class="hero-image">
+                <div class="hero-banner">
+                    <h3>¿Lo quieres? Lo tienes</h3>
+                    <div class="category-image">
+                        <img src="/imagenes/logo.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section">
+        <div class="container">
+            <h2>Categorías populares</h2>
+            <p class="section-subtitle">Explora los tipos de cocina más populares y encuentra tus tiendas y restaurantes favoritos en Mérida.</p>
+
+            <div class="categories-grid">
+                <article class="category-card">
+                    <div class="category-image">
+                        <span class="category-icon">[MEDALLA]</span>
+                    </div>
+                    <h3>OFERTAS</h3>
+                </article>
+
+                <article class="category-card">
+                    <div class="category-image">
+                        <img th:src="@{/imagenes/tostada.jpg}" alt="Tostadas" sizes="300px" class="category-icon">
+                    </div>
+                    <h3>Desayuno</h3>
+                </article>
+
+                <article class="category-card">
+                    <div class="category-image">
+                        <span class="category-icon">[AMERICANA]</span>
+                    </div>
+                    <h3>Americana</h3>
+                </article>
+
+                <article class="category-card">
+                    <div class="category-image">
+                        <span class="category-icon">[HAMBURGUESA]</span>
+                    </div>
+                    <h3>Hamburguesas</h3>
+                </article>
+
+                <article class="category-card">
+                    <div class="category-image">
+                        <span class="category-icon">[PIZZA]</span>
+                    </div>
+                    <h3>Pizza</h3>
+                </article>
+
+                <article class="category-card">
+                    <div class="category-image">
+                        <span class="category-icon">[ASIATICA]</span>
+                    </div>
+                    <h3>Asiática</h3>
+                </article>
+
+                <article class="category-card">
+                    <div class="category-image">
+                        <span class="category-icon">[MEXICANA]</span>
+                    </div>
+                    <h3>Mexicana</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <p>&copy; 2026 Just Eat CUMe - Proyecto Tecnologías Web</p>
+    </div>
+</footer>
+
+</body>
+</html>

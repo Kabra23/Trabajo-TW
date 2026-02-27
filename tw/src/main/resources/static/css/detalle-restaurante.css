@@ -1,0 +1,472 @@
+/* Detalle Restaurante CSS - Color Principal: #069c6f con tonos cálidos */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, #0db87e 0%, #069c6f 100%);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.logo-main {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo-separator {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    font-style: italic;
+}
+
+.logo-secondary {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffd700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.main-nav a:hover {
+    opacity: 0.8;
+}
+
+.btn-primary {
+    background-color: white;
+    color: #069c6f;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Restaurant Hero */
+.restaurant-hero {
+    background: linear-gradient(135deg, #d0ebe3 0%, #e8f5f1 100%);
+    padding: 3rem 0;
+}
+
+.hero-image-large {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.large-placeholder {
+    font-size: 8rem;
+}
+
+/* Detail Layout */
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+/* Restaurant Main */
+.restaurant-main {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.restaurant-header h1 {
+    color: #069c6f;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.restaurant-meta {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.restaurant-meta strong {
+    color: #069c6f;
+    font-weight: 700;
+}
+
+.restaurant-address {
+    color: #555;
+    font-style: normal;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.restaurant-address::before {
+    content: "📍 ";
+}
+
+.restaurant-contact {
+    margin-bottom: 1.5rem;
+}
+
+.restaurant-contact p {
+    margin: 0.5rem 0;
+}
+
+.restaurant-contact a {
+    color: #069c6f;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.restaurant-contact a:hover {
+    color: #048566;
+    text-decoration: underline;
+}
+
+.restaurant-tags {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: #e8f5f1;
+    color: #069c6f;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.restaurant-features {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.feature {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Menu Tabs */
+.menu-tabs {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    border-bottom: 2px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    color: #666;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.tab-btn:hover {
+    color: #069c6f;
+}
+
+.tab-btn.active {
+    color: #069c6f;
+    border-bottom-color: #069c6f;
+}
+
+/* Search Menu */
+.search-menu {
+    margin-bottom: 2rem;
+}
+
+.search-menu input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-menu input::placeholder::before {
+    content: "🔍 ";
+}
+
+.search-menu input:focus {
+    outline: none;
+    border-color: #069c6f;
+    box-shadow: 0 0 0 3px rgba(6, 156, 111, 0.1);
+}
+
+/* Menu Section */
+.menu-section h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: #888;
+    margin-bottom: 2rem;
+}
+
+.menu-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.dish-card {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.dish-card:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(6, 156, 111, 0.1);
+    border-color: #069c6f;
+}
+
+.dish-info h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.dish-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.dish-price {
+    color: #069c6f;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.dish-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8f5f1 0%, #d0ebe3 100%);
+    border-radius: 12px;
+    height: 120px;
+}
+
+.dish-placeholder {
+    font-size: 3rem;
+}
+
+/* Cart Sidebar */
+.cart-sidebar {
+    position: relative;
+}
+
+.cart-sticky {
+    position: sticky;
+    top: 100px;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cart-header h2 {
+    color: #069c6f;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.delivery-info,
+.pickup-info {
+    background: #e8f5f1;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.delivery-info strong,
+.pickup-info strong {
+    color: #069c6f;
+    font-size: 1.1rem;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 2rem;
+    color: #999;
+}
+
+.empty-cart h3 {
+    margin: 1rem 0 0.5rem;
+    color: #666;
+}
+
+/* Footer */
+.main-footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 4rem;
+    border-top: 3px solid #069c6f;
+}
+
+.main-footer p {
+    margin: 0;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+@media (max-width: 1200px) {
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-sticky {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .main-header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .main-nav ul {
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .restaurant-header h1 {
+        font-size: 2rem;
+    }
+
+    .menu-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .dish-card {
+        grid-template-columns: 1fr;
+    }
+
+    .dish-image {
+        height: 200px;
+    }
+
+    .hero-image-large {
+        height: 200px;
+    }
+
+    .large-placeholder {
+        font-size: 5rem;
+    }
+}
+

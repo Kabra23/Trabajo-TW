@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurantes - Just Eat CUMe</title>
+    <link rel="stylesheet" th:href="@{/css/restaurantes.css}">
+</head>
+<body>
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <h1>
+                <span class="logo-main">CUMe</span>
+                <span class="logo-separator">y</span>
+                <span class="logo-secondary">Calla</span>
+            </h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/login}" class="btn-primary">Inicia sesión</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="restaurants-page">
+    <div class="search-header">
+        <div class="container">
+            <div class="search-info">
+                <p class="location">Calle Santa Eulalia 2, 06800 Mérida</p>
+                <form class="inline-search">
+                    <label for="searchRestaurants" class="sr-only">Buscar restaurantes</label>
+                    <input
+                            type="search"
+                            id="searchRestaurants"
+                            name="searchRestaurants"
+                            placeholder="¿Buscas restaurantes?"
+                    >
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="restaurants-layout">
+            <aside class="filters-sidebar">
+                <h2>Filtros</h2>
+
+                <div class="filter-section">
+                    <h3>Disponibilidad</h3>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="abiertosAhora" checked>
+                        <span>Abiertos ahora</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="nuevo">
+                        <span>Nuevo</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="gastosEnvioGratis">
+                        <span>Gastos de envío gratis</span>
+                    </label>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Soporte emisión del pedido</h3>
+                    <label class="filter-radio">
+                        <input type="radio" name="soporte" value="todos" checked>
+                        <span>Mostrar todo (9)</span>
+                    </label>
+                    <label class="filter-radio">
+                        <input type="radio" name="soporte" value="menos10">
+                        <span>10,00 € o menos (9)</span>
+                    </label>
+                    <label class="filter-radio">
+                        <input type="radio" name="soporte" value="menos15">
+                        <span>15,00 € o menos (9)</span>
+                    </label>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Puntuación</h3>
+                    <div class="star-rating">
+                        [5 ESTRELLAS]
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Ofertas y ahorros</h3>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="ofertas">
+                        <span>Ofertas (0)</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="tarjetaSelllos">
+                        <span>Tarjeta de sellos (0)</span>
+                    </label>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Dieta</h3>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="halal">
+                        <span>Halal (0)</span>
+                    </label>
+                </div>
+            </aside>
+
+            <section class="restaurants-content">
+                <div class="results-header">
+                    <h2>9 establecimientos coinciden con "Lo + Top"</h2>
+                    <button class="filter-link">Eliminar este filtro</button>
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-pill active">
+                        <span class="category-icon">[TROFEO]</span>
+                        Lo + Top
+                    </button>
+                    <button class="category-pill">
+                        <span class="category-icon">[HAMBUR]</span>
+                        Hamburguesas
+                    </button>
+                    <button class="category-pill">
+                        <span class="category-icon">[PIZZA]</span>
+                        Pizza
+                    </button>
+                    <button class="category-pill">
+                        <span class="category-icon">[SUSHI]</span>
+                        Japonesa
+                    </button>
+                    <button class="category-pill">
+                        <span class="category-icon">[ENSALA]</span>
+                        Sushi
+                    </button>
+                    <button class="category-pill">
+                        <span class="category-icon">[KEBAB]</span>
+                        Kebab
+                    </button>
+                    <button class="category-pill">
+                        <span class="category-icon">[TALLOS]</span>
+                        Tallos
+                    </button>
+                </div>
+
+                <div class="restaurants-grid">
+                    <article class="restaurant-card">
+                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <div class="restaurant-image">
+                                <span class="image-placeholder">[IMAGEN]</span>
+                            </div>
+                            <div class="restaurant-info">
+                                <h3>The Sushi Mérida</h3>
+                                <div class="restaurant-rating">
+                                    [ESTRELLA] <strong>Nuevo</strong>
+                                </div>
+                                <p class="restaurant-category">Poke, Japonesa</p>
+                                <div class="restaurant-details">
+                                    <span class="delivery-time">[RELOJ] 14 Entrega</span>
+                                    <span class="min-order">[DINERO] 10,00€ mín.</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="restaurant-card">
+                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <div class="restaurant-image">
+                                <span class="image-placeholder">[IMAGEN]</span>
+                            </div>
+                            <div class="restaurant-info">
+                                <h3>Asador de Pollos Koki</h3>
+                                <div class="restaurant-rating">
+                                    [ESTRELLA] <strong>4.8</strong> (300+)
+                                </div>
+                                <p class="restaurant-category">Pollo, Española</p>
+                                <div class="restaurant-details">
+                                    <span class="delivery-time">[RELOJ] Entrega desde las 12:00</span>
+                                    <span class="min-order">[DINERO] Pedido sin importe mínimo</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="restaurant-card">
+                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <div class="restaurant-image">
+                                <span class="image-placeholder">[IMAGEN]</span>
+                            </div>
+                            <div class="restaurant-info">
+                                <h3>Aguacate Mexican And Caribbean Food</h3>
+                                <div class="restaurant-rating">
+                                    [ESTRELLA] <strong>4.9</strong> (78)
+                                </div>
+                                <p class="restaurant-category">Mexicana, Venezolana</p>
+                                <div class="restaurant-details">
+                                    <span class="delivery-time">[RELOJ] Entrega desde las 14:00</span>
+                                    <span class="min-order">[DINERO] Pedido sin importe mínimo</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="restaurant-card">
+                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <div class="restaurant-image">
+                                <span class="image-placeholder">[IMAGEN]</span>
+                            </div>
+                            <div class="restaurant-info">
+                                <h3>Cafetería CUMe</h3>
+                                <div class="restaurant-rating">
+                                    [ESTRELLA] <strong>4.7</strong> (250+)
+                                </div>
+                                <p class="restaurant-category">Cafetería, Bocadillos</p>
+                                <div class="restaurant-details">
+                                    <span class="delivery-time">[RELOJ] 15-25 min</span>
+                                    <span class="min-order">[DINERO] 5,00€ mín.</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="restaurant-card">
+                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <div class="restaurant-image">
+                                <span class="image-placeholder">[IMAGEN]</span>
+                            </div>
+                            <div class="restaurant-info">
+                                <h3>Pizza Express Mérida</h3>
+                                <div class="restaurant-rating">
+                                    [ESTRELLA] <strong>4.5</strong> (180)
+                                </div>
+                                <p class="restaurant-category">Pizza, Italiana</p>
+                                <div class="restaurant-details">
+                                    <span class="delivery-time">[RELOJ] 20-30 min</span>
+                                    <span class="min-order">[DINERO] 8,00€ mín.</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                    <article class="restaurant-card">
+                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <div class="restaurant-image">
+                                <span class="image-placeholder">[IMAGEN]</span>
+                            </div>
+                            <div class="restaurant-info">
+                                <h3>Burger House Mérida</h3>
+                                <div class="restaurant-rating">
+                                    [ESTRELLA] <strong>4.6</strong> (320+)
+                                </div>
+                                <p class="restaurant-category">Hamburguesas, Americana</p>
+                                <div class="restaurant-details">
+                                    <span class="delivery-time">[RELOJ] 25-35 min</span>
+                                    <span class="min-order">[DINERO] 10,00€ mín.</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <p>&copy; 2026 Just Eat CUMe - Proyecto Tecnologías Web</p>
+    </div>
+</footer>
+
+</body>
+</html>
