@@ -5,50 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Comienza el proyecto">
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/TwApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/WebController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/registro.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/tostada.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/registro.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/imagenes/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/static/imagenes/tostada.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,12 +59,12 @@
     &quot;assignee&quot;: &quot;Kabra23&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Kabra23/ProyectoTW.git&quot;,
-    &quot;accountId&quot;: &quot;9844e257-e01d-41f1-9f6e-3358fbcbc22b&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Kabra23/Trabajo-TW.git",
+    "accountId": "9844e257-e01d-41f1-9f6e-3358fbcbc22b"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -183,7 +141,7 @@
       <workItem from="1771845996060" duration="4684000" />
       <workItem from="1771927153865" duration="5708000" />
       <workItem from="1772020237611" duration="1254000" />
-      <workItem from="1772179602114" duration="1834000" />
+      <workItem from="1772179602114" duration="2232000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -209,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770825450261</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Comienza el proyecto">
+      <option name="closed" value="true" />
+      <created>1772181643845</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1772181643846</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
