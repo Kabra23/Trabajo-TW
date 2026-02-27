@@ -288,8 +288,8 @@ body {
     }
 }
 
-/* Accesibilidad - Focus */
-.star-checkbox:focus + .star-label {
+/* Accesibilidad - Focus (solo teclado) */
+.star-checkbox:focus-visible + .star-label {
     outline: 2px solid #069c6f;
     outline-offset: 2px;
     border-radius: 6px;
