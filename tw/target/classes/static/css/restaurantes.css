@@ -94,8 +94,9 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #f0f0f0;
+    background-color: #38543a;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Search Header */
