@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Cambios en restaurante.css">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza el color de fondo del botón primario en restaurantes.css">
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/star-filter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +150,7 @@
       <workItem from="1771845996060" duration="4684000" />
       <workItem from="1771927153865" duration="5708000" />
       <workItem from="1772020237611" duration="1254000" />
-      <workItem from="1772179602114" duration="3473000" />
+      <workItem from="1772179602114" duration="4360000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -210,7 +216,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772183073662</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml">
+      <option name="closed" value="true" />
+      <created>1772183130205</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1772183130205</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Actualiza el color de fondo del botón primario en restaurantes.css">
+      <option name="closed" value="true" />
+      <created>1772183239579</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1772183239579</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,7 +253,9 @@
     <MESSAGE value="Inicio del proyecto" />
     <MESSAGE value="Comienza el proyecto" />
     <MESSAGE value="Cambios en restaurante.css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cambios en restaurante.css" />
+    <MESSAGE value="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml" />
+    <MESSAGE value="Actualiza el color de fondo del botón primario en restaurantes.css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Actualiza el color de fondo del botón primario en restaurantes.css" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

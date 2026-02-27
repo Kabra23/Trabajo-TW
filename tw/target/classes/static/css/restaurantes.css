@@ -209,6 +209,113 @@ body {
     font-size: 0.95rem;
 }
 
+/* Star Rating Filter - Estilo Just Eat */
+.star-rating-filter {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.star-filter-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.star-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.star-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.star-label:hover {
+    background-color: #fff3e0;
+}
+
+.star-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.star-icon svg {
+    color: #d0d0d0;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.star-count {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+/* Estado hover */
+.star-label:hover .star-icon svg {
+    color: #ffa726;
+    transform: scale(1.05);
+}
+
+.star-label:hover .star-count {
+    color: #ff9800;
+}
+
+/* Estado checked */
+.star-checkbox:checked + .star-label .star-icon svg {
+    color: #ff9800;
+    filter: drop-shadow(0 0 4px rgba(255, 152, 0, 0.4));
+}
+
+.star-checkbox:checked + .star-label {
+    background-color: #fff3e0;
+    border-radius: 6px;
+}
+
+.star-checkbox:checked + .star-label .star-count {
+    color: #ff9800;
+    font-weight: 600;
+}
+
+/* Animación al hacer click */
+.star-checkbox:checked + .star-label .star-icon svg {
+    animation: starPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes starPop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Accesibilidad - Focus */
+.star-checkbox:focus + .star-label {
+    outline: 2px solid #069c6f;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
 .star-rating {
     font-size: 1.2rem;
     color: #ffa726;
