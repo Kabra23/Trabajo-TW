@@ -238,7 +238,8 @@ body {
     cursor: pointer;
     padding: 4px;
     border-radius: 6px;
-    transition: all 0.2s ease;
+    transition: none;
+    background-color: transparent;
 }
 
 .star-label:hover {

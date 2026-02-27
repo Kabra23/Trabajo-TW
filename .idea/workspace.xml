@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza el color de fondo del botón primario en restaurantes.css">
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/star-filter.js" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +144,7 @@
       <workItem from="1771845996060" duration="4684000" />
       <workItem from="1771927153865" duration="5708000" />
       <workItem from="1772020237611" duration="1254000" />
-      <workItem from="1772179602114" duration="4360000" />
+      <workItem from="1772179602114" duration="5066000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -232,7 +226,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772183239579</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js">
+      <option name="closed" value="true" />
+      <created>1772184133492</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1772184133492</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js">
+      <option name="closed" value="true" />
+      <created>1772184303402</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1772184303402</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,7 +265,8 @@
     <MESSAGE value="Cambios en restaurante.css" />
     <MESSAGE value="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml" />
     <MESSAGE value="Actualiza el color de fondo del botón primario en restaurantes.css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualiza el color de fondo del botón primario en restaurantes.css" />
+    <MESSAGE value="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
