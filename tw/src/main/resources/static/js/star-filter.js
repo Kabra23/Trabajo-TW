@@ -23,19 +23,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Escuchar clicks en los checkboxes
     checkboxes.forEach((checkbox, index) => {
-        checkbox.addEventListener('change', function() {
-            handleStarSelection(index);
+        checkbox.addEventListener('change', function(event) {
+            // Si el cambio no viene de una limpieza de filtros, manejar la selección
+            if (!event.isTrusted || event.target === checkbox) {
+                handleStarSelection(index);
+            } else {
+                // Solo actualizar visualización
+                updateStarsDisplay();
+            }
         });
     });
 
     // Función para manejar la selección de estrellas
     function handleStarSelection(selectedIndex) {
-        // Desmarcar todos primero
-        checkboxes.forEach(cb => cb.checked = false);
+        const wasChecked = checkboxes[selectedIndex].checked;
 
-        // Marcar desde 0 hasta el índice seleccionado
-        for (let i = 0; i <= selectedIndex; i++) {
-            checkboxes[i].checked = true;
+        if (wasChecked) {
+            // Si ya estaba marcada, marcar todas hasta este índice
+            checkboxes.forEach((cb, i) => {
+                cb.checked = i <= selectedIndex;
+            });
+        } else {
+            // Si no estaba marcada, desmarcar todas
+            checkboxes.forEach(cb => cb.checked = false);
         }
 
         // Actualizar visualización
@@ -76,5 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inicializar el estado al cargar
     updateStarsDisplay();
-});
 
+    // Exponer función para que otros scripts puedan actualizar las estrellas
+    window.updateStarsDisplay = updateStarsDisplay;
+});
