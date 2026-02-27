@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Comienza el proyecto">
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/americana.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/asiatica.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/italiana.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/oferta.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +71,10 @@
     "url": "https://github.com/Kabra23/Trabajo-TW.git",
     "accountId": "9844e257-e01d-41f1-9f6e-3358fbcbc22b"
   }
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
 }]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -145,7 +152,7 @@
       <workItem from="1771845996060" duration="4684000" />
       <workItem from="1771927153865" duration="5708000" />
       <workItem from="1772020237611" duration="1254000" />
-      <workItem from="1772179602114" duration="2888000" />
+      <workItem from="1772179602114" duration="3396000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -187,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772181870083</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Comienza el proyecto">
+      <option name="closed" value="true" />
+      <created>1772182768102</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1772182768102</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
