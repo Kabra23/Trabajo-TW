@@ -51,7 +51,7 @@
                 <div class="filter-section">
                     <h3>Disponibilidad</h3>
                     <label class="filter-checkbox">
-                        <input type="checkbox" name="abiertosAhora" checked>
+                        <input type="checkbox" name="abiertosAhora">
                         <span>Abiertos ahora</span>
                     </label>
                     <label class="filter-checkbox">
@@ -151,8 +151,8 @@
                 <div class="filter-section">
                     <h3>Dieta</h3>
                     <label class="filter-checkbox">
-                        <input type="checkbox" name="halal">
-                        <span>Halal (0)</span>
+                        <input type="checkbox" name="BIO">
+                        <span>BIO (0)</span>
                     </label>
                 </div>
             </aside>
@@ -188,17 +188,17 @@
                     <article class="restaurant-card">
                         <a th:href="@{/detalle-restaurante}" class="restaurant-link">
                             <div class="restaurant-image">
-                                <span class="image-placeholder">[IMAGEN]</span>
+                                <img th:src="@{/imagenes/asiatica.png}" alt="The Sushi Mérida" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>The Sushi Mérida</h3>
                                 <div class="restaurant-rating">
-                                    [ESTRELLA] <strong>Nuevo</strong>
+                                    <strong>Nuevo</strong>
                                 </div>
                                 <p class="restaurant-category">Poke, Japonesa</p>
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">[RELOJ] 14 Entrega</span>
-                                    <span class="min-order">[DINERO] 10,00€ mín.</span>
+                                    <span class="delivery-time">14 Entrega</span>
+                                    <span class="min-order">10,00€ mín.</span>
                                 </div>
                             </div>
                         </a>
@@ -207,17 +207,17 @@
                     <article class="restaurant-card">
                         <a th:href="@{/detalle-restaurante}" class="restaurant-link">
                             <div class="restaurant-image">
-                                <span class="image-placeholder">[IMAGEN]</span>
+                                <img th:src="@{/imagenes/pollo.png}" alt="Asador de Pollos Koki" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Asador de Pollos Koki</h3>
                                 <div class="restaurant-rating">
-                                    [ESTRELLA] <strong>4.8</strong> (300+)
+                                    <strong>4.8</strong> (300+)
                                 </div>
                                 <p class="restaurant-category">Pollo, Española</p>
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">[RELOJ] Entrega desde las 12:00</span>
-                                    <span class="min-order">[DINERO] Pedido sin importe mínimo</span>
+                                    <span class="delivery-time">Entrega desde las 12:00</span>
+                                    <span class="min-order">Pedido sin importe mínimo</span>
                                 </div>
                             </div>
                         </a>
@@ -226,17 +226,17 @@
                     <article class="restaurant-card">
                         <a th:href="@{/detalle-restaurante}" class="restaurant-link">
                             <div class="restaurant-image">
-                                <span class="image-placeholder">[IMAGEN]</span>
+                                <img th:src="@{/imagenes/mexicana.png}" alt="Aguacate Mexican And Caribbean Food" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Aguacate Mexican And Caribbean Food</h3>
                                 <div class="restaurant-rating">
-                                    [ESTRELLA] <strong>4.9</strong> (78)
+                                    <strong>4.9</strong> (78)
                                 </div>
                                 <p class="restaurant-category">Mexicana, Venezolana</p>
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">[RELOJ] Entrega desde las 14:00</span>
-                                    <span class="min-order">[DINERO] Pedido sin importe mínimo</span>
+                                    <span class="delivery-time">Entrega desde las 14:00</span>
+                                    <span class="min-order">Pedido sin importe mínimo</span>
                                 </div>
                             </div>
                         </a>
@@ -245,17 +245,17 @@
                     <article class="restaurant-card">
                         <a th:href="@{/detalle-restaurante}" class="restaurant-link">
                             <div class="restaurant-image">
-                                <span class="image-placeholder">[IMAGEN]</span>
+                                <img th:src="@{/imagenes/tostada.jpg}" alt="Cafetería CUMe" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Cafetería CUMe</h3>
                                 <div class="restaurant-rating">
-                                    [ESTRELLA] <strong>4.7</strong> (250+)
+                                    <strong>4.7</strong> (250+)
                                 </div>
                                 <p class="restaurant-category">Cafetería, Bocadillos</p>
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">[RELOJ] 15-25 min</span>
-                                    <span class="min-order">[DINERO] 5,00€ mín.</span>
+                                    <span class="delivery-time"> 15-25 min</span>
+                                    <span class="min-order"> 5,00€ mín.</span>
                                 </div>
                             </div>
                         </a>
@@ -264,17 +264,17 @@
                     <article class="restaurant-card">
                         <a th:href="@{/detalle-restaurante}" class="restaurant-link">
                             <div class="restaurant-image">
-                                <span class="image-placeholder">[IMAGEN]</span>
+                                <img th:src="@{/imagenes/italiana.png}" alt="Pizza Express Mérida" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Pizza Express Mérida</h3>
                                 <div class="restaurant-rating">
-                                    [ESTRELLA] <strong>4.5</strong> (180)
+                                    <strong>4.5</strong> (180)
                                 </div>
                                 <p class="restaurant-category">Pizza, Italiana</p>
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">[RELOJ] 20-30 min</span>
-                                    <span class="min-order">[DINERO] 8,00€ mín.</span>
+                                    <span class="delivery-time">20-30 min</span>
+                                    <span class="min-order">8,00€ mín.</span>
                                 </div>
                             </div>
                         </a>
@@ -283,17 +283,17 @@
                     <article class="restaurant-card">
                         <a th:href="@{/detalle-restaurante}" class="restaurant-link">
                             <div class="restaurant-image">
-                                <span class="image-placeholder">[IMAGEN]</span>
+                                <img th:src="@{/imagenes/americana.png}" alt="Burger House Mérida" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Burger House Mérida</h3>
                                 <div class="restaurant-rating">
-                                    [ESTRELLA] <strong>4.6</strong> (320+)
+                                    <strong>4.6</strong> (320+)
                                 </div>
                                 <p class="restaurant-category">Hamburguesas, Americana</p>
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">[RELOJ] 25-35 min</span>
-                                    <span class="min-order">[DINERO] 10,00€ mín.</span>
+                                    <span class="delivery-time">25-35 min</span>
+                                    <span class="min-order">10,00€ mín.</span>
                                 </div>
                             </div>
                         </a>

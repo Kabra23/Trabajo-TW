@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Elimina la transición y establece el color de fondo como transparente en restaurantes.css">
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/filters.js" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html">
+      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/pollo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/js/star-filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/star-filter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/js/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/filters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/js/star-filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/js/star-filter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/js/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/js/filters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,27 +63,27 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "OPEN"
+      &quot;state&quot;: &quot;OPEN&quot;
     }
   ],
-  "lastFilter": {
-    "state": "OPEN"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
     {
-      "id": {
-        "id": "PR_kwDORaMDss7G5vJv",
-        "number": 1
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDORaMDss7G5vJv&quot;,
+        &quot;number&quot;: 1
       },
-      "lastSeen": 1772220604642
+      &quot;lastSeen&quot;: 1772220604642
     }
   ]
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Kabra23/Trabajo-TW.git&quot;,
@@ -167,7 +171,10 @@
       <workItem from="1771927153865" duration="5708000" />
       <workItem from="1772020237611" duration="1254000" />
       <workItem from="1772179602114" duration="5066000" />
-      <workItem from="1772219806237" duration="1323000" />
+      <workItem from="1772219806237" duration="1617000" />
+      <workItem from="1772276660695" duration="2314000" />
+      <workItem from="1772388957814" duration="1297000" />
+      <workItem from="1772525545286" duration="2870000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -273,7 +280,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772220076775</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html">
+      <option name="closed" value="true" />
+      <created>1772221394105</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1772221394105</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,7 +313,8 @@
     <MESSAGE value="Actualiza el color de fondo del botón primario en restaurantes.css" />
     <MESSAGE value="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js" />
     <MESSAGE value="Elimina la transición y establece el color de fondo como transparente en restaurantes.css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Elimina la transición y establece el color de fondo como transparente en restaurantes.css" />
+    <MESSAGE value="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

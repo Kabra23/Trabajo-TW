@@ -40,6 +40,26 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (this.name === 'halal') {
                 updateDietFilters();
             }
+
+            // Sincronizar con las pills de categoría
+            if (this.name === 'ofertas') {
+                const ofertaPill = Array.from(categoryPills).find(pill =>
+                    pill.textContent.trim() === 'Ofertas'
+                );
+                if (ofertaPill) {
+                    if (this.checked) {
+                        categoryPills.forEach(p => p.classList.remove('active'));
+                        ofertaPill.classList.add('active');
+                        activeFilters.category = 'Ofertas';
+                    } else {
+                        ofertaPill.classList.remove('active');
+                        if (activeFilters.category === 'Ofertas') {
+                            activeFilters.category = null;
+                        }
+                    }
+                }
+            }
+
             updateResults();
         });
     });
@@ -69,6 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.classList.contains('active')) {
                 this.classList.remove('active');
                 activeFilters.category = null;
+
+                // Si es Ofertas, desmarcar el checkbox
+                if (categoryName === 'Ofertas') {
+                    const ofertasCheckbox = document.querySelector('input[name="ofertas"]');
+                    if (ofertasCheckbox) {
+                        ofertasCheckbox.checked = false;
+                        updateOffersFilters();
+                    }
+                }
             } else {
                 // Remover active de todas las pills
                 categoryPills.forEach(p => p.classList.remove('active'));
@@ -76,6 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('active');
                 // Actualizar filtro de categoría
                 activeFilters.category = categoryName;
+
+                // Si es Ofertas, marcar el checkbox
+                if (categoryName === 'Ofertas') {
+                    const ofertasCheckbox = document.querySelector('input[name="ofertas"]');
+                    if (ofertasCheckbox) {
+                        ofertasCheckbox.checked = true;
+                        updateOffersFilters();
+                    }
+                }
             }
 
             updateResults();
@@ -129,16 +167,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let filteredRestaurants = [...allRestaurants];
         let filterDescriptions = [];
 
-        // Filtrar por categoría
+        // Filtrar por categoría (pills)
         if (activeFilters.category) {
-            if (activeFilters.category === 'Ofertas') {
-                filterDescriptions.push('Ofertas');
-            } else {
-                filteredRestaurants = filteredRestaurants.filter(r =>
-                    r.category === activeFilters.category
-                );
-                filterDescriptions.push(activeFilters.category);
-            }
+            filteredRestaurants = filteredRestaurants.filter(r =>
+                r.category === activeFilters.category
+            );
+            filterDescriptions.push(activeFilters.category);
         }
 
         // Filtrar por disponibilidad
@@ -169,8 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Filtrar por ofertas
-        if (activeFilters.offers.length > 0) {
+        // Filtrar por ofertas (solo si no está ya incluido en categoría)
+        if (activeFilters.offers.length > 0 && activeFilters.category !== 'Ofertas') {
             if (activeFilters.offers.includes('ofertas')) {
                 filterDescriptions.push('Con ofertas');
             }
@@ -228,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function clearAllFilters() {
-        // Desmarcar todos los checkboxes
+        // Desmarcar todos los checkboxes excepto "Abiertos ahora" si quieres que esté marcado por defecto
         document.querySelectorAll('.filter-checkbox input').forEach(checkbox => {
             checkbox.checked = false;
         });
