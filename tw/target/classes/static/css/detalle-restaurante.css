@@ -85,17 +85,19 @@ body {
 }
 
 .btn-primary {
-    background-color: white;
+    background-color: #333;
     color: #069c6f;
     padding: 0.7rem 1.5rem;
     border-radius: 25px;
     font-weight: 700;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
-    background-color: #f0f0f0;
+    background-color: #38543a;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary {
@@ -130,7 +132,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center -150px;
 }
 
 .large-placeholder {
@@ -307,9 +309,6 @@ body {
     transition: all 0.3s ease;
 }
 
-.search-menu input::placeholder::before {
-    content: "🔍 ";
-}
 
 .search-menu input:focus {
     outline: none;

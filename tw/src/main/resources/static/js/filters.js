@@ -2,6 +2,19 @@
 const FILTER_ABIERTOS_AHORA = 'abiertosAhora';
 
 document.addEventListener('DOMContentLoaded', function() {
+    // ========== CARGAR DIRECCIÓN GUARDADA ==========
+    loadSavedAddress();
+
+    function loadSavedAddress() {
+        const savedAddress = localStorage.getItem('selectedAddress');
+        const locationElement = document.querySelector('.location');
+
+        if (savedAddress && locationElement) {
+            locationElement.textContent = savedAddress;
+            console.log('Dirección cargada en restaurantes:', savedAddress);
+        }
+    }
+
     // Referencias a elementos
     const resultsHeader = document.querySelector('.results-header h2');
     const clearFilterBtn = document.querySelector('.filter-link');

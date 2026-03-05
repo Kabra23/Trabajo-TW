@@ -1,14 +1,30 @@
 // Sistema de filtros dinámicos para restaurantes
+const FILTER_ABIERTOS_AHORA = 'abiertosAhora';
+
 document.addEventListener('DOMContentLoaded', function() {
+    // ========== CARGAR DIRECCIÓN GUARDADA ==========
+    loadSavedAddress();
+
+    function loadSavedAddress() {
+        const savedAddress = localStorage.getItem('selectedAddress');
+        const locationElement = document.querySelector('.location');
+
+        if (savedAddress && locationElement) {
+            locationElement.textContent = savedAddress;
+            console.log('Dirección cargada en restaurantes:', savedAddress);
+        }
+    }
+
     // Referencias a elementos
     const resultsHeader = document.querySelector('.results-header h2');
     const clearFilterBtn = document.querySelector('.filter-link');
-
-    // Todos los filtros
     const categoryPills = document.querySelectorAll('.category-pill');
+    const restaurantCards = document.querySelectorAll('.restaurant-card');
+    const searchInput = document.getElementById('searchRestaurants');
 
     // Estado de los filtros
     let activeFilters = {
+        search: '',
         availability: [],
         minOrder: 'todos',
         rating: [],
@@ -17,23 +33,21 @@ document.addEventListener('DOMContentLoaded', function() {
         category: null
     };
 
-    // Datos de ejemplo de restaurantes (esto vendría del backend en producción)
-    const allRestaurants = [
-        { name: 'The Sushi Mérida', category: 'Japonesa', rating: 0, nuevo: true },
-        { name: 'Asador de Pollos Koki', category: 'Española', rating: 4.8 },
-        { name: 'Aguacate Mexican And Caribbean Food', category: 'Mexicana', rating: 4.9 },
-        { name: 'Cafetería CUMe', category: 'Cafetería', rating: 4.7 },
-        { name: 'Pizza Express Mérida', category: 'Pizza', rating: 4.5 },
-        { name: 'Burger House Mérida', category: 'Hamburguesas', rating: 4.6 }
-    ];
-
     // Inicializar
     updateResults();
+
+    // Event listener para búsqueda
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            activeFilters.search = this.value.trim().toLowerCase();
+            updateResults();
+        });
+    }
 
     // Event listeners para checkboxes de disponibilidad
     document.querySelectorAll('.filter-checkbox input').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
-            if (this.name === 'abiertosAhora' || this.name === 'nuevo' || this.name === 'gastosEnvioGratis') {
+            if (this.name === FILTER_ABIERTOS_AHORA || this.name === 'nuevo' || this.name === 'gastosEnvioGratis') {
                 updateAvailabilityFilters();
             } else if (this.name === 'ofertas' || this.name === 'tarjetaSelllos') {
                 updateOffersFilters();
@@ -94,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateAvailabilityFilters() {
         activeFilters.availability = [];
         document.querySelectorAll('.filter-checkbox input').forEach(checkbox => {
-            if ((checkbox.name === 'abiertosAhora' || checkbox.name === 'nuevo' || checkbox.name === 'gastosEnvioGratis') && checkbox.checked) {
+            if ((checkbox.name === FILTER_ABIERTOS_AHORA || checkbox.name === 'nuevo' || checkbox.name === 'gastosEnvioGratis') && checkbox.checked) {
                 activeFilters.availability.push(checkbox.name);
             }
         });
@@ -124,73 +138,101 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Función principal para actualizar resultados
-    function updateResults() {
-        let filteredRestaurants = [...allRestaurants];
-        let filterDescriptions = [];
+    // Determina si una tarjeta de restaurante cumple los filtros activos
+    function cardMatchesFilters(card) {
+        const name = (card.dataset.name || '').toLowerCase();
+        const categories = (card.dataset.categories || '').toLowerCase().split(',');
+        const rating = parseFloat(card.dataset.rating || '0');
+        const isNuevo = card.dataset.nuevo === 'true';
+        const minOrder = parseFloat(card.dataset.minOrder || '0');
+        const freeDelivery = card.dataset.freeDelivery === 'true';
 
-        // Filtrar por categoría
-        if (activeFilters.category) {
-            if (activeFilters.category === 'Ofertas') {
-                filterDescriptions.push('Ofertas');
-            } else {
-                filteredRestaurants = filteredRestaurants.filter(r =>
-                    r.category === activeFilters.category
-                );
-                filterDescriptions.push(activeFilters.category);
+        // Filtrar por búsqueda de texto
+        if (activeFilters.search && !name.includes(activeFilters.search)) {
+            return false;
+        }
+
+        // Filtrar por categoría de pill
+        if (activeFilters.category && activeFilters.category !== 'Ofertas') {
+            if (!categories.includes(activeFilters.category.toLowerCase())) {
+                return false;
             }
         }
 
-        // Filtrar por disponibilidad
-        if (activeFilters.availability.includes('nuevo')) {
-            filteredRestaurants = filteredRestaurants.filter(r => r.nuevo === true);
-            filterDescriptions.push('Nuevo');
+        // Filtrar por "Nuevo"
+        if (activeFilters.availability.includes('nuevo') && !isNuevo) {
+            return false;
         }
 
-        if (activeFilters.availability.includes('gastosEnvioGratis')) {
-            filterDescriptions.push('Gastos de envío gratis');
+        // Filtrar por gastos de envío gratis
+        if (activeFilters.availability.includes('gastosEnvioGratis') && !freeDelivery) {
+            return false;
         }
 
-        // Filtrar por puntuación
+        // Filtrar por puntuación mínima (los restaurantes "Nuevo" con rating=0 no se excluyen)
         if (activeFilters.rating.length > 0) {
-            const maxRating = Math.max(...activeFilters.rating);
-            filteredRestaurants = filteredRestaurants.filter(r =>
-                r.rating >= maxRating || r.rating === 0
-            );
-            filterDescriptions.push(`${maxRating}+ estrellas`);
+            const minRating = Math.max(...activeFilters.rating);
+            if (rating > 0 && rating < minRating) {
+                return false;
+            }
         }
 
         // Filtrar por pedido mínimo
+        if (activeFilters.minOrder === 'menos10' && minOrder > 10) {
+            return false;
+        }
+        if (activeFilters.minOrder === 'menos15' && minOrder > 15) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Función principal para actualizar resultados
+    function updateResults() {
+        let visibleCount = 0;
+        const filterDescriptions = [];
+
+        // Mostrar/ocultar tarjetas según los filtros
+        restaurantCards.forEach(card => {
+            if (cardMatchesFilters(card)) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Construir descripciones de filtros activos
+        if (activeFilters.search) {
+            filterDescriptions.push(activeFilters.search);
+        }
+        if (activeFilters.category) {
+            filterDescriptions.push(activeFilters.category);
+        }
+        if (activeFilters.availability.includes('nuevo')) {
+            filterDescriptions.push('Nuevo');
+        }
+        if (activeFilters.availability.includes('gastosEnvioGratis')) {
+            filterDescriptions.push('Gastos de envío gratis');
+        }
+        if (activeFilters.rating.length > 0) {
+            filterDescriptions.push(`${Math.max(...activeFilters.rating)}+ estrellas`);
+        }
         if (activeFilters.minOrder !== 'todos') {
-            if (activeFilters.minOrder === 'menos10') {
-                filterDescriptions.push('Pedido mín. 10€ o menos');
-            } else if (activeFilters.minOrder === 'menos15') {
-                filterDescriptions.push('Pedido mín. 15€ o menos');
-            }
+            filterDescriptions.push(activeFilters.minOrder === 'menos10' ? 'Pedido mín. 10€ o menos' : 'Pedido mín. 15€ o menos');
+        }
+        if (activeFilters.offers.includes('ofertas')) {
+            filterDescriptions.push('Con ofertas');
+        }
+        if (activeFilters.offers.includes('tarjetaSelllos')) {
+            filterDescriptions.push('Tarjeta de sellos');
+        }
+        if (activeFilters.diet.includes('halal')) {
+            filterDescriptions.push('Halal');
         }
 
-        // Filtrar por ofertas
-        if (activeFilters.offers.length > 0) {
-            if (activeFilters.offers.includes('ofertas')) {
-                filterDescriptions.push('Con ofertas');
-            }
-            if (activeFilters.offers.includes('tarjetaSelllos')) {
-                filterDescriptions.push('Tarjeta de sellos');
-            }
-        }
-
-        // Filtrar por dieta
-        if (activeFilters.diet.length > 0) {
-            if (activeFilters.diet.includes('halal')) {
-                filterDescriptions.push('Halal');
-            }
-        }
-
-        // Actualizar el texto del encabezado
-        updateHeaderText(filteredRestaurants.length, filterDescriptions);
-
-        // Aquí podrías actualizar la visualización de las tarjetas de restaurantes
-        // Por ahora solo actualizamos el texto
+        updateHeaderText(visibleCount, filterDescriptions);
     }
 
     function updateHeaderText(count, descriptions) {
@@ -201,8 +243,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (descriptions.length === 1) {
             text = `${count} establecimientos coinciden con "${descriptions[0]}"`;
         } else {
-            const lastFilter = descriptions.pop();
-            text = `${count} establecimientos con ${descriptions.join(', ')} y ${lastFilter}`;
+            const descCopy = [...descriptions];
+            const lastFilter = descCopy.pop();
+            text = `${count} establecimientos con ${descCopy.join(', ')} y ${lastFilter}`;
         }
 
         resultsHeader.textContent = text;
@@ -219,7 +262,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function hasActiveFilters() {
-        return activeFilters.availability.length > 0 ||
+        // abiertosAhora es el estado por defecto, no cuenta como filtro activo
+        const nonDefaultAvailability = activeFilters.availability.filter(a => a !== FILTER_ABIERTOS_AHORA);
+        return activeFilters.search !== '' ||
+               nonDefaultAvailability.length > 0 ||
                activeFilters.minOrder !== 'todos' ||
                activeFilters.rating.length > 0 ||
                activeFilters.offers.length > 0 ||
@@ -228,9 +274,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function clearAllFilters() {
-        // Desmarcar todos los checkboxes
+        // Limpiar el campo de búsqueda
+        if (searchInput) {
+            searchInput.value = '';
+        }
+
+        // Resetear checkboxes (mantener abiertosAhora marcado por defecto)
         document.querySelectorAll('.filter-checkbox input').forEach(checkbox => {
-            checkbox.checked = false;
+            checkbox.checked = checkbox.name === FILTER_ABIERTOS_AHORA;
         });
 
         // Resetear radio buttons a "todos"
@@ -256,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Resetear estado de filtros
         activeFilters = {
+            search: '',
             availability: [],
             minOrder: 'todos',
             rating: [],

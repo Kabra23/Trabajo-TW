@@ -189,7 +189,7 @@ input, textarea, select {
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: white !important;
+    color: white;
     padding: 0.65rem 1.5rem;
     border-radius: var(--radius-lg);
     font-weight: 600;
@@ -207,7 +207,7 @@ input, textarea, select {
 
 .btn-secondary {
     background-color: transparent;
-    color: var(--text-dark) !important;
+    color: var(--text-dark);
     padding: 0.65rem 1.5rem;
     border-radius: var(--radius-lg);
     font-weight: 500;
@@ -217,7 +217,7 @@ input, textarea, select {
 
 .btn-secondary:hover {
     border-color: var(--primary-color);
-    color: var(--primary-color) !important;
+    color: var(--primary-color);
     background-color: rgba(255, 107, 53, 0.05);
 }
 

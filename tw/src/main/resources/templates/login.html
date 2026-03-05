@@ -49,7 +49,7 @@
                                 required
                         >
                         <button type="button" class="toggle-password" aria-label="Mostrar contraseña">
-                            <span>👁</span>
+                            <span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path></svg></span>
                         </button>
                     </div>
                     <span class="error-message" id="passwordError"></span>
@@ -69,58 +69,6 @@
     </section>
 </main>
 
-
-
-<script>
-    // Toggle password visibility
-    document.querySelectorAll('.toggle-password').forEach(button => {
-        button.addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('span');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.textContent = '🙈';
-            } else {
-                passwordInput.type = 'password';
-                icon.textContent = '👁';
-            }
-        });
-    });
-
-    // Form validation
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-
-        let isValid = true;
-
-        // Clear previous errors
-        document.querySelectorAll('.error-message').forEach(error => error.textContent = '');
-
-        // Validate email
-        if (!email) {
-            document.getElementById('emailError').textContent = 'El correo electrónico es obligatorio';
-            isValid = false;
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            document.getElementById('emailError').textContent = 'Introduce un correo electrónico válido';
-            isValid = false;
-        }
-
-        // Validate password
-        if (!password) {
-            document.getElementById('passwordError').textContent = 'La contraseña es obligatoria';
-            isValid = false;
-        }
-
-        if (isValid) {
-            alert('Inicio de sesión exitoso (simulado)');
-            // Aquí iría la lógica real de login
-        }
-    });
-</script>
-
+<script th:src="@{/js/login.js}"></script>
 </body>
 </html>

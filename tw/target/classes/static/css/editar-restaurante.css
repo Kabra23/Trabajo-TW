@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fa;
@@ -85,16 +89,19 @@ body {
 }
 
 .btn-primary {
-    background-color: white;
+    background-color: #333;
     color: #069c6f;
     padding: 0.7rem 1.5rem;
     border-radius: 25px;
     font-weight: 700;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
-    background-color: #f0f0f0;
+    background-color: #38543a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary {
@@ -190,7 +197,13 @@ body {
 .form-section {
     margin-bottom: 3rem;
     padding-bottom: 2rem;
+    padding-top: 2rem;
     border-bottom: 2px solid #e8f5f1;
+    scroll-margin-top: 120px;
+}
+
+.form-section:first-of-type {
+    padding-top: 0;
 }
 
 .form-section:last-of-type {
@@ -299,6 +312,23 @@ body {
     margin-top: 0.4rem;
 }
 
+.star-display {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.star-display svg {
+    flex-shrink: 0;
+}
+
+.star-display span {
+    margin-left: 0.5rem;
+    color: #069c6f;
+    font-weight: 700;
+}
+
 /* Dish Tabs */
 .dish-tabs {
     display: flex;
@@ -326,6 +356,7 @@ body {
     background: linear-gradient(135deg, #069c6f 0%, #02a674 100%);
     color: white;
 }
+
 
 .btn-add-dish {
     background: linear-gradient(135deg, #069c6f 0%, #02a674 100%);
@@ -375,6 +406,17 @@ body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    overflow: hidden;
+    padding: 0.5rem;
+}
+
+.dish-edit-image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
 }
 
 .dish-placeholder {
@@ -413,9 +455,6 @@ body {
     align-self: flex-start;
 }
 
-.btn-edit::before {
-    content: "✏️ ";
-}
 
 .btn-edit:hover {
     background: #069c6f;
@@ -496,6 +535,15 @@ body {
 .delivery-info p {
     margin: 0.5rem 0;
     color: #333;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.delivery-info svg {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: #069c6f;
 }
 
 .delivery-info strong {
@@ -508,6 +556,11 @@ body {
     color: #999;
 }
 
+.cart-icon svg {
+    color: #069c6f;
+    opacity: 0.3;
+}
+
 .cart-icon p {
     margin: 0.5rem 0;
     color: #666;
@@ -516,6 +569,66 @@ body {
 
 .cart-icon small {
     color: #999;
+}
+
+/* Notificaciones */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 2rem;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.notification-message {
+    color: #333;
+    font-weight: 500;
+}
+
+.notification-success {
+    border-left: 4px solid #069c6f;
+}
+
+.notification-success .notification-icon {
+    color: #069c6f;
+}
+
+.notification-error {
+    border-left: 4px solid #d32f2f;
+}
+
+.notification-error .notification-icon {
+    color: #d32f2f;
+}
+
+.notification-info {
+    border-left: 4px solid #2196f3;
+}
+
+.notification-info .notification-icon {
+    color: #2196f3;
 }
 
 /* Footer */

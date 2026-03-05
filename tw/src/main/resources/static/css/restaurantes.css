@@ -113,14 +113,22 @@ body {
     align-items: center;
 }
 
+.location-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.location-icon {
+    color: #069c6f;
+    flex-shrink: 0;
+}
+
 .location {
     color: #069c6f;
     font-weight: 600;
     font-size: 1rem;
-}
-
-.location::before {
-    content: "📍 ";
+    margin: 0;
 }
 
 .inline-search {
