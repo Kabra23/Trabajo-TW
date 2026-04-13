@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurantes - Just Eat CUMe</title>
-    <link rel="stylesheet" th:href="@{/css/restaurantes.css}">
+    <link rel="stylesheet" href="../static/css/restaurantes.css">
 </head>
 <body>
 <header class="main-header">
@@ -18,8 +18,8 @@
         </div>
         <nav class="main-nav">
             <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li><a th:href="@{/login}" class="btn-primary">Inicia sesión</a></li>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="login.html" class="btn-primary">Inicia sesión</a></li>
             </ul>
         </nav>
     </div>
@@ -197,9 +197,9 @@
                              data-nuevo="true"
                              data-min-order="10"
                              data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                        <a href="detalle-restaurante.html" class="restaurant-link">
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/asiatica.png}" alt="The Sushi Mérida" sizes="300px" class="category-icon">
+                                <img src="../static/imagenes/asiatica.png" alt="The Sushi Mérida" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>The Sushi Mérida</h3>
@@ -222,9 +222,9 @@
                              data-nuevo="false"
                              data-min-order="0"
                              data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                        <a href="detalle-restaurante.html" class="restaurant-link">
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/pollo.png}" alt="Asador de Pollos Koki" sizes="300px" class="category-icon">
+                                <img src="../static/imagenes/pollo.png" alt="Asador de Pollos Koki" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Asador de Pollos Koki</h3>
@@ -247,9 +247,9 @@
                              data-nuevo="false"
                              data-min-order="0"
                              data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                        <a href="detalle-restaurante.html" class="restaurant-link">
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/mexicana.png}" alt="Aguacate Mexican And Caribbean Food" sizes="300px" class="category-icon">
+                                <img src="../static/imagenes/mexicana.png" alt="Aguacate Mexican And Caribbean Food" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Aguacate Mexican And Caribbean Food</h3>
@@ -272,9 +272,9 @@
                              data-nuevo="false"
                              data-min-order="5"
                              data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                        <a href="detalle-restaurante.html" class="restaurant-link">
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/tostada.jpg}" alt="Cafetería CUMe" sizes="300px" class="category-icon">
+                                <img src="../static/imagenes/tostada.jpg" alt="Cafetería CUMe" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Cafetería CUMe</h3>
@@ -297,9 +297,9 @@
                              data-nuevo="false"
                              data-min-order="8"
                              data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                        <a href="detalle-restaurante.html" class="restaurant-link">
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/pizza.png}" alt="Pizza Express Mérida" sizes="300px" class="category-icon">
+                                <img src="../static/imagenes/pizza.png" alt="Pizza Express Mérida" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Pizza Express Mérida</h3>
@@ -322,9 +322,9 @@
                              data-nuevo="false"
                              data-min-order="10"
                              data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                        <a href="detalle-restaurante.html" class="restaurant-link">
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/americana.png}" alt="Burger House Mérida" sizes="300px" class="category-icon">
+                                <img src="../static/imagenes/americana.png" alt="Burger House Mérida" sizes="300px" class="category-icon">
                             </div>
                             <div class="restaurant-info">
                                 <h3>Burger House Mérida</h3>
@@ -345,7 +345,7 @@
     </div>
 </main>
 
-<script th:src="@{/js/filters.js}"></script>
-<script th:src="@{/js/star-filter.js}"></script>
+<script src="../static/js/filters.js"></script>
+<script src="../static/js/star-filter.js"></script>
 </body>
 </html>

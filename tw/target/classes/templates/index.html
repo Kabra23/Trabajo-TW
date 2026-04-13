@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CUMe y Calla - Pide comida a domicilio</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" href="../static/css/index.css">
 </head>
 <body>
 <header class="main-header">
@@ -18,12 +18,12 @@
         </div>
         <nav class="main-nav">
             <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a href="index.html">Inicio</a></li>
                 <li><a href="#" class="btn-secondary">Pedidos de empresa</a></li>
                 <li><a href="#" class="btn-secondary">Trabaja como repartidor</a></li>
                 <li><a href="#" class="btn-secondary">Registra tu negocio</a></li>
-                <li><a th:href="@{/login}" class="btn-primary">Inicia sesión</a></li>
-                <li><a th:href="@{/registro}" class="btn-primary"> Registrate</a> </li>
+                <li><a href="login.html" class="btn-primary">Inicia sesión</a></li>
+                <li><a href="registro.html" class="btn-primary"> Registrate</a> </li>
             </ul>
         </nav>
     </div>
@@ -36,7 +36,7 @@
                 <h2>Pide comida y mucho más</h2>
                 <p class="subtitle">Restaurantes y tiendas de alimentación que realizan entregas cerca de ti</p>
 
-                <form class="search-form" id="searchForm" th:action="@{/restaurantes}" method="get">
+                <form class="search-form" id="searchForm" action="restaurantes.html" method="get">
                     <div class="search-box">
                         <label for="address" class="sr-only">Dirección de entrega</label>
                         <input
@@ -57,7 +57,7 @@
                 <div class="hero-banner">
                     <h3>¿Lo quieres? Lo tienes</h3>
                     <div class="category-image">
-                        <img src="/imagenes/logo.png" alt="">
+                        <img src="../static/imagenes/logo.png" alt="">
                     </div>
                 </div>
             </div>
@@ -72,42 +72,42 @@
             <div class="categories-grid">
                 <article class="category-card">
                     <div class="category-image">
-                        <img th:src="@{/imagenes/oferta.png}" alt="Ofertas" sizes="300px" class="category-icon">
+                        <img src="../static/imagenes/oferta.png" alt="Ofertas" sizes="300px" class="category-icon">
                     </div>
                     <h3>Ofertas</h3>
                 </article>
 
                 <article class="category-card">
                     <div class="category-image">
-                        <img th:src="@{/imagenes/tostada.jpg}" alt="Tostadas" sizes="300px" class="category-icon">
+                        <img src="../static/imagenes/tostada.jpg" alt="Tostadas" sizes="300px" class="category-icon">
                     </div>
                     <h3>Desayunos</h3>
                 </article>
 
                 <article class="category-card">
                     <div class="category-image">
-                        <img th:src="@{/imagenes/italiana.png}" alt="Italiana" sizes="300px" class="category-icon">
+                        <img src="../static/imagenes/italiana.png" alt="Italiana" sizes="300px" class="category-icon">
                     </div>
                     <h3>Italiana</h3>
                 </article>
 
                 <article class="category-card">
                     <div class="category-image">
-                        <img th:src="@{/imagenes/americana.png}" alt="Americana" sizes="300px" class="category-icon">
+                        <img src="../static/imagenes/americana.png" alt="Americana" sizes="300px" class="category-icon">
                     </div>
                     <h3>Americana</h3>
                 </article>
 
                 <article class="category-card">
                     <div class="category-image">
-                        <img th:src="@{/imagenes/asiatica.png}" alt="Asiatica" sizes="300px" class="category-icon">
+                        <img src="../static/imagenes/asiatica.png" alt="Asiatica" sizes="300px" class="category-icon">
                     </div>
                     <h3>Asiatica</h3>
                 </article>
 
                 <article class="category-card">
                     <div class="category-image">
-                        <img th:src="@{/imagenes/mexicana.png}" alt="Mexicana" sizes="300px" class="category-icon">
+                        <img src="../static/imagenes/mexicana.png" alt="Mexicana" sizes="300px" class="category-icon">
                     </div>
                     <h3>Mexicana</h3>
                 </article>
@@ -116,6 +116,6 @@
     </section>
 </main>
 
-<script th:src="@{/js/search.js}"></script>
+<script src="../static/js/search.js"></script>
 </body>
 </html>

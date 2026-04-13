@@ -4,45 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade mejoras en el diseño y funcionalidad de las páginas de detalle y lista de restaurantes">
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/banner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/cafe.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/ensalada.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/montadito.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/pizza.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/tortilla.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/zumo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/detalle-restaurante.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/editar-restaurante.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/registro.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/search.js" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/tw.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/js/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/filters.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/js/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/js/filters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,14 +33,18 @@
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
+      <entry key="_C:/Users/negro/OneDrive - Universidad de Extremadura/Escritorio/Tecnologias Web/tw" value="3C4KzKBYsXqcLqs305X5IKqWI16" />
       <entry key="_C:/Users/negro/OneDrive/Desktop/tw" value="39W6QM3ppACrj8HMmrbpW9DoT3X" />
       <entry key="_C:/Users/negro/OneDrive/Desktop/tw/tw" value="39kReFg9qzddtIVhub7dNkHyHWA" />
     </persistenceIdMap>
   </component>
+  <component name="CopilotUserSelectedChatMode">
+    <option name="chatModeId" value="Agent" />
+  </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="chat-panel" value="Claude Sonnet 4.5" />
-      <entry key="agent-panel" value="Claude Sonnet 4.5" />
+      <entry key="chat-panel" value="Claude Haiku 4.5" />
+      <entry key="agent-panel" value="Claude Haiku 4.5" />
     </selectedModels>
   </component>
   <component name="ExternalProjectsData">
@@ -129,40 +114,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;Spring Boot.TwApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/negro/OneDrive/Desktop/tw/tw/src/main/resources/static/imagenes&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.TwApplication.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/negro/OneDrive - Universidad de Extremadura/Escritorio/Tecnologias Web/tw",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.editor",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\negro\OneDrive\Desktop\tw\tw\src\main\resources\static\imagenes" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="tw" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="tw" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration name="TwApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="tw.tw" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.tw.TwApplication" />
@@ -203,7 +178,10 @@
       <workItem from="1772388957814" duration="1297000" />
       <workItem from="1772525545286" duration="3112000" />
       <workItem from="1772614852172" duration="7478000" />
-      <workItem from="1772729160641" duration="2716000" />
+      <workItem from="1772729160641" duration="3166000" />
+      <workItem from="1772733114567" duration="2049000" />
+      <workItem from="1773217414159" duration="2574000" />
+      <workItem from="1775639648066" duration="3591000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -325,7 +303,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772557517764</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda">
+      <option name="closed" value="true" />
+      <created>1772732041007</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1772732041007</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,7 +338,8 @@
     <MESSAGE value="Elimina la transición y establece el color de fondo como transparente en restaurantes.css" />
     <MESSAGE value="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html" />
     <MESSAGE value="Añade mejoras en el diseño y funcionalidad de las páginas de detalle y lista de restaurantes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade mejoras en el diseño y funcionalidad de las páginas de detalle y lista de restaurantes" />
+    <MESSAGE value="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda" />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
