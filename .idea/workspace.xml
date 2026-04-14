@@ -4,64 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML">
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/CategoriaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PedidoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PlatoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/ValoracionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Categoria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/LineaPedido.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Pedido.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Plato.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Usuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Valoracion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/CategoriaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/LineaPedidoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/PedidoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/PlatoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/UsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/ValoracionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/ImagenService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/PedidoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/PlatoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/ValoracionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/categorias.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/error.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-categoria.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tw/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/TwApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/TwApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/WebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/WebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-    </list>
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -225,7 +168,7 @@
       <workItem from="1776103254499" duration="5357000" />
       <workItem from="1776150300095" duration="168000" />
       <workItem from="1776150712710" duration="393000" />
-      <workItem from="1776151521043" duration="1576000" />
+      <workItem from="1776151521043" duration="1894000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -363,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776103378988</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación.">
+      <option name="closed" value="true" />
+      <created>1776153878649</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1776153878650</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,7 +343,8 @@
     <MESSAGE value="Añade mejoras en el diseño y funcionalidad de las páginas de detalle y lista de restaurantes" />
     <MESSAGE value="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda" />
     <MESSAGE value="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML" />
+    <MESSAGE value="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
