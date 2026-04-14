@@ -2,6 +2,7 @@ package com.tw.controller;
 
 import com.tw.model.*;
 import com.tw.repository.CategoriaRepository;
+import com.tw.service.ImagenService;
 import com.tw.service.RestauranteService;
 import com.tw.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -20,17 +24,20 @@ public class RestauranteController {
     private final RestauranteService restauranteService;
     private final CategoriaRepository categoriaRepo;
     private final UsuarioService usuarioService;
+    private final ImagenService imagenService;
 
     public RestauranteController(RestauranteService restauranteService,
                                  CategoriaRepository categoriaRepo,
-                                 UsuarioService usuarioService) {
+                                 UsuarioService usuarioService,
+                                 ImagenService imagenService) {
         this.restauranteService = restauranteService;
         this.categoriaRepo = categoriaRepo;
         this.usuarioService = usuarioService;
+        this.imagenService = imagenService;
     }
 
     // -------------------------------------------------------
-    // Listado de restaurantes (req. mínimo 7: filtros Todos/Acepta/NoAcepta)
+    // Listado (req. mínimo 6, 7 y extra ordenar por valoración)
     // -------------------------------------------------------
     @GetMapping("/restaurantes")
     public String listar(@RequestParam(required = false) String q,
@@ -45,9 +52,10 @@ public class RestauranteController {
             restaurantes = restauranteService.buscarPorCategoria(categoria);
         } else {
             restaurantes = switch (filtro) {
-                case "acepta"   -> restauranteService.listarQueAceptanPedidos();
-                case "noAcepta" -> restauranteService.listarQueNoAceptanPedidos();
-                default         -> restauranteService.listarTodos();
+                case "acepta"     -> restauranteService.listarQueAceptanPedidos();
+                case "noAcepta"   -> restauranteService.listarQueNoAceptanPedidos();
+                case "valoracion" -> restauranteService.listarOrdenadosPorValoracion();
+                default           -> restauranteService.listarTodos();
             };
         }
 
@@ -59,7 +67,7 @@ public class RestauranteController {
     }
 
     // -------------------------------------------------------
-    // Detalle del restaurante
+    // Detalle
     // -------------------------------------------------------
     @GetMapping("/restaurantes/{id}")
     public String detalle(@PathVariable Long id,
@@ -68,12 +76,14 @@ public class RestauranteController {
         Restaurante restaurante = restauranteService.buscarPorId(id);
         model.addAttribute("restaurante", restaurante);
 
-        // Saber si el usuario actual es el propietario (para mostrar botones de edición)
         if (userDetails != null) {
             boolean esPropietario = restaurante.getPropietario()
                     .getEmail().equals(userDetails.getUsername());
             model.addAttribute("esPropietario", esPropietario);
             model.addAttribute("usuarioLogueado", true);
+        } else {
+            model.addAttribute("esPropietario", false);
+            model.addAttribute("usuarioLogueado", false);
         }
         return "detalle-restaurante";
     }
@@ -93,6 +103,7 @@ public class RestauranteController {
     public String crear(@Valid @ModelAttribute("restaurante") Restaurante restaurante,
                         BindingResult result,
                         @RequestParam(required = false) List<Long> categoriaIds,
+                        @RequestParam(required = false) MultipartFile imagenFile,
                         @AuthenticationPrincipal UserDetails userDetails,
                         Model model, RedirectAttributes flash) {
         if (result.hasErrors()) {
@@ -100,13 +111,16 @@ public class RestauranteController {
             model.addAttribute("modo", "crear");
             return "form-restaurante";
         }
+        // Subir imagen si se proporcionó
+        subirImagen(restaurante, imagenFile);
+
         restauranteService.crear(restaurante, userDetails.getUsername(), categoriaIds);
         flash.addFlashAttribute("exito", "Restaurante creado correctamente");
         return "redirect:/restaurantes";
     }
 
     // -------------------------------------------------------
-    // Editar restaurante (solo propietario)
+    // Editar restaurante (solo propietario — req. mínimo 2)
     // -------------------------------------------------------
     @GetMapping("/restaurantes/{id}/editar")
     public String editarForm(@PathVariable Long id,
@@ -125,6 +139,7 @@ public class RestauranteController {
                          @Valid @ModelAttribute("restaurante") Restaurante datos,
                          BindingResult result,
                          @RequestParam(required = false) List<Long> categoriaIds,
+                         @RequestParam(required = false) MultipartFile imagenFile,
                          @AuthenticationPrincipal UserDetails userDetails,
                          Model model, RedirectAttributes flash) {
         if (result.hasErrors()) {
@@ -133,6 +148,7 @@ public class RestauranteController {
             return "form-restaurante";
         }
         try {
+            subirImagen(datos, imagenFile);
             restauranteService.actualizar(id, datos, userDetails.getUsername(), categoriaIds);
             flash.addFlashAttribute("exito", "Restaurante actualizado correctamente");
         } catch (SecurityException e) {
@@ -142,7 +158,7 @@ public class RestauranteController {
     }
 
     // -------------------------------------------------------
-    // Eliminar restaurante (solo propietario)
+    // Eliminar (solo propietario)
     // -------------------------------------------------------
     @PostMapping("/restaurantes/{id}/eliminar")
     public String eliminar(@PathVariable Long id,
@@ -167,7 +183,9 @@ public class RestauranteController {
                                 RedirectAttributes flash) {
         try {
             restauranteService.cambiarEstado(id, aceptaPedidos, userDetails.getUsername());
-            String msg = aceptaPedidos ? "El restaurante ahora acepta pedidos" : "El restaurante ya no acepta pedidos";
+            String msg = aceptaPedidos
+                    ? "El restaurante ahora acepta pedidos"
+                    : "El restaurante ya no acepta pedidos";
             flash.addFlashAttribute("exito", msg);
         } catch (SecurityException e) {
             flash.addFlashAttribute("error", e.getMessage());
@@ -186,10 +204,23 @@ public class RestauranteController {
         return "redirect:/restaurantes/" + id;
     }
 
-    // ---- util ----
+    // ---- utilidades ----
+
     private void verificarPropietario(Restaurante r, String email) {
         if (!r.getPropietario().getEmail().equals(email)) {
             throw new SecurityException("No tienes permiso");
+        }
+    }
+
+    private void subirImagen(Restaurante restaurante, MultipartFile file) {
+        if (file != null && !file.isEmpty()) {
+            try {
+                imagenService.validarImagen(file);
+                String ruta = imagenService.guardar(file, "restaurantes");
+                restaurante.setImagen(ruta);
+            } catch (IOException e) {
+                System.err.println("Error al subir imagen del restaurante: " + e.getMessage());
+            }
         }
     }
 }
