@@ -1,121 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUMe y Calla - Pide comida a domicilio</title>
-    <link rel="stylesheet" href="../static/css/index.css">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Inicio')}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-<header class="main-header">
-    <div class="container">
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="#" class="btn-secondary">Pedidos de empresa</a></li>
-                <li><a href="#" class="btn-secondary">Trabaja como repartidor</a></li>
-                <li><a href="#" class="btn-secondary">Registra tu negocio</a></li>
-                <li><a href="login.html" class="btn-primary">Inicia sesión</a></li>
-                <li><a href="registro.html" class="btn-primary"> Registrate</a> </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
 <main>
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
                 <h2>Pide comida y mucho más</h2>
-                <p class="subtitle">Restaurantes y tiendas de alimentación que realizan entregas cerca de ti</p>
+                <p class="subtitle">Restaurantes cerca de ti en Mérida</p>
 
-                <form class="search-form" id="searchForm" action="restaurantes.html" method="get">
+                <form class="search-form" th:action="@{/restaurantes}" method="get">
                     <div class="search-box">
-                        <label for="address" class="sr-only">Dirección de entrega</label>
-                        <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                placeholder="Calle Santa Eulalia 2, 06800 Mérida"
-                                autocomplete="off"
-                                required
-                        >
+                        <label for="address" class="sr-only">Buscar restaurante o localidad</label>
+                        <input type="text" id="address" name="q"
+                               placeholder="Busca un restaurante o localidad..."
+                               autocomplete="off">
                         <button type="submit" class="btn-search">Buscar</button>
                     </div>
-                    <div id="autocomplete-results" class="autocomplete-results"></div>
                 </form>
             </div>
 
             <div class="hero-image">
                 <div class="hero-banner">
                     <h3>¿Lo quieres? Lo tienes</h3>
-                    <div class="category-image">
-                        <img src="../static/imagenes/logo.png" alt="">
-                    </div>
+                    <div class="banner-icon">🍽️</div>
+                    <div class="banner-logo">CUMe y Calla</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Categorías desde BD (extra: acceso rápido) -->
     <section class="categories-section">
         <div class="container">
             <h2>Categorías populares</h2>
-            <p class="section-subtitle">Explora los tipos de cocina más populares y encuentra tus tiendas y restaurantes favoritos en Mérida.</p>
+            <p class="section-subtitle">Explora los tipos de cocina disponibles en Mérida.</p>
 
             <div class="categories-grid">
-                <article class="category-card">
-                    <div class="category-image">
-                        <img src="../static/imagenes/oferta.png" alt="Ofertas" sizes="300px" class="category-icon">
-                    </div>
-                    <h3>Ofertas</h3>
-                </article>
+                <th:block th:if="${#lists.isEmpty(categorias)}">
+                    <p style="color:#888">Aún no hay categorías disponibles.</p>
+                </th:block>
 
-                <article class="category-card">
+                <a th:each="cat : ${categorias}"
+                   th:href="@{/restaurantes(categoria=${cat.id})}"
+                   class="category-card" style="text-decoration:none">
                     <div class="category-image">
-                        <img src="../static/imagenes/tostada.jpg" alt="Tostadas" sizes="300px" class="category-icon">
+                        <img th:if="${cat.imagen != null}"
+                             th:src="@{'/uploads/' + ${cat.imagen}}"
+                             th:alt="${cat.nombre}">
+                        <span th:unless="${cat.imagen != null}" class="category-icon">🍴</span>
                     </div>
-                    <h3>Desayunos</h3>
-                </article>
-
-                <article class="category-card">
-                    <div class="category-image">
-                        <img src="../static/imagenes/italiana.png" alt="Italiana" sizes="300px" class="category-icon">
-                    </div>
-                    <h3>Italiana</h3>
-                </article>
-
-                <article class="category-card">
-                    <div class="category-image">
-                        <img src="../static/imagenes/americana.png" alt="Americana" sizes="300px" class="category-icon">
-                    </div>
-                    <h3>Americana</h3>
-                </article>
-
-                <article class="category-card">
-                    <div class="category-image">
-                        <img src="../static/imagenes/asiatica.png" alt="Asiatica" sizes="300px" class="category-icon">
-                    </div>
-                    <h3>Asiatica</h3>
-                </article>
-
-                <article class="category-card">
-                    <div class="category-image">
-                        <img src="../static/imagenes/mexicana.png" alt="Mexicana" sizes="300px" class="category-icon">
-                    </div>
-                    <h3>Mexicana</h3>
-                </article>
+                    <h3 th:text="${cat.nombre}">Categoría</h3>
+                </a>
             </div>
         </div>
     </section>
 </main>
 
-<script src="../static/js/search.js"></script>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:src="@{/js/search.js}"></script>
 </body>
 </html>

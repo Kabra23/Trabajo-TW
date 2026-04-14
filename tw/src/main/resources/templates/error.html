@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main class="error-page">
+    <div class="container error-container">
+        <div class="error-code" th:text="${codigo}">404</div>
+        <h1 th:text="${mensaje}">Página no encontrada</h1>
+        <p>Vuelve al inicio e inténtalo de nuevo.</p>
+        <a th:href="@{/}" class="btn-primary">Volver al inicio</a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

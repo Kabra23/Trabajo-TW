@@ -1,226 +1,261 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafetería CUMe - Just Eat</title>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(${restaurante.nombre})}">
     <link rel="stylesheet" th:href="@{/css/detalle-restaurante.css}">
 </head>
 <body>
-<header class="main-header">
-    <div class="container">
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li><a th:href="@{/editar-restaurante}" class="btn-primary">Editar restaurante</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
 <main class="restaurant-detail">
+
+    <!-- Hero imagen -->
     <section class="restaurant-hero">
         <div class="hero-image-large">
-            <img th:src="@{/imagenes/banner.png}" alt="Cafetería CUMe" class="hero-image">
+            <img th:if="${restaurante.imagen != null}"
+                 th:src="@{'/uploads/' + ${restaurante.imagen}}"
+                 th:alt="${restaurante.nombre}" class="hero-image">
+            <span th:unless="${restaurante.imagen != null}"
+                  class="large-placeholder">🍽️</span>
         </div>
     </section>
 
     <div class="container">
+        <div th:replace="~{fragments/layout :: mensajes}"></div>
+
         <div class="detail-layout">
+            <!-- ==================== INFO + MENÚ ==================== -->
             <section class="restaurant-main">
                 <div class="restaurant-header">
-                    <h1>Cafetería CUMe</h1>
+                    <h1 th:text="${restaurante.nombre}">Nombre</h1>
+
+                    <!-- Estado -->
+                    <span th:if="${restaurante.aceptaPedidos}"
+                          class="badge badge-open">✅ Acepta pedidos</span>
+                    <span th:unless="${restaurante.aceptaPedidos}"
+                          class="badge badge-closed">🔴 No acepta pedidos</span>
+
                     <div class="restaurant-meta">
-                        <span class="rating">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="gold" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <strong>4.7</strong> (250+) · más de 100 €
+                        <span th:if="${restaurante.mediaValoraciones != null and restaurante.mediaValoraciones > 0}">
+                            ⭐ <strong th:text="${#numbers.formatDecimal(restaurante.mediaValoraciones,1,1)}">0.0</strong>/5
+                        </span>
+                        <span th:if="${restaurante.precioMin != null}">
+                            💶 <span th:text="${#numbers.formatDecimal(restaurante.precioMin,1,2)}">0</span>€ –
+                               <span th:text="${#numbers.formatDecimal(restaurante.precioMax,1,2)}">0</span>€
                         </span>
                     </div>
+
                     <address class="restaurant-address">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        Centro Universitario de Mérida, 06800 Mérida, España
+                        📍 <span th:text="${restaurante.direccion}">Dirección</span>
                     </address>
+
                     <div class="restaurant-contact">
-                        <p>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+34924123456">+34 924 12 34 56</a>
-                        </p>
-                        <p>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            <a href="mailto:contacto@cafeteriacume.com">contacto@cafeteriacume.com</a>
-                        </p>
+                        <p>📞 <a th:href="'tel:' + ${restaurante.telefono}"
+                                th:text="${restaurante.telefono}">Tel</a></p>
+                        <p>✉️ <a th:href="'mailto:' + ${restaurante.email}"
+                                 th:text="${restaurante.email}">Email</a></p>
                     </div>
+
+                    <!-- Categorías -->
                     <div class="restaurant-tags">
-                        <span class="tag tag-traditional">Tradicional</span>
-                        <span class="tag tag-tapas">Tapas</span>
-                        <span class="tag tag-cafe">Cafetería</span>
+                        <span th:each="cat : ${restaurante.categorias}"
+                              th:text="${cat.nombre}" class="tag"></span>
                     </div>
+
+                    <!-- Bike Friendly -->
                     <div class="restaurant-features">
-                        <span class="feature">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm5.8-10l2.4-2.4.8.8c1.3 1.3 3 2.1 5.1 2.1V9c-1.5 0-2.7-.6-3.6-1.5l-1.9-1.9c-.5-.4-1-.6-1.6-.6s-1.1.2-1.4.6L7.8 8.4c-.4.4-.6.9-.6 1.4 0 .6.2 1.1.6 1.4L11 14v5h2v-6.2l-2.2-2.3zM19 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/>
-                            </svg>
-                            Bike Friendly: Sí
-                        </span>
-                        <span class="feature">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
-                            </svg>
-                            Rango de precio: 5€ - 15€
-                        </span>
+                        <span th:if="${restaurante.bikeFriendly}" class="feature">🚲 Bike Friendly</span>
+                    </div>
+
+                    <!-- Botones propietario -->
+                    <div th:if="${esPropietario}" class="owner-actions" style="margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap">
+                        <a th:href="@{/restaurantes/{id}/editar(id=${restaurante.id})}"
+                           class="btn-primary">✏️ Editar restaurante</a>
+
+                        <!-- Toggle acepta/no acepta pedidos -->
+                        <form th:action="@{/restaurantes/{id}/estado(id=${restaurante.id})}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <input type="hidden" name="aceptaPedidos"
+                                   th:value="${!restaurante.aceptaPedidos}">
+                            <button type="submit" class="btn-secondary"
+                                    th:text="${restaurante.aceptaPedidos} ? 'Pausar pedidos' : 'Activar pedidos'">
+                                Cambiar estado
+                            </button>
+                        </form>
+
+                        <!-- Añadir plato -->
+                        <a th:href="@{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}"
+                           class="btn-secondary">+ Añadir plato</a>
+
+                        <!-- Eliminar restaurante -->
+                        <form th:action="@{/restaurantes/{id}/eliminar(id=${restaurante.id})}" method="post"
+                              onsubmit="return confirm('¿Seguro que quieres eliminar este restaurante?')">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="btn-danger">🗑️ Eliminar</button>
+                        </form>
+                    </div>
+
+                    <!-- Botón favorito (solo usuarios logueados que no son propietarios) -->
+                    <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}"
+                         style="margin-top:1rem">
+                        <form th:action="@{/restaurantes/{id}/favorito(id=${restaurante.id})}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="btn-secondary">❤️ Favorito</button>
+                        </form>
                     </div>
                 </div>
 
-                <nav class="menu-tabs">
-                    <button class="tab-btn active" data-category="destacados">Destacados</button>
-                    <button class="tab-btn" data-category="desayunos">Desayunos</button>
-                    <button class="tab-btn" data-category="bocadillos">Bocadillos y Montaditos</button>
-                    <button class="tab-btn" data-category="bebidas">Bebidas</button>
-                    <button class="tab-btn" data-category="ensaladas">Ensaladas</button>
-                </nav>
-
+                <!-- ==================== MENÚ / PLATOS ==================== -->
                 <div class="search-menu">
-                    <label for="searchDish" class="sr-only">Buscar en Cafetería CUMe</label>
-                    <input
-                            type="search"
-                            id="searchDish"
-                            name="searchDish"
-                            placeholder="Buscar en Cafetería CUMe"
-                    >
+                    <label for="searchDish" class="sr-only">Buscar plato</label>
+                    <input type="search" id="searchDish" placeholder="Buscar en el menú...">
                 </div>
 
                 <section class="menu-section">
-                    <h2>Destacados</h2>
-                    <p class="section-subtitle">6 productos</p>
+                    <h2>Carta</h2>
+                    <p class="section-subtitle"
+                       th:text="${#lists.size(restaurante.platos)} + ' plato' + (${#lists.size(restaurante.platos)} != 1 ? 's' : '')">
+                        0 platos
+                    </p>
 
-                    <div class="menu-grid">
-                        <!-- DESAYUNOS -->
-                        <article class="dish-card" data-category="desayunos">
+                    <div class="menu-grid" th:if="${!#lists.isEmpty(restaurante.platos)}">
+                        <article th:each="plato : ${restaurante.platos}"
+                                 class="dish-card" th:data-nombre="${plato.nombre}">
                             <div class="dish-info">
-                                <h3>Tostada Completa con Tomate</h3>
-                                <p class="dish-description">
-                                    Pan tostado con aceite de oliva virgen extra, tomate natural rallado, jamón ibérico y queso manchego
-                                </p>
-                                <p class="dish-price">4,50 €</p>
+                                <h3 th:text="${plato.nombre}">Nombre</h3>
+                                <p class="dish-description" th:text="${plato.descripcion}">Descripción</p>
+                                <p class="dish-price"
+                                   th:text="${#numbers.formatDecimal(plato.precio,1,2)} + ' €'">0 €</p>
+
+                                <!-- Botones editar/eliminar (propietario) -->
+                                <div th:if="${esPropietario}" style="margin-top:.5rem; display:flex; gap:.5rem">
+                                    <a th:href="@{/restaurantes/{rid}/platos/{pid}/editar(rid=${restaurante.id},pid=${plato.id})}"
+                                       class="btn-edit-small">Editar</a>
+                                    <form th:action="@{/restaurantes/{rid}/platos/{pid}/eliminar(rid=${restaurante.id},pid=${plato.id})}"
+                                          method="post" style="display:inline"
+                                          onsubmit="return confirm('¿Eliminar este plato?')">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                        <button type="submit" class="btn-danger-small">Eliminar</button>
+                                    </form>
+                                </div>
+
+                                <!-- Cantidad para el pedido (solo usuarios no propietarios) -->
+                                <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}"
+                                     th:if="${restaurante.aceptaPedidos}" class="cantidad-control">
+                                    <button type="button" class="btn-qty" onclick="cambiarCantidad(this, -1)">−</button>
+                                    <input type="number"
+                                           th:name="'plato_' + ${plato.id}"
+                                           th:id="'plato_' + ${plato.id}"
+                                           class="qty-input" value="0" min="0" max="99" readonly>
+                                    <button type="button" class="btn-qty" onclick="cambiarCantidad(this, 1)">+</button>
+                                </div>
                             </div>
+
                             <div class="dish-image">
-                                <img th:src="@{/imagenes/tostada.jpg}" alt="Tostada Completa con Tomate">
+                                <img th:if="${plato.imagen != null}"
+                                     th:src="@{'/uploads/' + ${plato.imagen}}"
+                                     th:alt="${plato.nombre}">
+                                <span th:unless="${plato.imagen != null}" class="dish-placeholder">🍴</span>
                             </div>
                         </article>
+                    </div>
 
-                        <article class="dish-card" data-category="desayunos">
-                            <div class="dish-info">
-                                <h3>Café con Leche y Tostada</h3>
-                                <p class="dish-description">
-                                    Café con leche recién hecho acompañado de tostada con aceite y tomate
-                                </p>
-                                <p class="dish-price">3,20 €</p>
-                            </div>
-                            <div class="dish-image">
-                                <img th:src="@{/imagenes/cafe.png}" alt="Café con Leche y Tostada">
-                            </div>
-                        </article>
+                    <p th:if="${#lists.isEmpty(restaurante.platos)}"
+                       style="color:#888">Este restaurante aún no tiene platos en la carta.</p>
+                </section>
 
-                        <!-- BOCADILLOS Y MONTADITOS -->
-                        <article class="dish-card" data-category="bocadillos">
-                            <div class="dish-info">
-                                <h3>Bocadillo de Tortilla Española</h3>
-                                <p class="dish-description">
-                                    Bocadillo de barra con tortilla española casera, hecha al momento
-                                </p>
-                                <p class="dish-price">5,00 €</p>
-                            </div>
-                            <div class="dish-image">
-                                <img th:src="@{/imagenes/tortilla.png}" alt="Bocadillo de Tortilla Española">
-                            </div>
-                        </article>
+                <!-- ==================== VALORACIONES ==================== -->
+                <section class="valoraciones-section" style="margin-top:2rem">
+                    <h2>Valoraciones</h2>
 
-                        <article class="dish-card" data-category="bocadillos">
-                            <div class="dish-info">
-                                <h3>Montadito de Lomo con Pimientos</h3>
-                                <p class="dish-description">
-                                    Pan especial con lomo ibérico a la plancha y pimientos asados
-                                </p>
-                                <p class="dish-price">4,80 €</p>
-                            </div>
-                            <div class="dish-image">
-                                <img th:src="@{/imagenes/montadito.png}" alt="Montadito de Lomo con Pimientos">
-                            </div>
-                        </article>
+                    <!-- Formulario nueva valoración (usuarios logueados) -->
+                    <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}">
+                        <form th:action="@{/valoraciones/crear}" method="post"
+                              class="valoracion-form" style="background:#f9f9f9; padding:1.5rem; border-radius:12px; margin-bottom:1.5rem">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <input type="hidden" name="restauranteId" th:value="${restaurante.id}">
 
-                        <!-- ENSALADAS -->
-                        <article class="dish-card" data-category="ensaladas">
-                            <div class="dish-info">
-                                <h3>Ensalada César con Pollo</h3>
-                                <p class="dish-description">
-                                    Lechuga romana, pollo a la parrilla, queso parmesano, crutones y salsa césar casera
-                                </p>
-                                <p class="dish-price">7,50 €</p>
+                            <div style="margin-bottom:1rem">
+                                <label style="font-weight:600">Tu puntuación (1-5):</label>
+                                <div class="star-input">
+                                    <th:block th:each="n : ${#numbers.sequence(1, 5)}">
+                                        <input type="radio" th:id="'star' + ${n}"
+                                               name="puntuacion" th:value="${n}" required>
+                                        <label th:for="'star' + ${n}" class="star-label-input">⭐</label>
+                                    </th:block>
+                                </div>
                             </div>
-                            <div class="dish-image">
-                                <img th:src="@{/imagenes/ensalada.png}" alt="Ensalada César con Pollo">
-                            </div>
-                        </article>
 
-                        <!-- BEBIDAS -->
-                        <article class="dish-card" data-category="bebidas">
-                            <div class="dish-info">
-                                <h3>Zumo Natural de Naranja</h3>
-                                <p class="dish-description">
-                                    Zumo de naranja recién exprimido (500ml)
-                                </p>
-                                <p class="dish-price">3,50 €</p>
+                            <div style="margin-bottom:1rem">
+                                <label for="comentario" style="font-weight:600">Comentario (opcional):</label>
+                                <textarea id="comentario" name="comentario" rows="3"
+                                          style="width:100%; padding:.8rem; border:2px solid #e0e0e0; border-radius:8px; margin-top:.5rem"></textarea>
                             </div>
-                            <div class="dish-image">
-                                <img th:src="@{/imagenes/zumo.png}" alt="Zumo Natural de Naranja">
+
+                            <button type="submit" class="btn-primary">Enviar valoración</button>
+                        </form>
+                    </div>
+
+                    <!-- Lista de valoraciones -->
+                    <div class="valoraciones-lista">
+                        <div th:each="val : ${restaurante.valoraciones}"
+                             class="valoracion-item" style="padding:1rem; border-bottom:1px solid #eee">
+                            <div style="display:flex; justify-content:space-between; align-items:center">
+                                <strong th:text="${val.usuario.nombre} + ' ' + ${val.usuario.apellidos}">Usuario</strong>
+                                <span th:text="'⭐ ' + ${val.puntuacion} + '/5'">⭐ 0/5</span>
                             </div>
-                        </article>
+                            <p th:if="${val.comentario}" th:text="${val.comentario}"
+                               style="color:#555; margin-top:.5rem"></p>
+                            <small th:text="${#temporals.format(val.fecha, 'dd/MM/yyyy')}"
+                                   style="color:#aaa"></small>
+                        </div>
+                        <p th:if="${#lists.isEmpty(restaurante.valoraciones)}"
+                           style="color:#888">Aún no hay valoraciones.</p>
                     </div>
                 </section>
             </section>
 
+            <!-- ==================== CESTA (sidebar) ==================== -->
             <aside class="cart-sidebar">
                 <div class="cart-sticky">
                     <div class="cart-header">
                         <h2>Cesta</h2>
-                        <p class="delivery-info">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                            </svg>
-                            Entrega<br>
-                            <strong>15-25 min</strong>
-                        </p>
-                        <p class="pickup-info">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            Recogida<br>
-                            <strong>10-15 min</strong>
+                    </div>
+
+                    <!-- Solo si acepta pedidos y el usuario está logueado y no es propietario -->
+                    <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}"
+                         th:if="${restaurante.aceptaPedidos}">
+                        <form th:action="@{/pedidos/realizar}" method="post" id="pedidoForm">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <input type="hidden" name="restauranteId" th:value="${restaurante.id}">
+
+                            <div id="resumen-cesta">
+                                <p class="empty-cart-msg" style="color:#aaa; text-align:center; padding:1rem">
+                                    Añade platos desde el menú
+                                </p>
+                            </div>
+
+                            <div id="total-section" style="display:none; margin-top:1rem; font-size:1.2rem; font-weight:700; color:#069c6f">
+                                Total: <span id="total-precio">0,00</span> €
+                            </div>
+
+                            <button type="submit" class="btn-submit"
+                                    style="margin-top:1rem; display:none" id="btn-pedir">
+                                Realizar pedido
+                            </button>
+                        </form>
+                    </div>
+
+                    <div sec:authorize="!isAuthenticated()">
+                        <p style="color:#888; text-align:center; padding:1rem">
+                            <a th:href="@{/login}">Inicia sesión</a> para hacer un pedido
                         </p>
                     </div>
-                    <div class="cart-content">
-                        <div class="empty-cart">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                            </svg>
-                            <h3>Llena tu cesta</h3>
-                            <p>Tu cesta está vacía</p>
-                        </div>
+
+                    <div th:if="${!restaurante.aceptaPedidos}">
+                        <p style="color:#d32f2f; text-align:center; padding:1rem">
+                            Este restaurante no acepta pedidos ahora mismo.
+                        </p>
                     </div>
                 </div>
             </aside>
@@ -228,6 +263,70 @@
     </div>
 </main>
 
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 <script th:src="@{/js/detalle-restaurante.js}"></script>
+<script>
+    // Cálculo instantáneo de la cuenta (extra +0.75)
+    const precios = {};
+    <th:block th:each="plato : ${restaurante.platos}">
+        precios[<th:block th:text="${plato.id}"/>] = <th:block th:text="${plato.precio}"/>;
+    </th:block>
+
+    function cambiarCantidad(btn, delta) {
+        const input = btn.parentElement.querySelector('.qty-input');
+        const platoId = input.name.replace('plato_', '');
+        let val = parseInt(input.value) + delta;
+        if (val < 0) val = 0;
+        input.value = val;
+
+        // Sincronizar en el formulario de pedido
+        let hidden = document.getElementById('h_' + platoId);
+        if (!hidden) {
+            hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.id = 'h_' + platoId;
+            hidden.name = 'plato_' + platoId;
+            document.getElementById('pedidoForm').appendChild(hidden);
+        }
+        hidden.value = val;
+
+        actualizarResumen();
+    }
+
+    function actualizarResumen() {
+        let total = 0;
+        let tieneItems = false;
+        const resumen = document.getElementById('resumen-cesta');
+        resumen.innerHTML = '';
+
+        document.querySelectorAll('.qty-input').forEach(input => {
+            const cantidad = parseInt(input.value);
+            if (cantidad > 0) {
+                const platoId = input.name.replace('plato_', '');
+                const precio = precios[platoId] || 0;
+                const subtotal = precio * cantidad;
+                total += subtotal;
+                tieneItems = true;
+
+                const nombre = input.closest('.dish-card').querySelector('h3').textContent;
+                const li = document.createElement('div');
+                li.style.cssText = 'display:flex; justify-content:space-between; padding:.4rem 0; border-bottom:1px solid #f0f0f0';
+                li.innerHTML = `<span>${nombre} ×${cantidad}</span><span>${subtotal.toFixed(2)} €</span>`;
+                resumen.appendChild(li);
+            }
+        });
+
+        if (!tieneItems) {
+            resumen.innerHTML = '<p class="empty-cart-msg" style="color:#aaa;text-align:center;padding:1rem">Añade platos desde el menú</p>';
+        }
+
+        const totalSection = document.getElementById('total-section');
+        const btnPedir = document.getElementById('btn-pedir');
+        if (totalSection) totalSection.style.display = tieneItems ? 'block' : 'none';
+        if (btnPedir) btnPedir.style.display = tieneItems ? 'block' : 'none';
+        const totalSpan = document.getElementById('total-precio');
+        if (totalSpan) totalSpan.textContent = total.toFixed(2).replace('.', ',');
+    }
+</script>
 </body>
 </html>

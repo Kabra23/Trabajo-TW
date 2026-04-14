@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- ============================================================
+     FRAGMENTO: <head> con estilos comunes
+     Uso: th:replace="~{fragments/layout :: head('Título')}"
+     ============================================================ -->
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - CUMe y Calla'">CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <th:block th:replace="${extraCss}"></th:block>
+</head>
+
+<!-- ============================================================
+     FRAGMENTO: Header / Nav principal
+     Uso: th:replace="~{fragments/layout :: header}"
+     ============================================================ -->
+<header th:fragment="header" class="main-header">
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}" style="text-decoration:none">
+                <h1>
+                    <span class="logo-main">CUMe</span>
+                    <span class="logo-separator">y</span>
+                    <span class="logo-secondary">Calla</span>
+                </h1>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+
+                <!-- Categorías (menú desplegable para acceso rápido — extra) -->
+                <li><a th:href="@{/categorias}">Categorías</a></li>
+
+                <!-- Autenticado -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/restaurantes/nuevo}" class="btn-secondary">+ Mi restaurante</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/perfil}">
+                        <span sec:authentication="name">Usuario</span>
+                    </a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-link">Cerrar sesión</button>
+                    </form>
+                </li>
+
+                <!-- No autenticado -->
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" class="btn-secondary">Inicia sesión</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/registro}" class="btn-primary">Regístrate</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ============================================================
+     FRAGMENTO: Mensajes flash (éxito / error)
+     Uso: th:replace="~{fragments/layout :: mensajes}"
+     ============================================================ -->
+<div th:fragment="mensajes">
+    <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+    <div th:if="${error}"  class="alert alert-error"   th:text="${error}"></div>
+</div>
+
+<!-- ============================================================
+     FRAGMENTO: Footer
+     Uso: th:replace="~{fragments/layout :: footer}"
+     ============================================================ -->
+<footer th:fragment="footer" class="main-footer">
+    <div class="container">
+        <p>© 2025 CUMe y Calla — Proyecto Tecnologías Web UEx</p>
+    </div>
+</footer>
+
+</html>

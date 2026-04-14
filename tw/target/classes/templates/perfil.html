@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Mi perfil')}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main style="min-height:70vh; background:#f5f5f5; padding:2rem 0">
+    <div class="container" style="max-width:700px">
+        <h1 style="color:#069c6f; margin-bottom:1.5rem">Mi perfil</h1>
+
+        <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+        <!-- DATOS DEL PERFIL -->
+        <div style="background:white; border-radius:12px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:1.5rem">
+            <h2 style="font-size:1.4rem; margin-bottom:1.5rem">Información personal</h2>
+
+            <form th:action="@{/perfil/editar}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <div class="form-group" style="margin-bottom:1rem">
+                    <label style="font-weight:600; display:block; margin-bottom:.4rem">Nombre</label>
+                    <input type="text" name="nombre" th:value="${usuario.nombre}" required
+                           style="width:100%; padding:.8rem; border:2px solid #e0e0e0; border-radius:8px">
+                </div>
+
+                <div class="form-group" style="margin-bottom:1rem">
+                    <label style="font-weight:600; display:block; margin-bottom:.4rem">Apellidos</label>
+                    <input type="text" name="apellidos" th:value="${usuario.apellidos}" required
+                           style="width:100%; padding:.8rem; border:2px solid #e0e0e0; border-radius:8px">
+                </div>
+
+                <div class="form-group" style="margin-bottom:1.5rem">
+                    <label style="font-weight:600; display:block; margin-bottom:.4rem">Correo electrónico</label>
+                    <input type="email" th:value="${usuario.email}" disabled
+                           style="width:100%; padding:.8rem; border:2px solid #e0e0e0; border-radius:8px; background:#f9f9f9; color:#888">
+                    <small style="color:#aaa">El email no se puede cambiar</small>
+                </div>
+
+                <button type="submit" class="btn-primary">Guardar cambios</button>
+            </form>
+        </div>
+
+        <!-- MIS RESTAURANTES -->
+        <div style="background:white; border-radius:12px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:1.5rem">
+            <h2 style="font-size:1.4rem; margin-bottom:1rem">Mis restaurantes</h2>
+
+            <div th:if="${#lists.isEmpty(usuario.restaurantes)}" style="color:#888">
+                Aún no tienes restaurantes.
+                <a th:href="@{/restaurantes/nuevo}" style="color:#069c6f">Crear uno</a>
+            </div>
+
+            <div th:each="r : ${usuario.restaurantes}"
+                 style="display:flex; justify-content:space-between; align-items:center; padding:.8rem 0; border-bottom:1px solid #f0f0f0">
+                <div>
+                    <a th:href="@{/restaurantes/{id}(id=${r.id})}"
+                       th:text="${r.nombre}" style="color:#069c6f; font-weight:600">Restaurante</a>
+                    <small th:text="' · ' + (${r.aceptaPedidos} ? 'Abierto' : 'Cerrado')"
+                           style="color:#aaa"></small>
+                </div>
+                <a th:href="@{/restaurantes/{id}/editar(id=${r.id})}"
+                   style="color:#069c6f; font-size:.9rem">Editar</a>
+            </div>
+        </div>
+
+        <!-- MIS FAVORITOS (extra) -->
+        <div th:if="${!#lists.isEmpty(usuario.favoritos)}"
+             style="background:white; border-radius:12px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:1.5rem">
+            <h2 style="font-size:1.4rem; margin-bottom:1rem">❤️ Mis favoritos</h2>
+            <div th:each="r : ${usuario.favoritos}"
+                 style="display:flex; align-items:center; gap:1rem; padding:.8rem 0; border-bottom:1px solid #f0f0f0">
+                <img th:if="${r.imagen != null}"
+                     th:src="@{'/uploads/' + ${r.imagen}}"
+                     th:alt="${r.nombre}"
+                     style="width:50px; height:50px; border-radius:8px; object-fit:cover">
+                <span th:unless="${r.imagen != null}"
+                      style="width:50px; height:50px; border-radius:8px; background:#f0f0f0; display:flex; align-items:center; justify-content:center">🍽️</span>
+                <a th:href="@{/restaurantes/{id}(id=${r.id})}"
+                   th:text="${r.nombre}" style="color:#069c6f; font-weight:600">Restaurante</a>
+            </div>
+        </div>
+
+        <!-- ELIMINAR CUENTA -->
+        <div style="background:#fff5f5; border:2px solid #ffcdd2; border-radius:12px; padding:2rem">
+            <h2 style="font-size:1.4rem; color:#d32f2f; margin-bottom:.5rem">Zona de peligro</h2>
+            <p style="color:#888; margin-bottom:1rem">
+                Al eliminar tu cuenta se borrarán todos tus datos permanentemente.
+            </p>
+            <form th:action="@{/perfil/eliminar}" method="post"
+                  onsubmit="return confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit"
+                        style="background:#d32f2f; color:white; border:none; padding:.8rem 1.5rem; border-radius:8px; cursor:pointer; font-weight:600">
+                    Eliminar mi cuenta
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

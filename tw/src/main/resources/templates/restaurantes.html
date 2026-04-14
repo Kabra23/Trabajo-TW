@@ -1,350 +1,136 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurantes - Just Eat CUMe</title>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Restaurantes')}">
     <link rel="stylesheet" th:href="@{/css/restaurantes.css}">
 </head>
 <body>
-<header class="main-header">
-    <div class="container">
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li><a th:href="@{/login}" class="btn-primary">Inicia sesión</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
-<main class="restaurants-page">
+<main>
+    <!-- Barra de búsqueda + filtros de estado -->
     <div class="search-header">
         <div class="container">
             <div class="search-info">
-                <div class="location-wrapper">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="location-icon">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    <p class="location">Calle Santa Eulalia 2, 06800 Mérida</p>
-                </div>
-                <form class="inline-search">
-                    <label for="searchRestaurants" class="sr-only">Buscar restaurantes</label>
-                    <input
-                            type="search"
-                            id="searchRestaurants"
-                            name="searchRestaurants"
-                            placeholder="¿Buscas restaurantes?"
-                    >
+                <form th:action="@{/restaurantes}" method="get" class="inline-search">
+                    <input type="search" name="q" th:value="${q}"
+                           placeholder="Busca por nombre o localidad...">
+                    <button type="submit" class="btn-search">Buscar</button>
                 </form>
+
+                <!-- Filtros Todos / Acepta / No acepta (req. mínimo 7) -->
+                <div class="filter-tabs">
+                    <a th:href="@{/restaurantes(filtro='todos')}"
+                       th:classappend="${filtro == 'todos' or filtro == null} ? 'active'"
+                       class="filter-tab">Todos</a>
+                    <a th:href="@{/restaurantes(filtro='acepta')}"
+                       th:classappend="${filtro == 'acepta'} ? 'active'"
+                       class="filter-tab">Aceptan pedidos</a>
+                    <a th:href="@{/restaurantes(filtro='noAcepta')}"
+                       th:classappend="${filtro == 'noAcepta'} ? 'active'"
+                       class="filter-tab">No aceptan pedidos</a>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="container">
         <div class="restaurants-layout">
+
+            <!-- Sidebar filtros por categoría -->
             <aside class="filters-sidebar">
-                <h2>Filtros</h2>
+                <h2>Categorías</h2>
+                <ul class="category-list">
+                    <li>
+                        <a th:href="@{/restaurantes}" class="category-link">
+                            Todas las categorías
+                        </a>
+                    </li>
+                    <li th:each="cat : ${categorias}">
+                        <a th:href="@{/restaurantes(categoria=${cat.id})}"
+                           th:text="${cat.nombre}"
+                           class="category-link">Categoría</a>
+                    </li>
+                </ul>
 
-                <div class="filter-section">
-                    <h3>Disponibilidad</h3>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="abiertosAhora">
-                        <span>Abiertos ahora</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="nuevo">
-                        <span>Nuevo</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="gastosEnvioGratis">
-                        <span>Gastos de envío gratis</span>
-                    </label>
-                </div>
-
-                <div class="filter-section">
-                    <h3>Soporte emisión del pedido</h3>
-                    <label class="filter-radio">
-                        <input type="radio" name="soporte" value="todos" checked>
-                        <span>Mostrar todo (9)</span>
-                    </label>
-                    <label class="filter-radio">
-                        <input type="radio" name="soporte" value="menos10">
-                        <span>10,00 € o menos (9)</span>
-                    </label>
-                    <label class="filter-radio">
-                        <input type="radio" name="soporte" value="menos15">
-                        <span>15,00 € o menos (9)</span>
-                    </label>
-                </div>
-
-                <div class="filter-section">
-                    <h3>Puntuación</h3>
-                    <div class="star-rating-filter">
-                        <div class="star-filter-wrapper" data-rating="1">
-                            <input id="rating_1" class="star-checkbox" type="checkbox" name="rating" aria-label="1 estrella" value="1">
-                            <label for="rating_1" class="star-label">
-                                <span class="star-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" fill="currentColor" viewBox="0 0 16 16" width="28" height="28">
-                                        <path d="m12.288 14.449-4.183-2.197a.219.219 0 0 0-.21 0L3.713 14.45 4.5 9.794a.254.254 0 0 0 0-.193L1.07 6.302l4.673-.682a.228.228 0 0 0 .166-.114L8 1.271l2.091 4.235a.227.227 0 0 0 .167.114l4.672.682-3.386 3.3a.254.254 0 0 0-.061.192l.805 4.655Zm-8.4-7.228 1.487 1.435a1.54 1.54 0 0 1 .438 1.356l-.35 2.04 1.828-.963a1.505 1.505 0 0 1 1.418 0l1.829.962-.35-2.039a1.539 1.539 0 0 1 .437-1.356l1.488-1.435-2.048-.297a1.531 1.531 0 0 1-1.19-.84L8 4.229l-.875 1.855a1.531 1.531 0 0 1-1.155.875l-2.082.262Z"></path>
-                                    </svg>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="star-filter-wrapper" data-rating="2">
-                            <input id="rating_2" class="star-checkbox" type="checkbox" name="rating" aria-label="2 estrellas" value="2">
-                            <label for="rating_2" class="star-label">
-                                <span class="star-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" fill="currentColor" viewBox="0 0 16 16" width="28" height="28">
-                                        <path d="m12.288 14.449-4.183-2.197a.219.219 0 0 0-.21 0L3.713 14.45 4.5 9.794a.254.254 0 0 0 0-.193L1.07 6.302l4.673-.682a.228.228 0 0 0 .166-.114L8 1.271l2.091 4.235a.227.227 0 0 0 .167.114l4.672.682-3.386 3.3a.254.254 0 0 0-.061.192l.805 4.655Zm-8.4-7.228 1.487 1.435a1.54 1.54 0 0 1 .438 1.356l-.35 2.04 1.828-.963a1.505 1.505 0 0 1 1.418 0l1.829.962-.35-2.039a1.539 1.539 0 0 1 .437-1.356l1.488-1.435-2.048-.297a1.531 1.531 0 0 1-1.19-.84L8 4.229l-.875 1.855a1.531 1.531 0 0 1-1.155.875l-2.082.262Z"></path>
-                                    </svg>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="star-filter-wrapper" data-rating="3">
-                            <input id="rating_3" class="star-checkbox" type="checkbox" name="rating" aria-label="3 estrellas" value="3">
-                            <label for="rating_3" class="star-label">
-                                <span class="star-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" fill="currentColor" viewBox="0 0 16 16" width="28" height="28">
-                                        <path d="m12.288 14.449-4.183-2.197a.219.219 0 0 0-.21 0L3.713 14.45 4.5 9.794a.254.254 0 0 0 0-.193L1.07 6.302l4.673-.682a.228.228 0 0 0 .166-.114L8 1.271l2.091 4.235a.227.227 0 0 0 .167.114l4.672.682-3.386 3.3a.254.254 0 0 0-.061.192l.805 4.655Zm-8.4-7.228 1.487 1.435a1.54 1.54 0 0 1 .438 1.356l-.35 2.04 1.828-.963a1.505 1.505 0 0 1 1.418 0l1.829.962-.35-2.039a1.539 1.539 0 0 1 .437-1.356l1.488-1.435-2.048-.297a1.531 1.531 0 0 1-1.19-.84L8 4.229l-.875 1.855a1.531 1.531 0 0 1-1.155.875l-2.082.262Z"></path>
-                                    </svg>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="star-filter-wrapper" data-rating="4">
-                            <input id="rating_4" class="star-checkbox" type="checkbox" name="rating" aria-label="4 estrellas" value="4">
-                            <label for="rating_4" class="star-label">
-                                <span class="star-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" fill="currentColor" viewBox="0 0 16 16" width="28" height="28">
-                                        <path d="m12.288 14.449-4.183-2.197a.219.219 0 0 0-.21 0L3.713 14.45 4.5 9.794a.254.254 0 0 0 0-.193L1.07 6.302l4.673-.682a.228.228 0 0 0 .166-.114L8 1.271l2.091 4.235a.227.227 0 0 0 .167.114l4.672.682-3.386 3.3a.254.254 0 0 0-.061.192l.805 4.655Zm-8.4-7.228 1.487 1.435a1.54 1.54 0 0 1 .438 1.356l-.35 2.04 1.828-.963a1.505 1.505 0 0 1 1.418 0l1.829.962-.35-2.039a1.539 1.539 0 0 1 .437-1.356l1.488-1.435-2.048-.297a1.531 1.531 0 0 1-1.19-.84L8 4.229l-.875 1.855a1.531 1.531 0 0 1-1.155.875l-2.082.262Z"></path>
-                                    </svg>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="star-filter-wrapper" data-rating="5">
-                            <input id="rating_5" class="star-checkbox" type="checkbox" name="rating" aria-label="5 estrellas" value="5">
-                            <label for="rating_5" class="star-label">
-                                <span class="star-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" fill="currentColor" viewBox="0 0 16 16" width="28" height="28">
-                                        <path d="m12.288 14.449-4.183-2.197a.219.219 0 0 0-.21 0L3.713 14.45 4.5 9.794a.254.254 0 0 0 0-.193L1.07 6.302l4.673-.682a.228.228 0 0 0 .166-.114L8 1.271l2.091 4.235a.227.227 0 0 0 .167.114l4.672.682-3.386 3.3a.254.254 0 0 0-.061.192l.805 4.655Zm-8.4-7.228 1.487 1.435a1.54 1.54 0 0 1 .438 1.356l-.35 2.04 1.828-.963a1.505 1.505 0 0 1 1.418 0l1.829.962-.35-2.039a1.539 1.539 0 0 1 .437-1.356l1.488-1.435-2.048-.297a1.531 1.531 0 0 1-1.19-.84L8 4.229l-.875 1.855a1.531 1.531 0 0 1-1.155.875l-2.082.262Z"></path>
-                                    </svg>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-section">
-                    <h3>Ofertas y ahorros</h3>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="ofertas">
-                        <span>Ofertas (0)</span>
-                    </label>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="tarjetaSelllos">
-                        <span>Tarjeta de sellos (0)</span>
-                    </label>
-                </div>
-
-                <div class="filter-section">
-                    <h3>Dieta</h3>
-                    <label class="filter-checkbox">
-                        <input type="checkbox" name="BIO">
-                        <span>BIO (0)</span>
-                    </label>
-                </div>
+                <!-- Ordenar por valoración (req. mínimo 5) -->
+                <h2 style="margin-top:1.5rem">Ordenar</h2>
+                <a th:href="@{/restaurantes(filtro='valoracion')}" class="category-link">
+                    ⭐ Por valoración
+                </a>
             </aside>
 
+            <!-- Grid de restaurantes -->
             <section class="restaurants-content">
                 <div class="results-header">
-                    <h2>9 establecimientos disponibles</h2>
-                    <button class="filter-link" style="display: none;">Eliminar filtros</button>
+                    <h2>
+                        <span th:text="${#lists.size(restaurantes)}">0</span>
+                        establecimiento<span th:if="${#lists.size(restaurantes) != 1}">s</span>
+                        disponible<span th:if="${#lists.size(restaurantes) != 1}">s</span>
+                    </h2>
                 </div>
 
-                <div class="category-filters">
-                    <button class="category-pill">
-                        Ofertas
-                    </button>
-                    <button class="category-pill">
-                        Hamburguesas
-                    </button>
-                    <button class="category-pill">
-                        Pizza
-                    </button>
-                    <button class="category-pill">
-                        Japonesa
-                    </button>
-                    <button class="category-pill">
-                        Kebab
-                    </button>
-                    <button class="category-pill">
-                        Mexicana
-                    </button>
-                </div>
+                <div th:fragment="mensajes" th:replace="~{fragments/layout :: mensajes}"></div>
 
-                <div class="restaurants-grid">
-                    <article class="restaurant-card"
-                             data-name="The Sushi Mérida"
-                             data-categories="poke,japonesa"
-                             data-rating="0"
-                             data-nuevo="true"
-                             data-min-order="10"
-                             data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
-                            <div class="restaurant-image">
-                                <img th:src="@{/imagenes/asiatica.png}" alt="The Sushi Mérida" sizes="300px" class="category-icon">
-                            </div>
-                            <div class="restaurant-info">
-                                <h3>The Sushi Mérida</h3>
-                                <div class="restaurant-rating">
-                                    <strong>Nuevo</strong>
-                                </div>
-                                <p class="restaurant-category">Poke, Japonesa</p>
-                                <div class="restaurant-details">
-                                    <span class="delivery-time">14 Entrega</span>
-                                    <span class="min-order">10,00€ mín.</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
+                <div class="restaurants-grid" th:if="${!#lists.isEmpty(restaurantes)}">
+                    <article th:each="r : ${restaurantes}" class="restaurant-card">
+                        <a th:href="@{/restaurantes/{id}(id=${r.id})}" class="restaurant-link">
 
-                    <article class="restaurant-card"
-                             data-name="Asador de Pollos Koki"
-                             data-categories="pollo,española"
-                             data-rating="4.8"
-                             data-nuevo="false"
-                             data-min-order="0"
-                             data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
+                            <!-- Imagen o placeholder -->
                             <div class="restaurant-image">
-                                <img th:src="@{/imagenes/pollo.png}" alt="Asador de Pollos Koki" sizes="300px" class="category-icon">
-                            </div>
-                            <div class="restaurant-info">
-                                <h3>Asador de Pollos Koki</h3>
-                                <div class="restaurant-rating">
-                                    <strong>4.8</strong> (300+)
-                                </div>
-                                <p class="restaurant-category">Pollo, Española</p>
-                                <div class="restaurant-details">
-                                    <span class="delivery-time">Entrega desde las 12:00</span>
-                                    <span class="min-order">Pedido sin importe mínimo</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
+                                <img th:if="${r.imagen != null}"
+                                     th:src="@{'/uploads/' + ${r.imagen}}"
+                                     th:alt="${r.nombre}">
+                                <span th:unless="${r.imagen != null}"
+                                      class="image-placeholder">🍽️</span>
 
-                    <article class="restaurant-card"
-                             data-name="Aguacate Mexican And Caribbean Food"
-                             data-categories="mexicana,venezolana"
-                             data-rating="4.9"
-                             data-nuevo="false"
-                             data-min-order="0"
-                             data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
-                            <div class="restaurant-image">
-                                <img th:src="@{/imagenes/mexicana.png}" alt="Aguacate Mexican And Caribbean Food" sizes="300px" class="category-icon">
+                                <!-- Badge estado -->
+                                <span th:unless="${r.aceptaPedidos}"
+                                      class="promo-badge badge-closed">Cerrado</span>
                             </div>
-                            <div class="restaurant-info">
-                                <h3>Aguacate Mexican And Caribbean Food</h3>
-                                <div class="restaurant-rating">
-                                    <strong>4.9</strong> (78)
-                                </div>
-                                <p class="restaurant-category">Mexicana, Venezolana</p>
-                                <div class="restaurant-details">
-                                    <span class="delivery-time">Entrega desde las 14:00</span>
-                                    <span class="min-order">Pedido sin importe mínimo</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
 
-                    <article class="restaurant-card"
-                             data-name="Cafetería CUMe"
-                             data-categories="cafetería,bocadillos"
-                             data-rating="4.7"
-                             data-nuevo="false"
-                             data-min-order="5"
-                             data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
-                            <div class="restaurant-image">
-                                <img th:src="@{/imagenes/tostada.jpg}" alt="Cafetería CUMe" sizes="300px" class="category-icon">
-                            </div>
                             <div class="restaurant-info">
-                                <h3>Cafetería CUMe</h3>
-                                <div class="restaurant-rating">
-                                    <strong>4.7</strong> (250+)
-                                </div>
-                                <p class="restaurant-category">Cafetería, Bocadillos</p>
-                                <div class="restaurant-details">
-                                    <span class="delivery-time"> 15-25 min</span>
-                                    <span class="min-order"> 5,00€ mín.</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
+                                <h3 th:text="${r.nombre}">Nombre</h3>
 
-                    <article class="restaurant-card"
-                             data-name="Pizza Express Mérida"
-                             data-categories="pizza,italiana"
-                             data-rating="4.5"
-                             data-nuevo="false"
-                             data-min-order="8"
-                             data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
-                            <div class="restaurant-image">
-                                <img th:src="@{/imagenes/pizza.png}" alt="Pizza Express Mérida" sizes="300px" class="category-icon">
-                            </div>
-                            <div class="restaurant-info">
-                                <h3>Pizza Express Mérida</h3>
                                 <div class="restaurant-rating">
-                                    <strong>4.5</strong> (180)
+                                    <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}">
+                                        ⭐ <strong th:text="${#numbers.formatDecimal(r.mediaValoraciones, 1, 1)}">0.0</strong>
+                                    </span>
+                                    <span th:unless="${r.mediaValoraciones != null and r.mediaValoraciones > 0}">
+                                        <strong>Nuevo</strong>
+                                    </span>
                                 </div>
-                                <p class="restaurant-category">Pizza, Italiana</p>
-                                <div class="restaurant-details">
-                                    <span class="delivery-time">20-30 min</span>
-                                    <span class="min-order">8,00€ mín.</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
 
-                    <article class="restaurant-card"
-                             data-name="Burger House Mérida"
-                             data-categories="hamburguesas,americana"
-                             data-rating="4.6"
-                             data-nuevo="false"
-                             data-min-order="10"
-                             data-free-delivery="false">
-                        <a th:href="@{/detalle-restaurante}" class="restaurant-link">
-                            <div class="restaurant-image">
-                                <img th:src="@{/imagenes/americana.png}" alt="Burger House Mérida" sizes="300px" class="category-icon">
-                            </div>
-                            <div class="restaurant-info">
-                                <h3>Burger House Mérida</h3>
-                                <div class="restaurant-rating">
-                                    <strong>4.6</strong> (320+)
+                                <!-- Categorías como tags -->
+                                <div class="restaurant-tags">
+                                    <span th:each="cat : ${r.categorias}"
+                                          th:text="${cat.nombre}"
+                                          class="tag"></span>
                                 </div>
-                                <p class="restaurant-category">Hamburguesas, Americana</p>
+
                                 <div class="restaurant-details">
-                                    <span class="delivery-time">25-35 min</span>
-                                    <span class="min-order">10,00€ mín.</span>
+                                    <span th:if="${r.precioMin != null}">
+                                        💶 <span th:text="${#numbers.formatDecimal(r.precioMin,1,2)}">0</span>€
+                                        - <span th:text="${#numbers.formatDecimal(r.precioMax,1,2)}">0</span>€
+                                    </span>
+                                    <span th:if="${r.localidad != null}"
+                                          th:text="'📍 ' + ${r.localidad}"></span>
                                 </div>
                             </div>
                         </a>
                     </article>
                 </div>
+
+                <p th:if="${#lists.isEmpty(restaurantes)}"
+                   style="color:#888; padding:2rem 0">
+                    No se encontraron restaurantes con ese criterio.
+                </p>
             </section>
         </div>
     </div>
 </main>
 
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 <script th:src="@{/js/filters.js}"></script>
 <script th:src="@{/js/star-filter.js}"></script>
 </body>

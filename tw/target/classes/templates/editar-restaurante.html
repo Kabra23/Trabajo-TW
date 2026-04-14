@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar - Cafetería CUMe</title>
-    <link rel="stylesheet" href="../static/css/editar-restaurante.css">
+    <link rel="stylesheet" th:href="@{/css/editar-restaurante.css}">
 </head>
 <body>
 <header class="main-header">
@@ -18,7 +18,7 @@
         </div>
         <nav class="main-nav">
             <ul>
-                <li><a href="detalle-restaurante.html" class="btn-primary">← Volver al Restaurante</a></li>
+                <li><a th:href="@{/detalle-restaurante}" class="btn-primary">← Volver al Restaurante</a></li>
             </ul>
         </nav>
     </div>
@@ -32,8 +32,8 @@
                     <h2>Editar restaurante</h2>
                     <ul>
                         <li><a href="#mis-pedidos">Mis pedidos</a></li>
-                        <li><a href="#menu">Menú</a></li>
                         <li><a href="#establecimiento">Establecimiento</a></li>
+                        <li><a href="#menu">Menú</a></li>
                         <li><a href="#horas-servicio">Horas de servicio</a></li>
                         <li><a href="#configuracion">Configuración</a></li>
                         <li><a href="#eliminar" class="delete-btn">Eliminar restaurante</a></li>
@@ -238,7 +238,7 @@
                         <div class="dishes-list">
                             <article class="dish-edit-card" data-category="desayunos">
                                 <div class="dish-edit-image">
-                                    <img src="../static/imagenes/tostada.jpg" alt="Tostada Completa con Tomate">
+                                    <img th:src="@{/imagenes/tostada.jpg}" alt="Tostada Completa con Tomate">
                                 </div>
                                 <div class="dish-edit-info">
                                     <h3>Tostada Completa con Tomate</h3>
@@ -249,7 +249,7 @@
 
                             <article class="dish-edit-card" data-category="desayunos">
                                 <div class="dish-edit-image">
-                                    <img src="../static/imagenes/cafe.png" alt="Café con Leche y Tostada">
+                                    <img th:src="@{/imagenes/cafe.png}" alt="Café con Leche y Tostada">
                                 </div>
                                 <div class="dish-edit-info">
                                     <h3>Café con Leche y Tostada</h3>
@@ -260,7 +260,7 @@
 
                             <article class="dish-edit-card" data-category="bocadillos">
                                 <div class="dish-edit-image">
-                                    <img src="../static/imagenes/tortilla.png" alt="Bocadillo de Tortilla Española">
+                                    <img th:src="@{/imagenes/tortilla.png}" alt="Bocadillo de Tortilla Española">
                                 </div>
                                 <div class="dish-edit-info">
                                     <h3>Bocadillo de Tortilla Española</h3>
@@ -271,7 +271,7 @@
 
                             <article class="dish-edit-card" data-category="bocadillos">
                                 <div class="dish-edit-image">
-                                    <img src="../static/imagenes/montadito.png" alt="Montadito de Lomo con Pimientos">
+                                    <img th:src="@{/imagenes/montadito.png}" alt="Montadito de Lomo con Pimientos">
                                 </div>
                                 <div class="dish-edit-info">
                                     <h3>Montadito de Lomo con Pimientos</h3>
@@ -282,7 +282,7 @@
 
                             <article class="dish-edit-card" data-category="ensaladas">
                                 <div class="dish-edit-image">
-                                    <img src="../static/imagenes/ensalada.png" alt="Ensalada César con Pollo">
+                                    <img th:src="@{/imagenes/ensalada.png}" alt="Ensalada César con Pollo">
                                 </div>
                                 <div class="dish-edit-info">
                                     <h3>Ensalada César con Pollo</h3>
@@ -293,7 +293,7 @@
 
                             <article class="dish-edit-card" data-category="bebidas">
                                 <div class="dish-edit-image">
-                                    <img src="../static/imagenes/zumo.png" alt="Zumo Natural de Naranja">
+                                    <img th:src="@{/imagenes/zumo.png}" alt="Zumo Natural de Naranja">
                                 </div>
                                 <div class="dish-edit-info">
                                     <h3>Zumo Natural de Naranja</h3>
@@ -355,6 +355,6 @@
     </div>
 </main>
 
-<script src="../static/js/editar-restaurante.js"></script>
+<script th:src="@{/js/editar-restaurante.js}"></script>
 </body>
 </html>
