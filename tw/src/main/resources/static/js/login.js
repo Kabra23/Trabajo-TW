@@ -1,4 +1,5 @@
-// Script de validación de formulario de inicio de sesión
+// Script de validación de formulario de inicio de sesión - VERSIÓN THYMELEAF
+// El formulario se envía al servidor Spring Security, NO usa window.location
 document.addEventListener('DOMContentLoaded', function() {
 
     // Toggle password visibility
@@ -7,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('span');
-
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
@@ -18,93 +18,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form validation
+    // Validación básica sin interceptar el submit real
     const loginForm = document.getElementById('loginForm');
-
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-
+            // El campo se llama "username" pero el label dice "email" - validamos igual
+            const emailInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
             let isValid = true;
 
-            // Clear previous errors
-            document.querySelectorAll('.error-message').forEach(error => {
-                error.textContent = '';
-                error.style.display = 'none';
+            document.querySelectorAll('.error-message').forEach(err => {
+                err.textContent = '';
+                err.style.display = 'none';
             });
 
-            document.querySelectorAll('input').forEach(input => {
-                input.classList.remove('error');
-            });
-
-            // Validate email
-            if (!email) {
+            if (emailInput && !emailInput.value.trim()) {
                 showError('emailError', 'El correo electrónico es obligatorio');
-                document.getElementById('email').classList.add('error');
-                isValid = false;
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showError('emailError', 'Introduce un correo electrónico válido');
-                document.getElementById('email').classList.add('error');
                 isValid = false;
             }
 
-            // Validate password
-            if (!password) {
+            if (passwordInput && !passwordInput.value) {
                 showError('passwordError', 'La contraseña es obligatoria');
-                document.getElementById('password').classList.add('error');
-                isValid = false;
-            } else if (password.length < 8) {
-                showError('passwordError', 'La contraseña debe tener al menos 8 caracteres');
-                document.getElementById('password').classList.add('error');
                 isValid = false;
             }
 
-            if (isValid) {
-                // Guardar datos de sesión simulados
-                const userData = {
-                    email: email,
-                    loginTime: new Date().toISOString()
-                };
-
-                localStorage.setItem('userSession', JSON.stringify(userData));
-
-                // Mostrar mensaje de éxito
-                showSuccessMessage('Inicio de sesión exitoso');
-
-                // Redirigir después de 1 segundo
-                setTimeout(() => {
-                    window.location.href = '/detalle-restaurante';
-                }, 1000);
+            if (!isValid) {
+                e.preventDefault();
             }
+            // Si isValid=true, el form se envía a /login (Spring Security lo procesa)
         });
     }
 
     function showError(elementId, message) {
-        const errorElement = document.getElementById(elementId);
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-    }
-
-    function showSuccessMessage(message) {
-        const form = document.getElementById('loginForm');
-        const successDiv = document.createElement('div');
-        successDiv.className = 'success-message';
-        successDiv.textContent = message;
-        successDiv.style.cssText = `
-            background-color: #069c6f;
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            text-align: center;
-            font-weight: 600;
-        `;
-        form.appendChild(successDiv);
+        const el = document.getElementById(elementId);
+        if (el) { el.textContent = message; el.style.display = 'block'; }
     }
 });
-
