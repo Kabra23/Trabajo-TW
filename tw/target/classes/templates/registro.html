@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Just Eat CUMe</title>
-    <link rel="stylesheet" th:href="@{/css/registro.css}">
+    <link rel="stylesheet" href="../static/css/registro.css">
 </head>
 <body>
 <header class="simple-header">
@@ -102,14 +102,14 @@
                 <button type="submit" class="btn-submit">Registrarse</button>
 
                 <div class="auth-footer">
-                    <p>¿Ya tienes cuenta? <a th:href="@{/login}" class="register-link">Inicia sesión</a></p>
+                    <p>¿Ya tienes cuenta? <a href="login.html" class="register-link">Inicia sesión</a></p>
                 </div>
             </form>
         </div>
     </section>
 </main>
 
-<script th:src="@{/js/registro.js}"></script>
+<script src="../static/js/registro.js"></script>
 </body>
 </html>
 

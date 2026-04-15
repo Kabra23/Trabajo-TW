@@ -3,54 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Exitoso - CUMe y Calla</title>
-    <link rel="stylesheet" th:href="@{/css/registro.css}">
+    <title>Registro Exitoso - Just Eat CUMe</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<header class="simple-header">
-    <div class="container">
-        <a th:href="@{/}" class="back-link">← Volver al inicio</a>
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-    </div>
-</header>
-
-<main class="auth-page">
-    <section class="auth-container">
-        <div class="auth-card">
-            <h2>¡Registro exitoso! 🎉</h2>
-
-            <div style="padding:1.5rem; background:#e8f5f1; border-radius:12px; margin:1.5rem 0; border-left:4px solid #069c6f;">
-                <h3 style="color:#069c6f; margin-bottom:1rem;">Información de tu cuenta</h3>
-                <p style="margin:.5rem 0;"><strong>Nombre:</strong>
-                    <span th:text="${nombre}">Nombre del usuario</span></p>
-                <p style="margin:.5rem 0;"><strong>Apellidos:</strong>
-                    <span th:text="${apellidos}">Apellidos del usuario</span></p>
-                <p style="margin:.5rem 0;"><strong>Correo electrónico:</strong>
-                    <span th:text="${email}">email@ejemplo.com</span></p>
-            </div>
-
-            <p style="color:#666; text-align:center; margin-bottom:1.5rem;">
-                Tu cuenta ha sido creada correctamente. Ya puedes iniciar sesión.
-            </p>
-
-            <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-                <a th:href="@{/login}" class="btn-submit"
-                   style="display:inline-block; text-decoration:none; text-align:center; padding:1rem 2rem;">
-                    Iniciar sesión
-                </a>
-                <a th:href="@{/}" class="btn-submit"
-                   style="display:inline-block; text-decoration:none; text-align:center; padding:1rem 2rem; background:linear-gradient(135deg,#555,#333);">
-                    Volver al inicio
-                </a>
+    <header class="simple-header">
+        <div class="container">
+            <div class="logo">
+                <h1>
+                    <span class="logo-main">CUMe</span>
+                    <span class="logo-separator">y</span>
+                    <span class="logo-secondary">Calla</span>
+                </h1>
             </div>
         </div>
-    </section>
-</main>
+    </header>
+
+    <main class="auth-page">
+        <section class="auth-container">
+            <div class="auth-card">
+                <h2>Registro Exitoso</h2>
+
+                <div style="padding: 20px; background-color: #f0f9ff; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #00d27a; margin-bottom: 15px;">Información del Usuario</h3>
+
+                    <p><strong>Nombre:</strong> <span th:text="${nombre}">Nombre del usuario</span></p>
+                    <p><strong>Apellidos:</strong> <span th:text="${apellidos}">Apellidos del usuario</span></p>
+                    <p><strong>Correo electrónico:</strong> <span th:text="${email}">email@ejemplo.com</span></p>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <a th:href="@{/login}" class="btn-submit" style="display: inline-block; text-decoration: none; margin: 10px;">
+                        Iniciar Sesión
+                    </a>
+                    <a th:href="@{/}" class="btn-submit" style="display: inline-block; text-decoration: none; margin: 10px; background-color: #666;">
+                        Volver al Inicio
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
 </body>
 </html>
+

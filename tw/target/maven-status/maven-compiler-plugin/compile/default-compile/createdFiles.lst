@@ -16,6 +16,7 @@ com\tw\service\ValoracionService.class
 com\tw\model\LineaPedido.class
 com\tw\model\Usuario.class
 com\tw\service\UsuarioDetailsService.class
+com\tw\controller\GlobalExceptionHandler.class
 com\tw\model\Plato$PlatoBuilder.class
 com\tw\model\Pedido$EstadoPedido.class
 com\tw\repository\CategoriaRepository.class

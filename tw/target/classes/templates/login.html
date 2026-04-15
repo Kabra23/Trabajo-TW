@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión - Just Eat CUMe</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
 <header class="simple-header">
     <div class="container">
-        <a th:href="@{/}" class="back-link">← Volver</a>
+        <a href="index.html" class="back-link">← Volver</a>
         <div class="logo">
             <h1>
                 <span class="logo-main">CUMe</span>
@@ -62,13 +62,13 @@
                 </div>
 
                 <div class="auth-footer">
-                    <p>¿No tienes cuenta? <a th:href="@{/registro}" class="register-link">Regístrate</a></p>
+                    <p>¿No tienes cuenta? <a href="registro.html" class="register-link">Regístrate</a></p>
                 </div>
             </form>
         </div>
     </section>
 </main>
 
-<script th:src="@{/js/login.js}"></script>
+<script src="../static/js/login.js"></script>
 </body>
 </html>

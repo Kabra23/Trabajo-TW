@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Detalle del pedido')}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main style="min-height:70vh; background:#f5f5f5; padding:2rem 0">
+    <div class="container" style="max-width:700px">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem">
+            <h1 style="color:#069c6f">
+                Pedido #<span th:text="${pedido.id}">0</span>
+            </h1>
+            <a th:href="@{/pedidos/mis-pedidos}" class="btn-secondary"
+               style="text-decoration:none" th:if="${esPropio}">← Mis pedidos</a>
+            <a th:href="@{/pedidos/restaurante/{id}(id=${pedido.restaurante.id})}"
+               class="btn-secondary" style="text-decoration:none" th:if="${esPropietario and !esPropio}">
+               ← Pedidos del restaurante
+            </a>
+        </div>
+
+        <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+        <div style="background:white; border-radius:12px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.05)">
+
+            <!-- Info del pedido -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:2px solid #f0f0f0">
+                <div>
+                    <p style="color:#888; font-size:.9rem; margin-bottom:.2rem">Restaurante</p>
+                    <a th:href="@{/restaurantes/{id}(id=${pedido.restaurante.id})}"
+                       th:text="${pedido.restaurante.nombre}"
+                       style="color:#069c6f; font-weight:700; text-decoration:none; font-size:1.1rem">
+                        Restaurante
+                    </a>
+                </div>
+                <div>
+                    <p style="color:#888; font-size:.9rem; margin-bottom:.2rem">Fecha</p>
+                    <p style="font-weight:600"
+                       th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</p>
+                </div>
+                <div>
+                    <p style="color:#888; font-size:.9rem; margin-bottom:.2rem">Estado</p>
+                    <span th:switch="${pedido.estado.name()}">
+                        <span th:case="'PENDIENTE'"
+                              style="background:#fff3e0; color:#f57c00; padding:.3rem .8rem; border-radius:20px; font-weight:600; font-size:.9rem">
+                            ⏳ Pendiente
+                        </span>
+                        <span th:case="'EN_PREPARACION'"
+                              style="background:#e3f2fd; color:#1565c0; padding:.3rem .8rem; border-radius:20px; font-weight:600; font-size:.9rem">
+                            👨‍🍳 En preparación
+                        </span>
+                        <span th:case="'ENVIADO'"
+                              style="background:#e8f5e9; color:#2e7d32; padding:.3rem .8rem; border-radius:20px; font-weight:600; font-size:.9rem">
+                            🚴 Enviado
+                        </span>
+                        <span th:case="'ENTREGADO'"
+                              style="background:#f3e5f5; color:#6a1b9a; padding:.3rem .8rem; border-radius:20px; font-weight:600; font-size:.9rem">
+                            ✅ Entregado
+                        </span>
+                    </span>
+                </div>
+                <div>
+                    <p style="color:#888; font-size:.9rem; margin-bottom:.2rem">Total</p>
+                    <p style="font-weight:700; font-size:1.3rem; color:#069c6f"
+                       th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' €'">0 €</p>
+                </div>
+            </div>
+
+            <!-- Líneas del pedido -->
+            <h2 style="font-size:1.2rem; margin-bottom:1rem; color:#333">Desglose</h2>
+            <table style="width:100%; border-collapse:collapse">
+                <thead>
+                    <tr style="border-bottom:2px solid #e0e0e0; color:#888; font-size:.9rem">
+                        <th style="text-align:left; padding:.6rem 0">Plato</th>
+                        <th style="text-align:center">Cant.</th>
+                        <th style="text-align:right">Precio</th>
+                        <th style="text-align:right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="linea : ${pedido.lineas}"
+                        style="border-bottom:1px solid #f5f5f5">
+                        <td style="padding:.7rem 0" th:text="${linea.nombrePlato}">Plato</td>
+                        <td style="text-align:center" th:text="${linea.cantidad}">1</td>
+                        <td style="text-align:right"
+                            th:text="${#numbers.formatDecimal(linea.precio,1,2)} + ' €'">0 €</td>
+                        <td style="text-align:right; font-weight:600; color:#069c6f"
+                            th:text="${#numbers.formatDecimal(linea.precio * linea.cantidad,1,2)} + ' €'">0 €</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align:right; padding:.8rem 0; font-weight:700; font-size:1.1rem">
+                            Total:
+                        </td>
+                        <td style="text-align:right; font-weight:700; font-size:1.1rem; color:#069c6f"
+                            th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' €'">0 €</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Acciones según rol -->
+            <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:2px solid #f0f0f0; display:flex; gap:1rem; flex-wrap:wrap">
+                <!-- Propietario: cambiar estado -->
+                <div th:if="${esPropietario}">
+                    <form th:action="@{/pedidos/{id}/cambiar-estado(id=${pedido.id})}" method="post"
+                          style="display:flex; gap:.8rem; align-items:center; flex-wrap:wrap">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <select name="estado"
+                                style="padding:.6rem 1rem; border:2px solid #e0e0e0; border-radius:8px">
+                            <option value="PENDIENTE"
+                                    th:selected="${pedido.estado.name() == 'PENDIENTE'}">⏳ Pendiente</option>
+                            <option value="EN_PREPARACION"
+                                    th:selected="${pedido.estado.name() == 'EN_PREPARACION'}">👨‍🍳 En preparación</option>
+                            <option value="ENVIADO"
+                                    th:selected="${pedido.estado.name() == 'ENVIADO'}">🚴 Enviado</option>
+                            <option value="ENTREGADO"
+                                    th:selected="${pedido.estado.name() == 'ENTREGADO'}">✅ Entregado</option>
+                        </select>
+                        <button type="submit" class="btn-primary">Actualizar estado</button>
+                    </form>
+                </div>
+
+                <!-- Usuario: eliminar pedido (solo si no enviado/entregado) -->
+                <div th:if="${esPropio and (pedido.estado.name() == 'PENDIENTE' or pedido.estado.name() == 'EN_PREPARACION')}">
+                    <form th:action="@{/pedidos/{id}/eliminar(id=${pedido.id})}" method="post"
+                          onsubmit="return confirm('¿Cancelar este pedido?')">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit"
+                                style="background:#d32f2f; color:white; border:none; padding:.7rem 1.5rem; border-radius:8px; cursor:pointer; font-weight:600">
+                            Cancelar pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

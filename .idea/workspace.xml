@@ -4,10 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza la configuración del espacio de trabajo y mejora la gestión de tareas locales">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/WebController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +187,8 @@
       <workItem from="1776150300095" duration="168000" />
       <workItem from="1776150712710" duration="393000" />
       <workItem from="1776151521043" duration="3450000" />
-      <workItem from="1776181595111" duration="2047000" />
+      <workItem from="1776181595111" duration="4730000" />
+      <workItem from="1776239472323" duration="361000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -327,7 +342,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776153972836</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil">
+      <option name="closed" value="true" />
+      <created>1776190180841</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1776190180841</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,7 +381,8 @@
     <MESSAGE value="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML" />
     <MESSAGE value="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación." />
     <MESSAGE value="Actualiza la configuración del espacio de trabajo y mejora la gestión de tareas locales" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualiza la configuración del espacio de trabajo y mejora la gestión de tareas locales" />
+    <MESSAGE value="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil" />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
