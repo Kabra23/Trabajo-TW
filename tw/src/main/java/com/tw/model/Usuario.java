@@ -27,8 +27,7 @@ public class Usuario {
     @Column(unique = true, nullable = false)
     private String email;
 
-    // CORRECCIÓN: sin @NotBlank aquí porque la contraseña llega como @RequestParam separado
-    // y Thymeleaf no debe hacer binding de contraseñas con th:field por seguridad
+    // Sin @NotBlank porque la contraseña llega como @RequestParam separado
     @Column(nullable = false)
     private String password;
 
@@ -51,4 +50,17 @@ public class Usuario {
     )
     @ToString.Exclude
     private List<Restaurante> favoritos;
+
+    /** Direcciones del usuario (extra: gestión de direcciones) */
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Direccion> direcciones;
+
+    /** Devuelve la dirección principal o null si no tiene ninguna */
+    public Direccion getDireccionPrincipal() {
+        if (direcciones == null || direcciones.isEmpty()) return null;
+        return direcciones.stream()
+                .filter(d -> Boolean.TRUE.equals(d.getPrincipal()))
+                .findFirst()
+                .orElse(direcciones.get(0));
+    }
 }

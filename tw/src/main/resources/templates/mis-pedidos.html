@@ -13,7 +13,7 @@
         <div th:replace="~{fragments/layout :: mensajes}"></div>
 
         <div th:if="${#lists.isEmpty(pedidos)}" class="empty-state">
-            <p>Aún no has realizado ningún pedido.</p>
+            <p>Aun no has realizado ningun pedido.</p>
             <a th:href="@{/restaurantes}" class="btn-primary">
                 Explorar restaurantes
             </a>
@@ -35,14 +35,32 @@
                     </div>
                 </div>
                 <div class="pedido-card-summary">
-                    <div class="pedido-total" th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' €'">0 €</div>
-                    <span class="pedido-estado"
-                          th:classappend="${#strings.containsIgnoreCase(pedido.estado,'pend')} ? ' pendiente' : ''
-                           + (${#strings.containsIgnoreCase(pedido.estado,'prepar')} ? ' preparacion' : '')
-                           + (${#strings.containsIgnoreCase(pedido.estado,'envi')} ? ' enviado' : '')
-                           + (${#strings.containsIgnoreCase(pedido.estado,'entr')} ? ' entregado' : '')
-                           + (${#strings.containsIgnoreCase(pedido.estado,'cancel')} ? ' cancelado' : '')"
-                          th:text="${pedido.estado}">Estado</span>
+                    <div class="pedido-total" th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' euro'">0 euro</div>
+                    <!-- Badge de estado sin emojis -->
+                    <span th:switch="${pedido.estado.name()}"
+                          class="pedido-estado">
+                        <span th:case="'PENDIENTE'"
+                              style="display:inline-block;background:#fff3e0;color:#f57c00;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
+                            Pendiente
+                        </span>
+                        <span th:case="'EN_PREPARACION'"
+                              style="display:inline-block;background:#e3f2fd;color:#1565c0;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
+                            En preparacion
+                        </span>
+                        <span th:case="'ENVIADO'"
+                              style="display:inline-block;background:#e8f5e9;color:#2e7d32;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
+                            Enviado
+                        </span>
+                        <span th:case="'ENTREGADO'"
+                              style="display:inline-block;background:#f3e5f5;color:#6a1b9a;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
+                            Entregado
+                        </span>
+                        <span th:case="*"
+                              style="display:inline-block;background:#f5f5f5;color:#555;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;"
+                              th:text="${pedido.estado.name()}">
+                            Estado
+                        </span>
+                    </span>
                 </div>
             </div>
 
@@ -50,8 +68,8 @@
                 <thead>
                 <tr>
                     <th>Plato</th>
-                    <th class="text-center">Cant.</th>
-                    <th class="text-right">Precio</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-right">Precio u.</th>
                     <th class="text-right">Subtotal</th>
                 </tr>
                 </thead>
@@ -59,14 +77,22 @@
                 <tr th:each="linea : ${pedido.lineas}">
                     <td th:text="${linea.nombrePlato}">Plato</td>
                     <td class="text-center" th:text="${linea.cantidad}">1</td>
-                    <td class="text-right" th:text="${#numbers.formatDecimal(linea.precio,1,2)} + ' €'">0 €</td>
-                    <td class="text-right font-weight-bold" th:text="${#numbers.formatDecimal(linea.precio * linea.cantidad,1,2)} + ' €'">0 €</td>
+                    <td class="text-right" th:text="${#numbers.formatDecimal(linea.precio,1,2)} + ' euro'">0 euro</td>
+                    <td class="text-right font-weight-bold" th:text="${#numbers.formatDecimal(linea.precio * linea.cantidad,1,2)} + ' euro'">0 euro</td>
                 </tr>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right font-weight-bold" style="padding:.7rem 1rem;">Total:</td>
+                    <td class="text-right font-weight-bold" style="padding:.7rem 1rem;color:#069c6f;"
+                        th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' euro'">0 euro</td>
+                </tr>
+                </tfoot>
             </table>
 
             <div class="pedido-card-actions">
-                <a th:href="@{/restaurantes/{id}(id=${pedido.restaurante.id})}" class="btn-secondary">Ver restaurante</a>
+                <a th:href="@{/pedidos/{id}(id=${pedido.id})}" class="btn-primary" style="text-decoration:none;font-size:.9rem;padding:.5rem 1.2rem;">Ver detalle</a>
+                <a th:href="@{/restaurantes/{id}(id=${pedido.restaurante.id})}" class="btn-secondary" style="text-decoration:none;">Ver restaurante</a>
             </div>
         </div>
     </div>

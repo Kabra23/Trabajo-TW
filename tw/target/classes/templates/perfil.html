@@ -16,16 +16,33 @@
         .card { background:white;border-radius:12px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:1.5rem; }
         .form-field { margin-bottom:1rem; }
         .form-field label { font-weight:600;display:block;margin-bottom:.4rem;color:#333; }
-        .form-field input { width:100%;padding:.8rem;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;box-sizing:border-box; }
-        .form-field input:focus { outline:none;border-color:#069c6f; }
+        .form-field input,.form-field textarea { width:100%;padding:.8rem;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;box-sizing:border-box;font-family:inherit; }
+        .form-field input:focus,.form-field textarea:focus { outline:none;border-color:#069c6f; }
         .form-field input:disabled { background:#f9f9f9;color:#888; }
-        .btn-primary { background:#069c6f;color:white;border:none;padding:.7rem 1.8rem;border-radius:25px;font-weight:600;cursor:pointer;font-size:1rem;transition:background .2s; }
+        .btn-primary { background:#069c6f;color:white;border:none;padding:.7rem 1.8rem;border-radius:25px;font-weight:600;cursor:pointer;font-size:1rem;transition:background .2s;text-decoration:none;display:inline-block; }
         .btn-primary:hover { background:#038a63; }
         .btn-secondary-link { color:#069c6f;border:2px solid #069c6f;padding:.4rem .9rem;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:600; }
         .restaurante-row { display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid #f0f0f0; }
         .estado-badge { font-size:.8rem;padding:.2rem .6rem;border-radius:12px;font-weight:600; }
         .estado-abierto { background:#e8f5f1;color:#069c6f; }
         .estado-cerrado { background:#ffebee;color:#d32f2f; }
+
+        /* Direcciones */
+        .dir-row { display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:.7rem;background:white;gap:1rem; }
+        .dir-row.principal { border-color:#069c6f;background:#f0fbf7; }
+        .dir-info { flex:1; }
+        .dir-info strong { display:block;color:#333;font-size:.95rem; }
+        .dir-info small { color:#888;font-size:.8rem; }
+        .dir-badge-principal { background:#069c6f;color:white;font-size:.75rem;padding:.15rem .55rem;border-radius:12px;font-weight:700;margin-left:.5rem;vertical-align:middle; }
+        .dir-actions { display:flex;gap:.5rem;flex-shrink:0; }
+        .btn-sm-outline { border:2px solid #069c6f;color:#069c6f;background:white;padding:.3rem .8rem;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit; }
+        .btn-sm-outline:hover { background:#069c6f;color:white; }
+        .btn-sm-danger { border:2px solid #d32f2f;color:#d32f2f;background:white;padding:.3rem .8rem;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit; }
+        .btn-sm-danger:hover { background:#d32f2f;color:white; }
+        .form-inline-dir { display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-top:1rem; }
+        .form-inline-dir .form-field { margin-bottom:0;flex:1;min-width:180px; }
+        .checkbox-inline { display:flex;align-items:center;gap:.4rem;font-size:.9rem;padding-top:.2rem; }
+        .checkbox-inline input { width:18px;height:18px;accent-color:#069c6f;cursor:pointer; }
     </style>
 </head>
 <body style="background:#f5f5f5;margin:0;font-family:'Segoe UI',sans-serif;">
@@ -59,7 +76,6 @@
     <div class="container" style="max-width:720px;">
         <h1 style="color:#069c6f;margin-bottom:1.5rem;">Mi perfil</h1>
 
-        <!-- Mensajes flash -->
         <div th:if="${exito}" style="background:#e8f5f1;color:#069c6f;padding:1rem;border-radius:8px;margin-bottom:1rem;border-left:4px solid #069c6f;" th:text="${exito}"></div>
         <div th:if="${error}" style="background:#ffebee;color:#d32f2f;padding:1rem;border-radius:8px;margin-bottom:1rem;border-left:4px solid #d32f2f;" th:text="${error}"></div>
 
@@ -67,20 +83,17 @@
         <div class="card">
             <h2 style="font-size:1.3rem;margin-bottom:1.5rem;color:#333;">Informacion personal</h2>
 
-            <!-- FOTO DE PERFIL — se muestra si existe -->
             <div style="text-align:center;margin-bottom:1.5rem;">
                 <img th:if="${usuario.fotoPerfil != null}"
                      th:src="@{'/uploads/' + ${usuario.fotoPerfil}}"
                      th:alt="${usuario.nombre}"
                      class="avatar-circle">
-                <!-- Placeholder con inicial si no hay foto -->
                 <div th:unless="${usuario.fotoPerfil != null}" class="avatar-placeholder"
                      style="margin:0 auto;">
                     <span th:text="${usuario.nombre != null ? #strings.substring(usuario.nombre,0,1).toUpperCase() : '?'}">U</span>
                 </div>
             </div>
 
-            <!-- Formulario editar perfil (req. minimo 1: datos pre-cargados) -->
             <form th:action="@{/perfil/editar}" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
@@ -100,15 +113,84 @@
                     <small style="color:#aaa;display:block;margin-top:.3rem;">El email no se puede cambiar</small>
                 </div>
 
-                <!-- Foto de perfil (extra imagenes) -->
                 <div class="form-field">
                     <label for="fotoFile">Foto de perfil (opcional)</label>
                     <input type="file" id="fotoFile" name="fotoFile" accept="image/jpeg,image/png,image/webp"
                            style="border:none;padding:0;">
-                    <small style="color:#888;display:block;margin-top:.3rem;">Sube una nueva foto para reemplazar la actual</small>
                 </div>
 
                 <button type="submit" class="btn-primary">Guardar cambios</button>
+            </form>
+        </div>
+
+        <!-- === MIS DIRECCIONES === -->
+        <div class="card">
+            <h2 style="font-size:1.3rem;margin-bottom:1rem;color:#333;">Mis direcciones de entrega</h2>
+            <p style="color:#888;font-size:.9rem;margin-bottom:1.2rem;">
+                La direccion marcada como principal aparecera en la busqueda de restaurantes.
+            </p>
+
+            <!-- Lista de direcciones existentes -->
+            <div th:if="${direcciones != null and !#lists.isEmpty(direcciones)}">
+                <div th:each="dir : ${direcciones}"
+                     class="dir-row"
+                     th:classappend="${dir.principal} ? ' principal' : ''">
+                    <div class="dir-info">
+                        <strong>
+                            <span th:if="${dir.etiqueta != null}"
+                                  th:text="${dir.etiqueta} + ': '"></span>
+                            <span th:text="${dir.direccion}">Direccion</span>
+                            <span th:if="${dir.principal}" class="dir-badge-principal">Principal</span>
+                        </strong>
+                    </div>
+                    <div class="dir-actions">
+                        <!-- Marcar como principal (solo si no lo es ya) -->
+                        <form th:unless="${dir.principal}"
+                              th:action="@{/perfil/direcciones/{id}/principal(id=${dir.id})}" method="post"
+                              style="display:inline">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="btn-sm-outline">Hacer principal</button>
+                        </form>
+                        <!-- Eliminar -->
+                        <form th:action="@{/perfil/direcciones/{id}/eliminar(id=${dir.id})}" method="post"
+                              style="display:inline"
+                              onsubmit="return confirm('Eliminar esta direccion?')">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button type="submit" class="btn-sm-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${direcciones == null or #lists.isEmpty(direcciones)}"
+                 style="color:#888;padding:.5rem 0;font-style:italic;">
+                Aun no tienes ninguna direccion. Anade una para que aparezca al buscar restaurantes.
+            </div>
+
+            <!-- Formulario añadir nueva dirección -->
+            <form th:action="@{/perfil/direcciones/nueva}" method="post" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #f0f0f0;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <h3 style="font-size:1rem;color:#333;margin-bottom:.8rem;">Anadir nueva direccion</h3>
+                <div class="form-inline-dir">
+                    <div class="form-field">
+                        <label for="etiqueta">Etiqueta (opcional)</label>
+                        <input type="text" id="etiqueta" name="etiqueta" placeholder="Ej: Casa, Trabajo">
+                    </div>
+                    <div class="form-field" style="flex:2;">
+                        <label for="nuevaDireccion">Direccion *</label>
+                        <input type="text" id="nuevaDireccion" name="direccion"
+                               placeholder="Calle, numero, ciudad..." required>
+                    </div>
+                </div>
+                <label class="checkbox-inline" style="margin-top:.8rem;">
+                    <input type="checkbox" name="principal" value="true">
+                    <span>Usar como direccion principal</span>
+                </label>
+                <div style="margin-top:1rem;">
+                    <button type="submit" class="btn-primary" style="font-size:.9rem;padding:.6rem 1.4rem;">
+                        Guardar direccion
+                    </button>
+                </div>
             </form>
         </div>
 

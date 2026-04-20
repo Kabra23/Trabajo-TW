@@ -38,13 +38,6 @@ public class RestauranteController {
 
     /**
      * Listado con filtros server-side (req. minimo 6 y 7).
-     * Sin JS client-side que oculte nada: todos los restaurantes
-     * aparecen por defecto sin necesidad de pulsar ningun boton.
-     *
-     * Parametros:
-     *   filtro    = 'todos' | 'acepta' | 'noAcepta' | 'valoracion'
-     *   categoria = Long ID de categoria
-     *   q         = String busqueda por nombre/localidad
      */
     @GetMapping("/restaurantes")
     public String listar(
@@ -55,6 +48,7 @@ public class RestauranteController {
             @RequestParam(required = false) Integer precio,
             @RequestParam(required = false) Boolean bikeFriendly,
             @RequestParam(required = false) String orden,
+            @AuthenticationPrincipal UserDetails userDetails,
             Model model) {
 
         List<Restaurante> restaurantes = restauranteService.buscar(q, categoria, filtro, valoracion, precio, bikeFriendly, orden);
@@ -68,6 +62,18 @@ public class RestauranteController {
         model.addAttribute("precio", precio);
         model.addAttribute("bikeFriendly", bikeFriendly);
         model.addAttribute("orden", orden);
+
+        // Dirección principal del usuario logueado (para mostrar en la cabecera)
+        if (userDetails != null) {
+            try {
+                Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
+                Direccion dirPrincipal = usuario.getDireccionPrincipal();
+                if (dirPrincipal != null) {
+                    model.addAttribute("direccionUsuario", dirPrincipal.getDireccion());
+                }
+            } catch (Exception ignored) {}
+        }
+
         return "restaurantes";
     }
 
@@ -112,7 +118,7 @@ public class RestauranteController {
         if (result.hasErrors()) {
             model.addAttribute("categorias", categoriaRepo.findAll());
             model.addAttribute("modo", "crear");
-            return "editar-restaurante";
+            return "form-restaurante";
         }
         subirImagen(restaurante, imagenFile);
         restauranteService.crear(restaurante, userDetails.getUsername(), categoriaIds);
@@ -144,7 +150,7 @@ public class RestauranteController {
         if (result.hasErrors()) {
             model.addAttribute("categorias", categoriaRepo.findAll());
             model.addAttribute("modo", "editar");
-            return "editar-restaurante";
+            return "form-restaurante";
         }
         try {
             subirImagen(datos, imagenFile);

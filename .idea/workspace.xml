@@ -4,90 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza las páginas de registro y login para utilizar Thymeleaf, mejora la estructura y el estilo de la página de registro exitoso.">
-      <change afterPath="$PROJECT_DIR$/tw/credenciales.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/base.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/filter-submit.js" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade nuevas páginas y funcionalidades: registro exitoso, categorías, y valoraciones; mejora la interactividad del filtro de estrellas y actualiza estilos.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TANI.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tw/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/TwApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/TwApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/CategoriaController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PlatoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PlatoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/UsuarioRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/ValoracionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/ValoracionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/ValoracionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/ValoracionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/js/star-filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/star-filter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/categorias.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-categoria.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-pedido.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-pedido.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-valoraciones.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-valoraciones.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/pedidos-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/pedidos-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/TwApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/CategoriaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Usuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Usuario.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/RestauranteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/RestauranteRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/UsuarioRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/UsuarioRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/ValoracionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/ValoracionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/UsuarioDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/UsuarioDetailsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/UsuarioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/UsuarioService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/ValoracionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/ValoracionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/js/star-filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/js/star-filter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-valoraciones.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-valoraciones.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/pedidos-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/pedidos-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/cume-0.0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/cume-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/tw-0.0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/tw-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,7 +189,7 @@
       <workItem from="1776350549969" duration="1508000" />
       <workItem from="1776525792172" duration="100000" />
       <workItem from="1776525933707" duration="1166000" />
-      <workItem from="1776612629458" duration="20929000" />
+      <workItem from="1776612629458" duration="22447000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -440,7 +367,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776263526987</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Añade nuevas páginas y funcionalidades: registro exitoso, categorías, y valoraciones; mejora la interactividad del filtro de estrellas y actualiza estilos.">
+      <option name="closed" value="true" />
+      <created>1776715298322</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1776715298322</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -473,7 +408,8 @@
     <MESSAGE value="Actualiza la configuración del espacio de trabajo y mejora la gestión de tareas locales" />
     <MESSAGE value="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil" />
     <MESSAGE value="Actualiza las páginas de registro y login para utilizar Thymeleaf, mejora la estructura y el estilo de la página de registro exitoso." />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualiza las páginas de registro y login para utilizar Thymeleaf, mejora la estructura y el estilo de la página de registro exitoso." />
+    <MESSAGE value="Añade nuevas páginas y funcionalidades: registro exitoso, categorías, y valoraciones; mejora la interactividad del filtro de estrellas y actualiza estilos." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade nuevas páginas y funcionalidades: registro exitoso, categorías, y valoraciones; mejora la interactividad del filtro de estrellas y actualiza estilos." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

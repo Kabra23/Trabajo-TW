@@ -1,6 +1,8 @@
 package com.tw.controller;
 
+import com.tw.model.Direccion;
 import com.tw.model.Usuario;
+import com.tw.repository.DireccionRepository;
 import com.tw.service.ImagenService;
 import com.tw.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -20,10 +22,14 @@ public class AuthController {
 
     private final UsuarioService usuarioService;
     private final ImagenService imagenService;
+    private final DireccionRepository direccionRepo;
 
-    public AuthController(UsuarioService usuarioService, ImagenService imagenService) {
+    public AuthController(UsuarioService usuarioService,
+                          ImagenService imagenService,
+                          DireccionRepository direccionRepo) {
         this.usuarioService = usuarioService;
         this.imagenService = imagenService;
+        this.direccionRepo = direccionRepo;
     }
 
     // ---- Login ----
@@ -57,7 +63,19 @@ public class AuthController {
         if (result.hasErrors()) return "registro";
 
         try {
-            usuarioService.registrar(usuario, password, direccionPrincipal);
+            Usuario guardado = usuarioService.registrar(usuario, password, direccionPrincipal);
+
+            // Si proporcionó una dirección en el registro, guardarla como principal
+            if (direccionPrincipal != null && !direccionPrincipal.isBlank()) {
+                Direccion dir = Direccion.builder()
+                        .direccion(direccionPrincipal.trim())
+                        .etiqueta("Principal")
+                        .principal(true)
+                        .usuario(guardado)
+                        .build();
+                direccionRepo.save(dir);
+            }
+
             model.addAttribute("nombre", usuario.getNombre());
             model.addAttribute("apellidos", usuario.getApellidos());
             model.addAttribute("email", usuario.getEmail());
@@ -73,6 +91,7 @@ public class AuthController {
     public String perfil(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         Usuario usuario = usuarioService.buscarPorEmailConRestaurantes(userDetails.getUsername());
         model.addAttribute("usuario", usuario);
+        model.addAttribute("direcciones", direccionRepo.findByUsuarioId(usuario.getId()));
         return "perfil";
     }
 
@@ -87,7 +106,6 @@ public class AuthController {
         String rutaFoto = null;
         if (fotoFile != null && !fotoFile.isEmpty()) {
             try {
-                // CRITICO: guardar en la carpeta correcta que sirve Spring
                 rutaFoto = imagenService.guardar(fotoFile, "usuarios");
             } catch (IOException e) {
                 flash.addFlashAttribute("error", "Error al subir la foto: " + e.getMessage());

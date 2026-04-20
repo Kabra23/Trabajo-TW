@@ -1,6 +1,7 @@
 com\tw\controller\PlatoController.class
 com\tw\service\ImagenService.class
 com\tw\repository\PedidoRepository.class
+com\tw\model\Direccion$DireccionBuilder.class
 com\tw\controller\AuthController.class
 com\tw\repository\ValoracionRepository.class
 com\tw\repository\PlatoRepository.class
@@ -8,6 +9,7 @@ com\tw\service\UsuarioService.class
 com\tw\controller\GlobalExceptionHandler.class
 com\tw\repository\CategoriaRepository.class
 com\tw\repository\LineaPedidoRepository.class
+com\tw\repository\DireccionRepository.class
 com\tw\controller\RestauranteController.class
 com\tw\model\Restaurante.class
 com\tw\repository\UsuarioRepository.class
@@ -17,6 +19,7 @@ com\tw\model\Valoracion.class
 com\tw\TwApplication.class
 com\tw\model\Usuario$UsuarioBuilder.class
 com\tw\model\Plato.class
+com\tw\controller\DireccionController.class
 com\tw\repository\RestauranteRepository.class
 com\tw\model\Pedido$PedidoBuilder.class
 com\tw\model\Restaurante$RestauranteBuilder.class
@@ -24,6 +27,7 @@ com\tw\service\PlatoService.class
 com\tw\service\RestauranteService.class
 com\tw\model\Categoria.class
 com\tw\model\LineaPedido$LineaPedidoBuilder.class
+com\tw\model\Direccion.class
 com\tw\service\ValoracionService.class
 com\tw\model\LineaPedido.class
 com\tw\model\Usuario.class
