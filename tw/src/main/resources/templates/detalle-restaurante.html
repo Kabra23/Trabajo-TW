@@ -140,7 +140,7 @@
                                     th:text="${restaurante.aceptaPedidos} ? 'Pausar pedidos' : 'Activar pedidos'">Estado</button>
                         </form>
                         <a th:href="@{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}"
-                           class="btn-primary" style="text-decoration:none;background:#069c6f;">+ Añadir plato</a>
+                           class="btn-primary" style="text-decoration:none;background:#EEF527;">+ Añadir plato</a>
                         <a th:href="@{/pedidos/restaurante/{id}(id=${restaurante.id})}"
                            class="btn-primary" style="text-decoration:none;background:#1565c0;">Pedidos recibidos</a>
                         <form th:action="@{/restaurantes/{id}/eliminar(id=${restaurante.id})}" method="post" style="display:inline"

@@ -159,6 +159,23 @@ input, textarea, select {
     background-color: var(--bg-gray);
 }
 
+.btn-logout {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    padding: 0.45rem 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
 /* Header simple (para login/registro) */
 .simple-header {
     background-color: var(--bg-color);
@@ -1279,4 +1296,3 @@ input, textarea, select {
         width: 100%;
     }
 }
-
