@@ -15,6 +15,8 @@
     <groupId>com.tw</groupId>
     <artifactId>tw</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <!-- CAMBIO 1: packaging WAR en vez de JAR -->
+    <packaging>war</packaging>
     <name>cume</name>
     <description>Just Eat CUMe - Proyecto Tecnologías Web</description>
 
@@ -23,31 +25,31 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Web (incluye Tomcat embebido) -->
+        <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Thymeleaf para las vistas -->
+        <!-- Thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- Spring Security (HTTPS, sesiones, autorización) -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- Thymeleaf + Spring Security (extras para plantillas) -->
+        <!-- Thymeleaf + Spring Security extras -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
 
-        <!-- Spring Data JPA (ORM sobre JDBC) -->
+        <!-- Spring Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -66,17 +68,28 @@
             <artifactId>hibernate-community-dialects</artifactId>
         </dependency>
 
-        <!-- Validación de formularios (@Valid, @NotBlank, etc.) -->
+        <!-- Validación -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- Lombok (getters/setters automáticos) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!--
+          CAMBIO 2: Tomcat embebido marcado como PROVIDED
+          Así Spring Boot NO incluye Tomcat en el WAR,
+          porque el Tomcat externo ya lo proporciona.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Tests -->
@@ -93,8 +106,9 @@
     </dependencies>
 
     <build>
+        <!-- CAMBIO 3: El nombre del WAR que se desplegará en Tomcat -->
+        <finalName>cume</finalName>
         <plugins>
-            <!-- Compilador con soporte para Lombok -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -14,27 +14,27 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(nullable = false)
     private String nombre;
 
-    @NotBlank
+    @NotBlank(message = "Los apellidos son obligatorios")
     @Column(nullable = false)
     private String apellidos;
 
-    @Email
-    @NotBlank
+    @Email(message = "El correo electrónico no es válido")
+    @NotBlank(message = "El correo electrónico es obligatorio")
     @Column(unique = true, nullable = false)
     private String email;
 
-    @NotBlank
+    // CORRECCIÓN: sin @NotBlank aquí porque la contraseña llega como @RequestParam separado
+    // y Thymeleaf no debe hacer binding de contraseñas con th:field por seguridad
     @Column(nullable = false)
-    private String password;   // almacenado con BCrypt
+    private String password;
 
-    private String fotoPerfil; // ruta relativa a uploads/
+    private String fotoPerfil;
 
-    // Relaciones
-    @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Restaurante> restaurantes;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -49,5 +49,6 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "restaurante_id")
     )
+    @ToString.Exclude
     private List<Restaurante> favoritos;
 }

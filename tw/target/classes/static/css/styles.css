@@ -4,11 +4,11 @@
 
 :root {
     /* Colores principales */
-    --primary-color: #FF6B35;
-    --primary-dark: #E85A2C;
-    --primary-light: #FF8C61;
-    --secondary-color: #00B8A9;
-    --secondary-dark: #00968A;
+    --primary-color: #069c6f;
+    --primary-dark: #038a63;
+    --primary-light: #45c49a;
+    --secondary-color: #0aa97a;
+    --secondary-dark: #088d67;
 
     /* Colores neutros */
     --bg-color: #FFFFFF;
@@ -218,7 +218,7 @@ input, textarea, select {
 .btn-secondary:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
-    background-color: rgba(255, 107, 53, 0.05);
+    background-color: rgba(6, 156, 111, 0.08);
 }
 
 .btn-search {
@@ -277,7 +277,7 @@ input, textarea, select {
    ======================================== */
 
 .hero {
-    background: linear-gradient(135deg, #FF6B35 0%, #FF8C61 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
     color: white;
     padding: var(--spacing-xl) 0;
     min-height: 500px;
@@ -460,7 +460,7 @@ input, textarea, select {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #FF6B35 0%, #FF8C61 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
     padding: var(--spacing-xl) var(--spacing-md);
 }
 
@@ -514,7 +514,7 @@ input, textarea, select {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    box-shadow: 0 0 0 3px rgba(6, 156, 111, 0.12);
 }
 
 .form-group input.error {
@@ -618,7 +618,7 @@ input, textarea, select {
 .inline-search input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    box-shadow: 0 0 0 3px rgba(6, 156, 111, 0.12);
 }
 
 /* Layout de restaurantes */
@@ -951,7 +951,7 @@ input, textarea, select {
 .search-menu input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    box-shadow: 0 0 0 3px rgba(6, 156, 111, 0.12);
 }
 
 .menu-section h2 {
@@ -1074,7 +1074,7 @@ input, textarea, select {
 
 .image-upload:hover {
     border-color: var(--primary-color);
-    background-color: rgba(255, 107, 53, 0.05);
+    background-color: rgba(6, 156, 111, 0.08);
 }
 
 .upload-placeholder {

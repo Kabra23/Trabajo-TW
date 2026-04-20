@@ -1,0 +1,28 @@
+/*
+ * PARCHE: añadir esto a styles.css (o a cada CSS de pagina que tenga header)
+ * Soluciona el bug del 3er boton del nav (Cerrar sesion invisible sobre header verde)
+ *
+ * El problema: .btn-primary tiene background:#069c6f y color:#fff
+ * Sobre un header verde (#069c6f), el boton verde desaparece.
+ * Solucion: .btn-logout tiene fondo transparente con borde blanco.
+ */
+
+.btn-logout {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    padding: .5rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background .2s, border-color .2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+}

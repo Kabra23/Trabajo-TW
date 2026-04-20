@@ -19,12 +19,12 @@ public class UsuarioService {
     }
 
     /** Registra un nuevo usuario. Lanza excepción si el email ya existe. */
-    public Usuario registrar(Usuario usuario) {
+    public Usuario registrar(Usuario usuario, String password, String direccion) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("Ya existe una cuenta con ese email");
         }
         // Hash de la contraseña antes de guardar
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setPassword(passwordEncoder.encode(password));
         return usuarioRepository.save(usuario);
     }
 
@@ -32,6 +32,12 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario buscarPorEmailConRestaurantes(String email) {
+        return usuarioRepository.findByEmailWithRestaurantes(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 

@@ -1,0 +1,2 @@
+-- password de todos los usuarios de prueba es Test1234!
+-- Para el admin usar: admin@cume.es / Test1234!

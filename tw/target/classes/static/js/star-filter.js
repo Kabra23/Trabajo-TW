@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         starWrappers.forEach((wrapper, index) => {
             const svg = wrapper.querySelector('.star-icon svg');
             if (index <= upToIndex) {
-                svg.style.color = '#ffa726';
+                svg.style.color = '#069c6f';
                 svg.style.transform = 'scale(1.1)';
             } else {
                 svg.style.color = '#d0d0d0';
@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const svg = wrapper.querySelector('.star-icon svg');
 
             if (checkbox.checked) {
-                svg.style.color = '#ffd700';
-                svg.style.filter = 'drop-shadow(0 0 4px rgba(255, 215, 0, 0.5))';
+                svg.style.color = '#069c6f';
+                svg.style.filter = 'drop-shadow(0 0 4px rgba(6, 156, 111, 0.35))';
                 svg.style.transform = 'scale(1)';
             } else {
                 svg.style.color = '#d0d0d0';

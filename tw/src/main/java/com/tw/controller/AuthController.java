@@ -27,17 +27,13 @@ public class AuthController {
     }
 
     // ---- Login ----
-
     @GetMapping("/login")
     public String loginForm(@RequestParam(required = false) String error, Model model) {
-        if (error != null) {
-            model.addAttribute("error", "Email o contraseña incorrectos");
-        }
+        if (error != null) model.addAttribute("error", "Email o contrasena incorrectos");
         return "login";
     }
 
     // ---- Registro ----
-
     @GetMapping("/registro")
     public String registroForm(Model model) {
         model.addAttribute("usuario", new Usuario());
@@ -47,25 +43,21 @@ public class AuthController {
     @PostMapping("/registro")
     public String registrar(@Valid @ModelAttribute("usuario") Usuario usuario,
                              BindingResult result,
+                             @RequestParam String password,
                              @RequestParam String confirmPassword,
+                             @RequestParam(required = false) String direccionPrincipal,
                              Model model) {
-        // Validar contraseña robusta
-        if (!validarPassword(usuario.getPassword())) {
+        if (!validarPassword(password)) {
             result.rejectValue("password", "password.weak",
-                    "La contraseña debe tener al menos 8 caracteres, mayúscula, minúscula, número y carácter especial");
+                    "La contrasena debe tener al menos 8 caracteres, mayuscula, minuscula, numero y caracter especial");
         }
-        // Validar que coincidan
-        if (usuario.getPassword() != null && !usuario.getPassword().equals(confirmPassword)) {
-            result.rejectValue("password", "password.mismatch", "Las contraseñas no coinciden");
+        if (password != null && !password.equals(confirmPassword)) {
+            result.rejectValue("password", "password.mismatch", "Las contrasenas no coinciden");
         }
-
-        if (result.hasErrors()) {
-            return "registro";
-        }
+        if (result.hasErrors()) return "registro";
 
         try {
-            usuarioService.registrar(usuario);
-            // Req. mínimo 1: mostrar página de éxito con los datos del usuario
+            usuarioService.registrar(usuario, password, direccionPrincipal);
             model.addAttribute("nombre", usuario.getNombre());
             model.addAttribute("apellidos", usuario.getApellidos());
             model.addAttribute("email", usuario.getEmail());
@@ -77,10 +69,9 @@ public class AuthController {
     }
 
     // ---- Perfil ----
-
     @GetMapping("/perfil")
     public String perfil(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
+        Usuario usuario = usuarioService.buscarPorEmailConRestaurantes(userDetails.getUsername());
         model.addAttribute("usuario", usuario);
         return "perfil";
     }
@@ -93,11 +84,10 @@ public class AuthController {
                                 RedirectAttributes flash) {
         Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
 
-        // Subir foto de perfil si se proporcionó (extra imágenes)
         String rutaFoto = null;
         if (fotoFile != null && !fotoFile.isEmpty()) {
             try {
-                imagenService.validarImagen(fotoFile);
+                // CRITICO: guardar en la carpeta correcta que sirve Spring
                 rutaFoto = imagenService.guardar(fotoFile, "usuarios");
             } catch (IOException e) {
                 flash.addFlashAttribute("error", "Error al subir la foto: " + e.getMessage());
@@ -111,20 +101,26 @@ public class AuthController {
     }
 
     @PostMapping("/perfil/eliminar")
-    public String eliminarCuenta(@AuthenticationPrincipal UserDetails userDetails,
-                                  RedirectAttributes flash) {
+    public String eliminarCuenta(@AuthenticationPrincipal UserDetails userDetails) {
         Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
         usuarioService.eliminarCuenta(usuario.getId());
         return "redirect:/logout";
     }
 
-    // ---- Validación de contraseña (req. mínimo 1) ----
+    // ---- Mis restaurantes (pantalla de listado) ----
+    @GetMapping("/mis-restaurantes")
+    public String misRestaurantes(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
+        model.addAttribute("restaurantes", usuario.getRestaurantes());
+        return "mis-restaurantes";
+    }
+
+    // ---- Validacion password ----
     private boolean validarPassword(String pass) {
         if (pass == null || pass.length() < 8) return false;
-        boolean tieneMayuscula = pass.chars().anyMatch(Character::isUpperCase);
-        boolean tieneMinuscula = pass.chars().anyMatch(Character::isLowerCase);
-        boolean tieneNumero    = pass.chars().anyMatch(Character::isDigit);
-        boolean tieneEspecial  = pass.chars().anyMatch(c -> !Character.isLetterOrDigit(c));
-        return tieneMayuscula && tieneMinuscula && tieneNumero && tieneEspecial;
+        return pass.chars().anyMatch(Character::isUpperCase)
+            && pass.chars().anyMatch(Character::isLowerCase)
+            && pass.chars().anyMatch(Character::isDigit)
+            && pass.chars().anyMatch(c -> !Character.isLetterOrDigit(c));
     }
 }

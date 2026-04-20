@@ -1,0 +1,159 @@
+/*
+ * PATCH GLOBAL — anadir al final de styles.css (o a cada CSS de pagina)
+ * Corrige: btn-logout invisible sobre header verde, colores naranja de Just Eat
+ * Paleta: verde principal #069c6f, secundario #038a63, fondo #f5f5f5
+ */
+
+/* =====================================================
+   BOTON CERRAR SESION — visible sobre header verde
+   ===================================================== */
+.btn-logout {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    padding: .5rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background .2s, border-color .2s;
+    display: inline-block;
+    text-decoration: none;
+    line-height: 1.4;
+}
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
+}
+
+/* =====================================================
+   HEADER — fondo siempre verde (sin Just Eat naranja)
+   ===================================================== */
+.main-header {
+    background: #069c6f !important;
+    color: white !important;
+}
+.main-header .logo-main { color: white !important; }
+.main-header .logo-separator { color: rgba(255,255,255,.7) !important; }
+.main-header .logo-secondary { color: rgba(255,255,255,.85) !important; }
+.main-header nav a { color: white !important; }
+.main-header nav a:hover { color: rgba(255,255,255,.8) !important; }
+
+/* =====================================================
+   ETIQUETAS / TAGS — verde en lugar de cualquier naranja
+   ===================================================== */
+.tag {
+    background: #e8f5f1;
+    color: #069c6f;
+    border: 1px solid #b2dfdb;
+    padding: .25rem .75rem;
+    border-radius: 20px;
+    font-size: .85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin: .2rem;
+}
+
+/* =====================================================
+   PLATOS SIN IMAGEN — contenedor sin fondo raro
+   ===================================================== */
+.dish-image:empty,
+.dish-edit-image:empty {
+    display: none;
+}
+.dish-image img,
+.dish-edit-image img {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* =====================================================
+   CATEGORIA PILLS — verde activo, sin naranja
+   ===================================================== */
+.category-pill {
+    display: inline-block;
+    padding: .4rem 1rem;
+    border-radius: 20px;
+    border: 2px solid #e0e0e0;
+    color: #555;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 600;
+    transition: all .2s;
+    margin: .2rem;
+}
+.category-pill:hover,
+.category-pill.active {
+    background: #069c6f;
+    border-color: #069c6f;
+    color: white;
+}
+
+/* =====================================================
+   BOTONES PRINCIPALES — verde, sin naranja
+   ===================================================== */
+.btn-primary {
+    background: #069c6f;
+    color: white;
+    border: none;
+    padding: .6rem 1.4rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background .2s;
+}
+.btn-primary:hover { background: #038a63; }
+
+.btn-secondary {
+    background: transparent;
+    color: #069c6f;
+    border: 2px solid #069c6f;
+    padding: .5rem 1.2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+}
+.btn-secondary:hover {
+    background: #069c6f;
+    color: white;
+}
+
+/* =====================================================
+   FORM CSS — checkbox-group para categorias
+   ===================================================== */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .5rem;
+}
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .4rem .8rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: .9rem;
+    transition: all .2s;
+    background: white;
+}
+.checkbox-label:hover {
+    border-color: #069c6f;
+    color: #069c6f;
+}
+.checkbox-label input[type="checkbox"]:checked + span,
+.checkbox-label:has(input:checked) {
+    color: #069c6f;
+    font-weight: 600;
+}
+.checkbox-label input[type="checkbox"] {
+    accent-color: #069c6f;
+}

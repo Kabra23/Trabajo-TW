@@ -36,39 +36,42 @@ public class RestauranteController {
         this.imagenService = imagenService;
     }
 
-    // -------------------------------------------------------
-    // Listado (req. mínimo 6, 7 y extra ordenar por valoración)
-    // -------------------------------------------------------
+    /**
+     * Listado con filtros server-side (req. minimo 6 y 7).
+     * Sin JS client-side que oculte nada: todos los restaurantes
+     * aparecen por defecto sin necesidad de pulsar ningun boton.
+     *
+     * Parametros:
+     *   filtro    = 'todos' | 'acepta' | 'noAcepta' | 'valoracion'
+     *   categoria = Long ID de categoria
+     *   q         = String busqueda por nombre/localidad
+     */
     @GetMapping("/restaurantes")
-    public String listar(@RequestParam(required = false) String q,
-                         @RequestParam(required = false, defaultValue = "todos") String filtro,
-                         @RequestParam(required = false) Long categoria,
-                         Model model) {
-        List<Restaurante> restaurantes;
+    public String listar(
+            @RequestParam(required = false) String filtro,
+            @RequestParam(required = false) Long categoria,
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) Integer valoracion,
+            @RequestParam(required = false) Integer precio,
+            @RequestParam(required = false) Boolean bikeFriendly,
+            @RequestParam(required = false) String orden,
+            Model model) {
 
-        if (q != null && !q.isBlank()) {
-            restaurantes = restauranteService.buscar(q);
-        } else if (categoria != null) {
-            restaurantes = restauranteService.buscarPorCategoria(categoria);
-        } else {
-            restaurantes = switch (filtro) {
-                case "acepta"     -> restauranteService.listarQueAceptanPedidos();
-                case "noAcepta"   -> restauranteService.listarQueNoAceptanPedidos();
-                case "valoracion" -> restauranteService.listarOrdenadosPorValoracion();
-                default           -> restauranteService.listarTodos();
-            };
-        }
+        List<Restaurante> restaurantes = restauranteService.buscar(q, categoria, filtro, valoracion, precio, bikeFriendly, orden);
 
         model.addAttribute("restaurantes", restaurantes);
         model.addAttribute("categorias", categoriaRepo.findAll());
         model.addAttribute("filtro", filtro);
+        model.addAttribute("categoria", categoria);
         model.addAttribute("q", q);
+        model.addAttribute("valoracion", valoracion);
+        model.addAttribute("precio", precio);
+        model.addAttribute("bikeFriendly", bikeFriendly);
+        model.addAttribute("orden", orden);
         return "restaurantes";
     }
 
-    // -------------------------------------------------------
-    // Detalle
-    // -------------------------------------------------------
+    // Detalle del restaurante
     @GetMapping("/restaurantes/{id}")
     public String detalle(@PathVariable Long id,
                           @AuthenticationPrincipal UserDetails userDetails,
@@ -80,22 +83,22 @@ public class RestauranteController {
             boolean esPropietario = restaurante.getPropietario()
                     .getEmail().equals(userDetails.getUsername());
             model.addAttribute("esPropietario", esPropietario);
-            model.addAttribute("usuarioLogueado", true);
         } else {
             model.addAttribute("esPropietario", false);
-            model.addAttribute("usuarioLogueado", false);
         }
         return "detalle-restaurante";
     }
 
-    // -------------------------------------------------------
-    // Crear restaurante
-    // -------------------------------------------------------
+    // Formulario nuevo restaurante
     @GetMapping("/restaurantes/nuevo")
-    public String nuevoForm(Model model) {
+    public String nuevoForm(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("restaurante", new Restaurante());
         model.addAttribute("categorias", categoriaRepo.findAll());
         model.addAttribute("modo", "crear");
+        if (userDetails != null) {
+            Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
+            model.addAttribute("misRestaurantes", restauranteService.buscarPorPropietario(usuario));
+        }
         return "form-restaurante";
     }
 
@@ -109,19 +112,15 @@ public class RestauranteController {
         if (result.hasErrors()) {
             model.addAttribute("categorias", categoriaRepo.findAll());
             model.addAttribute("modo", "crear");
-            return "form-restaurante";
+            return "editar-restaurante";
         }
-        // Subir imagen si se proporcionó
         subirImagen(restaurante, imagenFile);
-
         restauranteService.crear(restaurante, userDetails.getUsername(), categoriaIds);
         flash.addFlashAttribute("exito", "Restaurante creado correctamente");
         return "redirect:/restaurantes";
     }
 
-    // -------------------------------------------------------
-    // Editar restaurante (solo propietario — req. mínimo 2)
-    // -------------------------------------------------------
+    // Editar restaurante (solo propietario - req. minimo 2)
     @GetMapping("/restaurantes/{id}/editar")
     public String editarForm(@PathVariable Long id,
                              @AuthenticationPrincipal UserDetails userDetails,
@@ -145,7 +144,7 @@ public class RestauranteController {
         if (result.hasErrors()) {
             model.addAttribute("categorias", categoriaRepo.findAll());
             model.addAttribute("modo", "editar");
-            return "form-restaurante";
+            return "editar-restaurante";
         }
         try {
             subirImagen(datos, imagenFile);
@@ -157,9 +156,6 @@ public class RestauranteController {
         return "redirect:/restaurantes/" + id;
     }
 
-    // -------------------------------------------------------
-    // Eliminar (solo propietario)
-    // -------------------------------------------------------
     @PostMapping("/restaurantes/{id}/eliminar")
     public String eliminar(@PathVariable Long id,
                            @AuthenticationPrincipal UserDetails userDetails,
@@ -173,9 +169,7 @@ public class RestauranteController {
         return "redirect:/restaurantes";
     }
 
-    // -------------------------------------------------------
-    // Cambiar estado acepta/no acepta pedidos (req. mínimo 7)
-    // -------------------------------------------------------
+    // Cambiar estado acepta/no acepta pedidos (req. minimo 7)
     @PostMapping("/restaurantes/{id}/estado")
     public String cambiarEstado(@PathVariable Long id,
                                 @RequestParam boolean aceptaPedidos,
@@ -183,19 +177,16 @@ public class RestauranteController {
                                 RedirectAttributes flash) {
         try {
             restauranteService.cambiarEstado(id, aceptaPedidos, userDetails.getUsername());
-            String msg = aceptaPedidos
+            flash.addFlashAttribute("exito", aceptaPedidos
                     ? "El restaurante ahora acepta pedidos"
-                    : "El restaurante ya no acepta pedidos";
-            flash.addFlashAttribute("exito", msg);
+                    : "El restaurante ya no acepta pedidos");
         } catch (SecurityException e) {
             flash.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/restaurantes/" + id;
     }
 
-    // -------------------------------------------------------
     // Favoritos (extra)
-    // -------------------------------------------------------
     @PostMapping("/restaurantes/{id}/favorito")
     public String toggleFavorito(@PathVariable Long id,
                                  @AuthenticationPrincipal UserDetails userDetails,
@@ -204,11 +195,11 @@ public class RestauranteController {
         return "redirect:/restaurantes/" + id;
     }
 
-    // ---- utilidades ----
+    // --- utilidades ---
 
     private void verificarPropietario(Restaurante r, String email) {
         if (!r.getPropietario().getEmail().equals(email)) {
-            throw new SecurityException("No tienes permiso");
+            throw new SecurityException("No tienes permiso para editar este restaurante");
         }
     }
 
@@ -219,7 +210,7 @@ public class RestauranteController {
                 String ruta = imagenService.guardar(file, "restaurantes");
                 restaurante.setImagen(ruta);
             } catch (IOException e) {
-                System.err.println("Error al subir imagen del restaurante: " + e.getMessage());
+                System.err.println("Error al subir imagen: " + e.getMessage());
             }
         }
     }

@@ -194,113 +194,99 @@ body {
     font-weight: 600;
 }
 
-.filter-checkbox,
-.filter-radio {
-    display: flex;
+.filter-link {
+    display: inline-flex;
     align-items: center;
-    margin-bottom: 0.8rem;
-    cursor: pointer;
-}
-
-.filter-checkbox input,
-.filter-radio input {
-    margin-right: 0.8rem;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: #069c6f;
-}
-
-.filter-checkbox span,
-.filter-radio span {
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    border: 2px solid #e0e0e0;
     color: #555;
+    font-size: 0.92rem;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.filter-link:hover {
+    border-color: #069c6f;
+    color: #069c6f;
+    background: #e8f5f1;
+}
+
+.filter-link.active {
+    border-color: #069c6f;
+    background: #069c6f;
+    color: #fff;
+}
+
+.sort-select select {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
     font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sort-select select:focus {
+    outline: none;
+    border-color: #069c6f;
+    box-shadow: 0 0 0 3px rgba(6, 156, 111, 0.12);
 }
 
 /* Star Rating Filter - Estilo Just Eat */
 .star-rating-filter {
-    display: flex;
-    gap: 0.3rem;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    gap: 0.6rem;
 }
 
-.star-filter-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.star-checkbox {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-}
-
-.star-label {
+.rating-filter-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-    border-radius: 0;
-    transition: none;
-    background-color: transparent;
+    gap: 0.6rem;
+    text-decoration: none;
+    padding: 0.5rem 0.7rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    color: #555;
+    transition: all 0.2s ease;
 }
 
-.star-label:hover {
-    background-color: transparent;
+.rating-filter-link:hover {
+    background: #e8f5f1;
+    border-color: #d6ede6;
+    color: #069c6f;
 }
 
-.star-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
+.rating-filter-link.active {
+    background: #e8f5f1;
+    border-color: #069c6f;
+    color: #069c6f;
+    font-weight: 700;
 }
 
-.star-icon svg {
+.rating-stars {
+    display: inline-flex;
+    gap: 0.15rem;
+}
+
+.rating-star {
     color: #d0d0d0;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estado hover */
-.star-label:hover .star-icon svg {
-    color: #ffa726;
-    transform: scale(1.1);
+.rating-star.star-filled {
+    color: #069c6f;
 }
 
-/* Estado checked */
-.star-checkbox:checked + .star-label .star-icon svg {
-    color: #ffd700;
-    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
-}
-
-/* Animación al hacer click */
-.star-checkbox:checked + .star-label .star-icon svg {
-    animation: starPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes starPop {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Accesibilidad - Focus (solo teclado) */
-.star-checkbox:focus-visible + .star-label {
-    outline: 2px solid #069c6f;
-    outline-offset: 2px;
-    border-radius: 6px;
+.rating-text {
+    font-size: 0.9rem;
 }
 
 .star-rating {
@@ -325,19 +311,6 @@ body {
     font-size: 1.8rem;
 }
 
-.filter-link {
-    background: none;
-    border: none;
-    color: #069c6f;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-
-.filter-link:hover {
-    color: #048566;
-}
 
 /* Category Filters */
 .category-filters {

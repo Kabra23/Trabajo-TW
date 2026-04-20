@@ -72,7 +72,8 @@ public class ValoracionService {
 
         Valoracion guardada = valoracionRepo.save(valoracion);
 
-        // Recalcular media del restaurante
+        // Recalcular media del restaurante con la coleccion en memoria
+        restaurante.getValoraciones().add(guardada);
         restaurante.recalcularMedia();
         restauranteRepo.save(restaurante);
 
@@ -112,6 +113,7 @@ public class ValoracionService {
         valoracionRepo.delete(valoracion);
 
         // Recalcular media del restaurante
+        restaurante.getValoraciones().remove(valoracion);
         restaurante.recalcularMedia();
         restauranteRepo.save(restaurante);
     }

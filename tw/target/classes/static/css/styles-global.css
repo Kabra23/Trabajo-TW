@@ -1,0 +1,249 @@
+/* ============================================================
+   STYLES GLOBAL — CUMe y Calla
+   Paleta: principal #069c6f | secundario #038a63 | fondo #f5f5f5
+   Incluir al final de styles.css (o importar en cada CSS de pagina)
+   ============================================================ */
+
+/* ===== RESET BASE ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ===== VARIABLES DE COLOR ===== */
+:root {
+    --verde:     #069c6f;
+    --verde-dark:#038a63;
+    --verde-bg:  #e8f5f1;
+    --rojo:      #d32f2f;
+    --fondo:     #f5f5f5;
+    --texto:     #333333;
+    --gris:      #888888;
+    --borde:     #e0e0e0;
+}
+
+/* ===== HEADER — SIEMPRE VERDE ===== */
+.main-header {
+    background: var(--verde) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.main-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+.main-header .logo h1 { margin: 0; font-size: 1.6rem; }
+.main-header .logo-main    { color: white; font-weight: 800; }
+.main-header .logo-separator { color: rgba(255,255,255,.7); margin: 0 .3rem; }
+.main-header .logo-secondary { color: rgba(255,255,255,.9); font-weight: 600; }
+
+.main-header nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 0;
+    padding: 0;
+}
+.main-header nav a {
+    color: white !important;
+    text-decoration: none;
+    font-weight: 500;
+    padding: .4rem .5rem;
+    border-radius: 6px;
+    transition: background .2s;
+}
+.main-header nav a:hover { background: rgba(255,255,255,.15); }
+
+/* ===== BOTON CERRAR SESION — visible sobre fondo verde ===== */
+.btn-logout {
+    background: transparent;
+    color: #ffffff !important;
+    border: 2px solid rgba(255,255,255,.75);
+    padding: .45rem 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .95rem;
+    font-weight: 600;
+    transition: background .2s, border-color .2s;
+    display: inline-block;
+    line-height: 1.4;
+}
+.btn-logout:hover {
+    background: rgba(255,255,255,.2);
+    border-color: white;
+}
+
+/* ===== BOTONES PRINCIPALES ===== */
+.btn-primary {
+    background: var(--verde);
+    color: white !important;
+    border: none;
+    padding: .6rem 1.4rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background .2s;
+    font-size: 1rem;
+}
+.btn-primary:hover { background: var(--verde-dark); }
+
+.btn-secondary {
+    background: transparent;
+    color: var(--verde) !important;
+    border: 2px solid var(--verde);
+    padding: .5rem 1.2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+}
+.btn-secondary:hover {
+    background: var(--verde);
+    color: white !important;
+}
+
+/* ===== HEADER SIMPLE (login/registro) ===== */
+.simple-header {
+    background: var(--verde);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.simple-header .back-link { color: white; text-decoration: none; font-weight: 600; }
+.simple-header .logo h1 { margin: 0; color: white; font-size: 1.4rem; }
+
+/* ===== PILLS DE CATEGORIA ===== */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+}
+.category-pill {
+    display: inline-block;
+    padding: .4rem 1rem;
+    border-radius: 20px;
+    border: 2px solid var(--borde);
+    color: #555;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 600;
+    transition: all .2s;
+}
+.category-pill:hover, .category-pill.active {
+    background: var(--verde);
+    border-color: var(--verde);
+    color: white;
+}
+
+/* ===== TAGS / ETIQUETAS ===== */
+.tag {
+    background: var(--verde-bg);
+    color: var(--verde);
+    border: 1px solid #b2dfdb;
+    padding: .25rem .75rem;
+    border-radius: 20px;
+    font-size: .85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin: .2rem;
+}
+
+/* ===== CHECKBOXES CATEGORIAS (pill-style) ===== */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .5rem;
+}
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .4rem .9rem;
+    border: 2px solid var(--borde);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: .9rem;
+    transition: all .2s;
+    background: white;
+    user-select: none;
+}
+.checkbox-label:hover { border-color: var(--verde); color: var(--verde); }
+.checkbox-label input[type="checkbox"] { accent-color: var(--verde); }
+.checkbox-label:has(input:checked) {
+    background: var(--verde-bg);
+    border-color: var(--verde);
+    color: var(--verde);
+    font-weight: 600;
+}
+
+/* ===== RADIO BUTTONS ===== */
+.radio-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .5rem; }
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    cursor: pointer;
+    font-size: .95rem;
+}
+.radio-label input[type="radio"] { accent-color: var(--verde); }
+
+/* ===== FORMULARIOS ===== */
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { font-weight: 600; display: block; margin-bottom: .4rem; color: var(--texto); }
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: .8rem;
+    border: 2px solid var(--borde);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color .2s;
+    background: white;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--verde);
+}
+.error-message { color: var(--rojo); font-size: .85rem; display: block; margin-top: .3rem; }
+
+/* ===== MENSAJES FLASH ===== */
+.msg-exito {
+    background: var(--verde-bg);
+    color: var(--verde);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--verde);
+    margin-bottom: 1rem;
+}
+.msg-error {
+    background: #ffebee;
+    color: var(--rojo);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--rojo);
+    margin-bottom: 1rem;
+}
+
+/* ===== FILTROS SIDEBAR ===== */
+.filter-radio { margin-bottom: .4rem; }
+.filter-radio a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: .5rem; padding: .3rem 0; }
+.filter-radio a.filter-active { color: var(--verde); font-weight: 700; }
+.filter-section { margin-bottom: 1.5rem; }
+.filter-section h3 { font-size: .95rem; color: #555; margin-bottom: .6rem; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ===== CONTAINER ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ===== ELIMINAR CUALQUIER NARANJA residual ===== */
+/* Sobrescribe cualquier color naranja que pueda quedar de Just Eat */
+[style*="f57c00"], [style*="ff6900"], [style*="ff8c00"], [style*="orange"] {
+    color: var(--verde) !important;
+}

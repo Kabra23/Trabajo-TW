@@ -350,6 +350,40 @@ body {
     border-color: #069c6f;
 }
 
+.dish-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-edit-dish {
+    border: 2px solid #069c6f;
+    color: #069c6f;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-edit-dish:hover {
+    background: #069c6f;
+    color: white;
+}
+
+.btn-delete-dish {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
 .dish-info h3 {
     color: #333;
     font-size: 1.2rem;

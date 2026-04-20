@@ -3,7 +3,8 @@ package com.tw.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurantes")
@@ -14,77 +15,76 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // --- Campos requeridos por el enunciado ---
-
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(nullable = false)
-    private String nombre;          // Text
+    private String nombre;
 
-    @NotBlank
+    @NotBlank(message = "La dirección es obligatoria")
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String direccion;       // Textarea
+    private String direccion;
 
-    @NotBlank
+    @NotBlank(message = "El teléfono es obligatorio")
     @Column(nullable = false)
-    private String telefono;        // Tel
+    private String telefono;
 
-    @Email
-    @NotBlank
+    @Email(message = "El correo no es válido")
+    @NotBlank(message = "El correo de contacto es obligatorio")
     @Column(nullable = false)
-    private String email;           // Email
+    private String email;
 
-    @Min(0)
-    private Double precioMin;       // Number (rango precio)
+    @Min(value = 0, message = "El precio no puede ser negativo")
+    private Double precioMin;
 
-    @Min(0)
-    private Double precioMax;       // Number (rango precio)
+    @Min(value = 0, message = "El precio no puede ser negativo")
+    private Double precioMax;
 
-    private Double mediaValoraciones; // calculado automáticamente
+    private Double mediaValoraciones;
 
-    private Boolean bikeFriendly;   // Radio button Sí/No
+    private Boolean bikeFriendly;
 
-    // Estado para req. mínimo 7
     @Builder.Default
     private Boolean aceptaPedidos = true;
 
-    // Extra: imagen del restaurante
     private String imagen;
+    private String imagenBanner;
 
-    // Localidad para búsqueda (req. mínimo 6)
     private String localidad;
-
-    // --- Relaciones ---
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propietario_id", nullable = false)
     private Usuario propietario;
 
-    @ManyToMany
+    // CORRECCIÓN PROBLEMA 2: EAGER para evitar LazyInitializationException
+    // cuando Thymeleaf accede a categorias fuera de la sesión JPA
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "restaurante_categorias",
             joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private List<Categoria> categorias;
+    @Builder.Default
+    private Set<Categoria> categorias = new HashSet<>();
+
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Builder.Default
+    private Set<Plato> platos = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Plato> platos;
-
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Valoracion> valoraciones;
+    @Builder.Default
+    private Set<Valoracion> valoraciones = new HashSet<>();
 
     @ManyToMany(mappedBy = "favoritos")
-    private List<Usuario> usuariosQueFavorecen;
+    @Builder.Default
+    private Set<Usuario> usuariosQueFavorecen = new HashSet<>();
 
-     // Método de utilidad: recalcular media
-     public void recalcularMedia() {
-         if (valoraciones == null || valoraciones.isEmpty()) {
-             this.mediaValoraciones = 0.0;
-         } else {
-             this.mediaValoraciones = valoraciones.stream()
-                     .mapToDouble(Valoracion::getPuntuacion)
-                     .average()
-                     .orElse(0.0);
-         }
-     }
+    public void recalcularMedia() {
+        if (valoraciones == null || valoraciones.isEmpty()) {
+            this.mediaValoraciones = 0.0;
+        } else {
+            this.mediaValoraciones = valoraciones.stream()
+                    .mapToDouble(Valoracion::getPuntuacion)
+                    .average()
+                    .orElse(0.0);
+        }
+    }
 }
