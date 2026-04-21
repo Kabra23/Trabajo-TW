@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - CUMe y Calla'">CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        /* Asegurar que el header siempre sea verde en todas las páginas que usen este layout */
+        .main-header { background:#069c6f !important; }
+        .main-header .logo-main,
+        .main-header .logo-separator,
+        .main-header .logo-secondary { color:white !important; }
+        .main-header .main-nav a { color:white !important; }
+        .main-header .main-nav a:hover { background:rgba(255,255,255,.15) !important; border-radius:20px; }
+        .btn-link { background:none;border:none;color:white;cursor:pointer;font-family:inherit;font-size:inherit;font-weight:500;padding:.5rem 1rem; }
+        .btn-link:hover { background:rgba(255,255,255,.15);border-radius:20px; }
+        /* Badge mensajes no leidos */
+        .nav-badge { background:#d32f2f;color:white;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;vertical-align:middle;margin-left:.25rem; }
+    </style>
+</head>
+
+<header th:fragment="header" class="main-header">
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}" style="text-decoration:none">
+                <h1>
+                    <span class="logo-main">CUMe</span>
+                    <span class="logo-separator">y</span>
+                    <span class="logo-secondary">Calla</span>
+                </h1>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+                <li><a th:href="@{/busqueda}">Busqueda avanzada</a></li>
+
+                <!-- Autenticado -->
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/restaurantes/nuevo}">+ Mi restaurante</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/mensajes}">
+                        Mensajes
+                        <!-- El contador de no leidos se incluye aqui si se pasa noLeidos al modelo -->
+                        <span th:if="${noLeidosNav != null and noLeidosNav > 0}"
+                              class="nav-badge" th:text="${noLeidosNav}">0</span>
+                    </a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/perfil}">
+                        <span sec:authentication="name">Usuario</span>
+                    </a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-link">Cerrar sesion</button>
+                    </form>
+                </li>
+
+                <!-- No autenticado -->
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Inicia sesion</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/registro}">Registrate</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div th:fragment="mensajes">
+    <div th:if="${exito}"
+         style="background:#e8f5f1;color:#069c6f;padding:1rem;border-radius:8px;border-left:4px solid #069c6f;margin-bottom:1rem;"
+         th:text="${exito}"></div>
+    <div th:if="${error}"
+         style="background:#ffebee;color:#d32f2f;padding:1rem;border-radius:8px;border-left:4px solid #d32f2f;margin-bottom:1rem;"
+         th:text="${error}"></div>
+</div>
+
+<footer th:fragment="footer" class="main-footer">
+    <div class="container">
+        <p>&copy; 2025 CUMe y Calla &mdash; Proyecto Tecnologias Web UEx</p>
+    </div>
+</footer>
+
+</html>

@@ -36,9 +36,7 @@ public class RestauranteController {
         this.imagenService = imagenService;
     }
 
-    /**
-     * Listado con filtros server-side (req. minimo 6 y 7).
-     */
+    // ---- Listado principal con filtros (req. mínimo 6 y 7) ----
     @GetMapping("/restaurantes")
     public String listar(
             @RequestParam(required = false) String filtro,
@@ -63,7 +61,7 @@ public class RestauranteController {
         model.addAttribute("bikeFriendly", bikeFriendly);
         model.addAttribute("orden", orden);
 
-        // Dirección principal del usuario logueado (para mostrar en la cabecera)
+        // Dirección del usuario logueado
         if (userDetails != null) {
             try {
                 Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
@@ -77,13 +75,46 @@ public class RestauranteController {
         return "restaurantes";
     }
 
-    // Detalle del restaurante
+    // ---- Búsqueda avanzada (extra 3) ----
+    @GetMapping("/busqueda")
+    public String busquedaAvanzada(
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) Long categoria,
+            @RequestParam(required = false) String localidad,
+            @RequestParam(required = false) Double precioMin,
+            @RequestParam(required = false) Double precioMax,
+            Model model) {
+
+        List<Restaurante> resultados = null;
+        boolean buscado = q != null || categoria != null || localidad != null
+                || precioMin != null || precioMax != null;
+
+        if (buscado) {
+            resultados = restauranteService.busquedaAvanzada(q, categoria, localidad, precioMin, precioMax);
+        }
+
+        model.addAttribute("resultados", resultados);
+        model.addAttribute("categorias", categoriaRepo.findAll());
+        model.addAttribute("q", q);
+        model.addAttribute("categoria", categoria);
+        model.addAttribute("localidad", localidad);
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
+        model.addAttribute("buscado", buscado);
+        return "busqueda-avanzada";
+    }
+
+    // ---- Detalle del restaurante ----
     @GetMapping("/restaurantes/{id}")
     public String detalle(@PathVariable Long id,
                           @AuthenticationPrincipal UserDetails userDetails,
                           Model model) {
         Restaurante restaurante = restauranteService.buscarPorId(id);
         model.addAttribute("restaurante", restaurante);
+
+        // Restaurantes relacionados (extra 4)
+        List<Restaurante> relacionados = restauranteService.buscarRelacionados(restaurante);
+        model.addAttribute("relacionados", relacionados);
 
         if (userDetails != null) {
             boolean esPropietario = restaurante.getPropietario()
@@ -95,7 +126,22 @@ public class RestauranteController {
         return "detalle-restaurante";
     }
 
-    // Formulario nuevo restaurante
+    // ---- Guardar etiquetas del menú (tabs editables) ----
+    @PostMapping("/restaurantes/{id}/etiquetas")
+    public String guardarEtiquetas(@PathVariable Long id,
+                                   @RequestParam String etiquetasMenu,
+                                   @AuthenticationPrincipal UserDetails userDetails,
+                                   RedirectAttributes flash) {
+        try {
+            restauranteService.guardarEtiquetasMenu(id, etiquetasMenu, userDetails.getUsername());
+            flash.addFlashAttribute("exito", "Etiquetas del menu actualizadas");
+        } catch (SecurityException e) {
+            flash.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/restaurantes/" + id;
+    }
+
+    // ---- Formulario nuevo restaurante ----
     @GetMapping("/restaurantes/nuevo")
     public String nuevoForm(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("restaurante", new Restaurante());
@@ -126,7 +172,7 @@ public class RestauranteController {
         return "redirect:/restaurantes";
     }
 
-    // Editar restaurante (solo propietario - req. minimo 2)
+    // ---- Editar restaurante ----
     @GetMapping("/restaurantes/{id}/editar")
     public String editarForm(@PathVariable Long id,
                              @AuthenticationPrincipal UserDetails userDetails,
@@ -175,7 +221,7 @@ public class RestauranteController {
         return "redirect:/restaurantes";
     }
 
-    // Cambiar estado acepta/no acepta pedidos (req. minimo 7)
+    // ---- Estado acepta/no acepta pedidos (req. mínimo 7) ----
     @PostMapping("/restaurantes/{id}/estado")
     public String cambiarEstado(@PathVariable Long id,
                                 @RequestParam boolean aceptaPedidos,
@@ -192,7 +238,7 @@ public class RestauranteController {
         return "redirect:/restaurantes/" + id;
     }
 
-    // Favoritos (extra)
+    // ---- Favoritos (extra) ----
     @PostMapping("/restaurantes/{id}/favorito")
     public String toggleFavorito(@PathVariable Long id,
                                  @AuthenticationPrincipal UserDetails userDetails,
@@ -201,7 +247,7 @@ public class RestauranteController {
         return "redirect:/restaurantes/" + id;
     }
 
-    // --- utilidades ---
+    // ---- Utilidades ----
 
     private void verificarPropietario(Restaurante r, String email) {
         if (!r.getPropietario().getEmail().equals(email)) {

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensajes - CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body { background:#f5f7fa; font-family:'Segoe UI',sans-serif; margin:0; }
+        .main-header { background:#069c6f; }
+        .main-header .logo-main,.main-header nav a,.main-header .logo-separator,.main-header .logo-secondary { color:white; }
+        .btn-logout { background:transparent;color:#fff;border:2px solid rgba(255,255,255,.75);padding:.45rem 1.1rem;border-radius:25px;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:600; }
+
+        .page-wrap { max-width:860px;margin:2rem auto;padding:0 1.5rem; }
+        .page-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem; }
+        .page-header h1 { color:#069c6f;font-size:1.8rem;margin:0; }
+        .btn-new-msg { background:#069c6f;color:white;padding:.7rem 1.5rem;border-radius:25px;text-decoration:none;font-weight:700;font-size:.95rem;transition:background .2s; }
+        .btn-new-msg:hover { background:#038a63; }
+
+        /* Tabs */
+        .msg-tabs { display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:1.5rem; }
+        .msg-tab {
+            padding:.85rem 1.8rem;color:#666;text-decoration:none;font-weight:600;font-size:.93rem;
+            border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;display:flex;align-items:center;gap:.5rem;
+        }
+        .msg-tab:hover { color:#069c6f; }
+        .msg-tab.active { color:#069c6f;border-bottom-color:#069c6f; }
+        .badge-count {
+            background:#d32f2f;color:white;border-radius:50%;width:20px;height:20px;
+            display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;
+        }
+
+        /* Mensajes flash */
+        .msg-ok { background:#e8f5f1;color:#069c6f;padding:1rem;border-radius:8px;border-left:4px solid #069c6f;margin-bottom:1rem; }
+        .msg-err { background:#ffebee;color:#d32f2f;padding:1rem;border-radius:8px;border-left:4px solid #d32f2f;margin-bottom:1rem; }
+
+        /* Lista de mensajes */
+        .msg-list { display:grid;gap:.6rem; }
+        .msg-item {
+            background:white;border-radius:10px;padding:1.1rem 1.3rem;
+            box-shadow:0 1px 6px rgba(0,0,0,.06);display:flex;gap:1rem;align-items:flex-start;
+            border-left:4px solid transparent;transition:all .2s;cursor:pointer;text-decoration:none;color:inherit;
+        }
+        .msg-item:hover { box-shadow:0 4px 14px rgba(0,0,0,.1);transform:translateY(-1px); }
+        .msg-item.no-leido { border-left-color:#069c6f;background:#fafffe; }
+        .msg-avatar {
+            width:42px;height:42px;border-radius:50%;background:#e8f5f1;color:#069c6f;
+            display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;flex-shrink:0;
+        }
+        .msg-body { flex:1;min-width:0; }
+        .msg-who { font-weight:700;color:#333;font-size:.92rem; }
+        .msg-subject { color:#555;font-size:.9rem;margin:.1rem 0; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .msg-subject.no-leido { color:#069c6f;font-weight:600; }
+        .msg-preview { color:#aaa;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .msg-meta { text-align:right;flex-shrink:0; }
+        .msg-fecha { color:#bbb;font-size:.78rem;white-space:nowrap; }
+        .dot-noread { width:8px;height:8px;border-radius:50%;background:#069c6f;display:inline-block;margin-top:.4rem; }
+
+        /* Estado vacío */
+        .empty-msg { text-align:center;padding:3.5rem 2rem;background:white;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.06); }
+        .empty-msg svg { opacity:.25;margin-bottom:1rem; }
+        .empty-msg p { color:#888;font-size:1rem; }
+
+        /* Eliminar inline */
+        .msg-del-form { display:inline; }
+        .btn-del-mini {
+            background:none;border:none;color:#ccc;cursor:pointer;font-size:1.1rem;
+            padding:.2rem .4rem;border-radius:6px;transition:color .2s;line-height:1;font-family:inherit;
+        }
+        .btn-del-mini:hover { color:#d32f2f; }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}" style="text-decoration:none">
+                <h1><span class="logo-main">CUMe</span><span class="logo-separator">y</span><span class="logo-secondary">Calla</span></h1>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+                <li><a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a></li>
+                <li><a th:href="@{/perfil}"><span sec:authentication="name">Mi perfil</span></a></li>
+                <li>
+                    <form th:action="@{/logout}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-logout">Cerrar sesion</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="page-wrap">
+    <div class="page-header">
+        <h1>
+            Mensajes
+            <span th:if="${noLeidos > 0}"
+                  style="background:#d32f2f;color:white;font-size:.7rem;padding:.15rem .55rem;border-radius:12px;vertical-align:middle;font-weight:700;"
+                  th:text="${noLeidos} + ' nuevo' + (${noLeidos} > 1 ? 's' : '')">1 nuevo</span>
+        </h1>
+        <a th:href="@{/mensajes/nuevo}" class="btn-new-msg">+ Nuevo mensaje</a>
+    </div>
+
+    <div th:if="${exito}" class="msg-ok" th:text="${exito}"></div>
+    <div th:if="${error}" class="msg-err" th:text="${error}"></div>
+
+    <!-- Tabs -->
+    <nav class="msg-tabs">
+        <a th:href="@{/mensajes(tab='entrada')}"
+           class="msg-tab" th:classappend="${tab == 'entrada'} ? ' active' : ''">
+            Recibidos
+            <span th:if="${noLeidos > 0}" class="badge-count" th:text="${noLeidos}">0</span>
+        </a>
+        <a th:href="@{/mensajes(tab='enviados')}"
+           class="msg-tab" th:classappend="${tab == 'enviados'} ? ' active' : ''">
+            Enviados
+        </a>
+    </nav>
+
+    <!-- BANDEJA ENTRADA -->
+    <div th:if="${tab == 'entrada'}">
+        <div th:if="${#lists.isEmpty(entrada)}" class="empty-msg">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="#069c6f">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <p>Tu bandeja de entrada esta vacia.</p>
+            <a th:href="@{/mensajes/nuevo}" style="color:#069c6f;font-weight:600;text-decoration:none;">Enviar un mensaje</a>
+        </div>
+        <div class="msg-list" th:unless="${#lists.isEmpty(entrada)}">
+            <div th:each="m : ${entrada}"
+                 class="msg-item"
+                 th:classappend="${!m.leido} ? ' no-leido' : ''">
+                <a th:href="@{/mensajes/{id}(id=${m.id})}" style="display:flex;gap:1rem;flex:1;text-decoration:none;color:inherit;align-items:flex-start;">
+                    <div class="msg-avatar"
+                         th:text="${#strings.substring(m.remitente.nombre,0,1).toUpperCase()}">A</div>
+                    <div class="msg-body">
+                        <div class="msg-who" th:text="${m.remitente.nombre} + ' ' + ${m.remitente.apellidos}">Remitente</div>
+                        <div class="msg-subject" th:classappend="${!m.leido} ? ' no-leido' : ''" th:text="${m.asunto}">Asunto</div>
+                        <div class="msg-preview" th:text="${#strings.abbreviate(m.contenido, 80)}">Contenido...</div>
+                    </div>
+                    <div class="msg-meta">
+                        <div class="msg-fecha" th:text="${#temporals.format(m.fecha,'dd/MM HH:mm')}">Fecha</div>
+                        <div th:if="${!m.leido}" class="dot-noread"></div>
+                    </div>
+                </a>
+                <form th:action="@{/mensajes/{id}/eliminar(id=${m.id})}" method="post" class="msg-del-form">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="hidden" name="tab" value="entrada">
+                    <button type="submit" class="btn-del-mini" title="Eliminar"
+                            onclick="return confirm('Eliminar este mensaje?')">&#x2715;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENVIADOS -->
+    <div th:if="${tab == 'enviados'}">
+        <div th:if="${#lists.isEmpty(enviados)}" class="empty-msg">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="#069c6f">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+            <p>Todavia no has enviado ningun mensaje.</p>
+            <a th:href="@{/mensajes/nuevo}" style="color:#069c6f;font-weight:600;text-decoration:none;">Enviar el primero</a>
+        </div>
+        <div class="msg-list" th:unless="${#lists.isEmpty(enviados)}">
+            <div th:each="m : ${enviados}" class="msg-item">
+                <a th:href="@{/mensajes/{id}(id=${m.id})}" style="display:flex;gap:1rem;flex:1;text-decoration:none;color:inherit;align-items:flex-start;">
+                    <div class="msg-avatar"
+                         th:text="${#strings.substring(m.destinatario.nombre,0,1).toUpperCase()}">B</div>
+                    <div class="msg-body">
+                        <div class="msg-who">
+                            Para: <span th:text="${m.destinatario.nombre} + ' ' + ${m.destinatario.apellidos}">Dest</span>
+                        </div>
+                        <div class="msg-subject" th:text="${m.asunto}">Asunto</div>
+                        <div class="msg-preview" th:text="${#strings.abbreviate(m.contenido, 80)}">Contenido...</div>
+                    </div>
+                    <div class="msg-meta">
+                        <div class="msg-fecha" th:text="${#temporals.format(m.fecha,'dd/MM HH:mm')}">Fecha</div>
+                        <div th:if="${m.leido}"
+                             style="font-size:.72rem;color:#069c6f;font-weight:600;margin-top:.2rem;">Leido</div>
+                    </div>
+                </a>
+                <form th:action="@{/mensajes/{id}/eliminar(id=${m.id})}" method="post" class="msg-del-form">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="hidden" name="tab" value="enviados">
+                    <button type="submit" class="btn-del-mini" title="Eliminar"
+                            onclick="return confirm('Eliminar este mensaje?')">&#x2715;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
