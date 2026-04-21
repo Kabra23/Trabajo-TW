@@ -156,8 +156,8 @@ public class RestauranteController {
     public String crear(@Valid @ModelAttribute("restaurante") Restaurante restaurante,
                         BindingResult result,
                         @RequestParam(required = false) List<Long> categoriaIds,
-                        @RequestParam(required = false) MultipartFile imagenFile,
-                        @RequestParam(required = false) MultipartFile imagenBannerFile,
+                        @RequestParam(value = "imagenFile", required = false) MultipartFile imagenFile,
+                        @RequestParam(value = "imagenBannerFile", required = false) MultipartFile imagenBannerFile,
                         @AuthenticationPrincipal UserDetails userDetails,
                         Model model, RedirectAttributes flash) {
         if (result.hasErrors()) {
@@ -165,14 +165,21 @@ public class RestauranteController {
             model.addAttribute("modo", "crear");
             return "form-restaurante";
         }
-        // Subir imagen principal (tarjeta)
-        subirImagenPrincipal(restaurante, imagenFile);
-        // Subir imagen banner
-        subirImagenBanner(restaurante, imagenBannerFile);
+        try {
+            // Subir imagen principal (tarjeta)
+            subirImagenPrincipal(restaurante, imagenFile);
+            // Subir imagen banner
+            subirImagenBanner(restaurante, imagenBannerFile);
 
-        restauranteService.crear(restaurante, userDetails.getUsername(), categoriaIds);
-        flash.addFlashAttribute("exito", "Restaurante creado correctamente");
-        return "redirect:/restaurantes";
+            restauranteService.crear(restaurante, userDetails.getUsername(), categoriaIds);
+            flash.addFlashAttribute("exito", "Restaurante creado correctamente");
+            return "redirect:/restaurantes";
+        } catch (Exception e) {
+            model.addAttribute("categorias", categoriaRepo.findAll());
+            model.addAttribute("modo", "crear");
+            model.addAttribute("error", e.getMessage());
+            return "form-restaurante";
+        }
     }
 
     // ---- Editar restaurante ----
@@ -193,8 +200,8 @@ public class RestauranteController {
                          @Valid @ModelAttribute("restaurante") Restaurante datos,
                          BindingResult result,
                          @RequestParam(required = false) List<Long> categoriaIds,
-                         @RequestParam(required = false) MultipartFile imagenFile,
-                         @RequestParam(required = false) MultipartFile imagenBannerFile,
+                         @RequestParam(value = "imagenFile", required = false) MultipartFile imagenFile,
+                         @RequestParam(value = "imagenBannerFile", required = false) MultipartFile imagenBannerFile,
                          @AuthenticationPrincipal UserDetails userDetails,
                          Model model, RedirectAttributes flash) {
         if (result.hasErrors()) {
@@ -203,30 +210,34 @@ public class RestauranteController {
             return "form-restaurante";
         }
         try {
-            // Subir imagen principal si se proporcionó una nueva
+            // Subir imagen principal si se proporciono una nueva
             subirImagenPrincipal(datos, imagenFile);
-            // Subir imagen banner si se proporcionó una nueva
+            // Subir imagen banner si se proporciono una nueva
             subirImagenBanner(datos, imagenBannerFile);
 
             restauranteService.actualizar(id, datos, userDetails.getUsername(), categoriaIds);
             flash.addFlashAttribute("exito", "Restaurante actualizado correctamente");
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             flash.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/restaurantes/" + id;
+        return "redirect:/restaurantes/" + id + "/editar";
     }
 
     @PostMapping("/restaurantes/{id}/eliminar")
     public String eliminar(@PathVariable Long id,
+                           @RequestParam(defaultValue = "/restaurantes") String redirectTo,
                            @AuthenticationPrincipal UserDetails userDetails,
                            RedirectAttributes flash) {
         try {
             restauranteService.eliminar(id, userDetails.getUsername());
             flash.addFlashAttribute("exito", "Restaurante eliminado");
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             flash.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/restaurantes";
+        if (redirectTo == null || redirectTo.isBlank() || !redirectTo.startsWith("/")) {
+            redirectTo = "/restaurantes";
+        }
+        return "redirect:" + redirectTo;
     }
 
     // ---- Estado acepta/no acepta pedidos (req. mínimo 7) ----
@@ -274,7 +285,7 @@ public class RestauranteController {
                 String ruta = imagenService.guardar(file, "restaurantes");
                 restaurante.setImagen(ruta);
             } catch (IOException e) {
-                System.err.println("Error al subir imagen principal: " + e.getMessage());
+                throw new IllegalStateException("No se pudo guardar la imagen del restaurante", e);
             }
         }
     }
@@ -290,7 +301,7 @@ public class RestauranteController {
                 String ruta = imagenService.guardar(file, "restaurantes");
                 restaurante.setImagenBanner(ruta);
             } catch (IOException e) {
-                System.err.println("Error al subir imagen banner: " + e.getMessage());
+                throw new IllegalStateException("No se pudo guardar el banner del restaurante", e);
             }
         }
     }

@@ -4,8 +4,11 @@ import com.tw.model.Categoria;
 import com.tw.model.Restaurante;
 import com.tw.model.Usuario;
 import com.tw.repository.CategoriaRepository;
+import com.tw.repository.PedidoRepository;
+import com.tw.repository.PlatoRepository;
 import com.tw.repository.RestauranteRepository;
 import com.tw.repository.UsuarioRepository;
+import com.tw.repository.ValoracionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,9 @@ public class RestauranteService {
     private final RestauranteRepository restauranteRepo;
     private final UsuarioRepository usuarioRepo;
     private final CategoriaRepository categoriaRepo;
+    private final PedidoRepository pedidoRepo;
+    private final PlatoRepository platoRepo;
+    private final ValoracionRepository valoracionRepo;
 
     // ---- Lectura ----
 
@@ -267,7 +273,14 @@ public class RestauranteService {
     public void eliminar(Long id, String email) {
         Restaurante restaurante = buscarPorId(id);
         verificarPropietario(restaurante, email);
-        restauranteRepo.delete(restaurante);
+
+        pedidoRepo.deleteByRestauranteId(id);
+        valoracionRepo.deleteByRestauranteId(id);
+        platoRepo.deleteByRestauranteId(id);
+        restauranteRepo.deleteFavoritosByRestauranteId(id);
+        restauranteRepo.deleteCategoriasByRestauranteId(id);
+        restauranteRepo.deleteByIdDirect(id);
+        restauranteRepo.flush();
     }
 
     public void cambiarEstado(Long id, boolean aceptaPedidos, String email) {

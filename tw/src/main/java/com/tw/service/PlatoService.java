@@ -42,6 +42,8 @@ public class PlatoService {
 
     public Plato crear(Long restauranteId, Plato plato, String emailPropietario) {
         Restaurante restaurante = verificarPropietario(restauranteId, emailPropietario);
+        // Nunca reutilizar id en alta: evita sobrescribir un plato existente.
+        plato.setId(null);
         plato.setRestaurante(restaurante);
         plato.setEtiquetaMenu(normalizarEtiqueta(restaurante, plato.getEtiquetaMenu()));
         return platoRepo.save(plato);

@@ -100,7 +100,6 @@
             <ul>
                 <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/mensajes}">Mensajes</a></li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/perfil}"><span sec:authentication="name">Mi perfil</span></a></li>
                 <li sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="post" style="display:inline">

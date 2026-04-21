@@ -111,11 +111,17 @@ public class PedidoController {
                                @RequestParam Pedido.EstadoPedido estado,
                                @AuthenticationPrincipal UserDetails userDetails,
                                RedirectAttributes flash) {
+        Long restauranteId = null;
         try {
+            Pedido pedido = pedidoService.buscarPorId(id);
+            restauranteId = pedido.getRestaurante().getId();
             pedidoService.cambiarEstado(id, estado, userDetails.getUsername(), true);
             flash.addFlashAttribute("exito", "Estado del pedido actualizado");
         } catch (Exception e) {
             flash.addFlashAttribute("error", e.getMessage());
+        }
+        if (restauranteId != null) {
+            return "redirect:/pedidos/restaurante/" + restauranteId;
         }
         return "redirect:/pedidos/" + id;
     }
@@ -147,8 +153,34 @@ public class PedidoController {
                                        Model model) {
         try {
             List<Pedido> pedidos = pedidoService.listarPedidosDelRestaurante(id, userDetails.getUsername());
+
+            long pendientes = 0;
+            long enPreparacion = 0;
+            long entregados = 0;
+            double totalIngresos = 0.0;
+
+            for (Pedido pedido : pedidos) {
+                if (pedido == null) {
+                    continue;
+                }
+                if (pedido.getEstado() == Pedido.EstadoPedido.PENDIENTE) {
+                    pendientes++;
+                } else if (pedido.getEstado() == Pedido.EstadoPedido.EN_PREPARACION) {
+                    enPreparacion++;
+                } else if (pedido.getEstado() == Pedido.EstadoPedido.ENTREGADO) {
+                    entregados++;
+                }
+                if (pedido.getTotal() != null) {
+                    totalIngresos += pedido.getTotal();
+                }
+            }
+
             model.addAttribute("pedidos", pedidos);
             model.addAttribute("restauranteId", id);
+            model.addAttribute("pendientes", pendientes);
+            model.addAttribute("enPreparacion", enPreparacion);
+            model.addAttribute("entregados", entregados);
+            model.addAttribute("totalIngresos", totalIngresos);
             return "pedidos-restaurante";
         } catch (SecurityException e) {
             throw new SecurityException("No tienes permiso para ver estos pedidos");

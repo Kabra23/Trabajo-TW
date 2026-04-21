@@ -1,7 +1,6 @@
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\GlobalExceptionHandler.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\repository\CategoriaRepository.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\model\LineaPedido.java
-C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\repository\MensajeRepository.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\PedidoController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\service\UsuarioDetailsService.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\TwApplication.java
@@ -14,12 +13,10 @@ C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\repository\LineaPedidoRepository.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\AuthController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\service\PedidoService.java
-C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\service\MensajeService.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\config\SecurityConfig.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\WebController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\repository\DireccionRepository.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\RestauranteController.java
-C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\MensajeController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\DireccionController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\repository\UsuarioRepository.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\model\Categoria.java
@@ -35,6 +32,5 @@ C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\config\WebMvcConfig.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\ValoracionController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\repository\ValoracionRepository.java
-C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\model\Mensaje.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\controller\PlatoController.java
 C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw\src\main\java\com\tw\model\Pedido.java

@@ -4,8 +4,254 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la visualización de pedidos: actualiza el diseño de la página de pedidos recibidos, optimiza la gestión de estados y mejora la experiencia del usuario con un nuevo estilo y funcionalidades interactivas.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/WebMvcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/MensajeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PedidoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Mensaje.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/MensajeRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/PedidoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/PedidoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/PlatoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/PlatoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/ValoracionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/ValoracionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/MensajeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/PlatoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/PlatoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/js/detalle-restaurante.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/detalle-restaurante.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/bandeja.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/busqueda-avanzada.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/busqueda-avanzada.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-mensaje.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/layout_final.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/layout_final.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/nuevo-mensaje.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/pedidos-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/pedidos-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/WebMvcConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/WebMvcConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/MensajeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/PedidoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/PedidoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Mensaje$MensajeBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Mensaje.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/MensajeRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/PedidoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/PedidoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/PlatoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/PlatoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/RestauranteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/RestauranteRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/ValoracionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/ValoracionRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/MensajeService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/PlatoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/PlatoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/americana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/asiatica.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/banner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/cafe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/ensalada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/italiana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/mexicana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/montadito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/oferta.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/pizza.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/pollo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/tostada.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/imagenes/zumo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/js/detalle-restaurante.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/js/detalle-restaurante.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/busqueda-avanzada.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/busqueda-avanzada.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/categorias.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante-fragmentos.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-categoria.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/layout_final.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/layout_final.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/pedidos-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/pedidos-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume.war" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume.war.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/TwApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/config/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/CategoriaController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/GlobalExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/PedidoController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/PlatoController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/RestauranteController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/ValoracionController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/controller/WebController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Categoria$CategoriaBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Categoria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/LineaPedido$LineaPedidoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/LineaPedido.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Pedido$EstadoPedido.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Pedido$PedidoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Pedido.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Plato$PlatoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Plato.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Restaurante$RestauranteBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Restaurante.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Usuario$UsuarioBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Usuario.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Valoracion$ValoracionBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/model/Valoracion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/CategoriaRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/LineaPedidoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/PedidoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/PlatoRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/RestauranteRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/UsuarioRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/repository/ValoracionRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/ImagenService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/PedidoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/PlatoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/RestauranteService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/UsuarioDetailsService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/UsuarioService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/com/tw/service/ValoracionService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/detalle-restaurante.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/editar-restaurante.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/registro.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/restaurantes.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/css/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/americana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/asiatica.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/banner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/cafe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/ensalada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/italiana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/mexicana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/montadito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/oferta.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/pizza.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/pollo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/tostada.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/imagenes/zumo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/detalle-restaurante.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/editar-restaurante.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/filters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/registro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/static/js/star-filter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/categorias.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/detalle-pedido.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/detalle-restaurante.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/editar-restaurante.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/error.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/form-categoria.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/form-plato.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/form-restaurante.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/fragments/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/mis-pedidos.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/mis-valoraciones.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/pedidos-restaurante.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/perfil.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/registro-exitoso.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/registro.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/restaurantes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/classes/templates/valoraciones.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/HikariCP-5.0.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/angus-activation-2.0.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/antlr4-runtime-4.13.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/aspectjweaver-1.9.21.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/attoparser-2.0.7.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/byte-buddy-1.14.12.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/classmate-1.6.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/hibernate-commons-annotations-6.0.6.Final.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/hibernate-community-dialects-6.4.4.Final.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/hibernate-core-6.4.4.Final.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/hibernate-validator-8.0.1.Final.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/istack-commons-runtime-4.1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jackson-annotations-2.15.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jackson-core-2.15.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jackson-databind-2.15.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jackson-datatype-jdk8-2.15.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jackson-datatype-jsr310-2.15.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jackson-module-parameter-names-2.15.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.activation-api-2.1.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.annotation-api-2.1.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.inject-api-2.0.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.persistence-api-3.1.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.transaction-api-2.0.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.validation-api-3.0.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jakarta.xml.bind-api-4.0.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jandex-3.1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jaxb-core-4.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jaxb-runtime-4.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jboss-logging-3.5.3.Final.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/jul-to-slf4j-2.0.12.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/log4j-api-2.21.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/log4j-to-slf4j-2.21.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/logback-classic-1.4.14.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/logback-core-1.4.14.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/micrometer-commons-1.12.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/micrometer-observation-1.12.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/slf4j-api-2.0.12.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/snakeyaml-2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-aop-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-aspects-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-beans-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-autoconfigure-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-aop-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-data-jpa-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-jdbc-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-json-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-logging-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-security-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-thymeleaf-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-validation-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-boot-starter-web-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-context-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-core-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-data-commons-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-data-jpa-3.2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-expression-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-jcl-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-jdbc-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-orm-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-security-config-6.2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-security-core-6.2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-security-crypto-6.2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-security-web-6.2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-tx-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-web-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/spring-webmvc-6.1.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/sqlite-jdbc-3.45.3.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/thymeleaf-3.1.2.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/thymeleaf-extras-springsecurity6-3.1.2.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/thymeleaf-spring6-3.1.2.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/tomcat-embed-el-10.1.19.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/txw2-4.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/cume/WEB-INF/lib/unbescape-1.1.6.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/surefire-reports/TEST-com.tw.CrudIntegrationTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/surefire-reports/com.tw.CrudIntegrationTest.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +270,8 @@
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="agent-panel" value="Claude Haiku 4.5" />
-      <entry key="chat-panel" value="Claude Haiku 4.5" />
+      <entry key="agent-panel" value="GPT-5.3-Codex" />
+      <entry key="chat-panel" value="GPT-5.3-Codex" />
     </selectedModels>
   </component>
   <component name="ExternalProjectsData">
@@ -182,7 +428,7 @@
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
       <workItem from="1776758751874" duration="14063000" />
-      <workItem from="1776795281121" duration="3576000" />
+      <workItem from="1776795281121" duration="8851000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -472,7 +718,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776798234071</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Mejora la visualización de pedidos: actualiza el diseño de la página de pedidos recibidos, optimiza la gestión de estados y mejora la experiencia del usuario con un nuevo estilo y funcionalidades interactivas.">
+      <option name="closed" value="true" />
+      <created>1776800192483</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1776800192483</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,7 +744,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Comienza el proyecto" />
     <MESSAGE value="Cambios en restaurante.css" />
     <MESSAGE value="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml" />
     <MESSAGE value="Actualiza el color de fondo del botón primario en restaurantes.css" />
@@ -515,7 +768,8 @@
     <MESSAGE value="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas." />
     <MESSAGE value="Optimiza formularios de platos y restaurantes: actualiza la gestión de campos en los formularios, mejora la legibilidad del código y ajusta los tiempos de ejecución de las pruebas." />
     <MESSAGE value="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía." />
-    <option name="LAST_COMMIT_MESSAGE" value="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía." />
+    <MESSAGE value="Mejora la visualización de pedidos: actualiza el diseño de la página de pedidos recibidos, optimiza la gestión de estados y mejora la experiencia del usuario con un nuevo estilo y funcionalidades interactivas." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mejora la visualización de pedidos: actualiza el diseño de la página de pedidos recibidos, optimiza la gestión de estados y mejora la experiencia del usuario con un nuevo estilo y funcionalidades interactivas." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

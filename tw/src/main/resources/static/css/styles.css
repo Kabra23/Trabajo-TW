@@ -161,8 +161,8 @@ input, textarea, select {
 
 .btn-logout {
     background: transparent;
-    color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.75);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
     padding: 0.45rem 1.1rem;
     border-radius: 25px;
     cursor: pointer;
@@ -173,7 +173,9 @@ input, textarea, select {
 }
 
 .btn-logout:hover {
-    background: rgba(255, 255, 255, 0.18);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background: rgba(6, 156, 111, 0.08);
 }
 
 /* Header simple (para login/registro) */

@@ -36,7 +36,6 @@ public class SecurityConfig {
                 // Administración de categorías (solo ADMIN)
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // Autenticados
-                .requestMatchers("/mensajes/**").authenticated()
                 .requestMatchers("/perfil/**").authenticated()
                 .anyRequest().authenticated()
             )

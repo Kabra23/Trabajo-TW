@@ -83,9 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== FUNCIONALIDAD DE PESTAÑAS ==========
     const tabButtons = document.querySelectorAll('.tab-btn');
     const dishCards = document.querySelectorAll('.dish-card');
-    let activeCategory = tabButtons.length > 0
-        ? (tabButtons[0].getAttribute('data-category') || tabButtons[0].getAttribute('data-tab') || '').toLowerCase().trim()
-        : '';
+    // Mostrar toda la carta al cargar para que no parezca que faltan platos.
+    let activeCategory = '';
 
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {

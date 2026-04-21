@@ -61,9 +61,6 @@
                     <a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/mensajes}">Mensajes</a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/perfil}">
                         <span sec:authentication="name">Usuario</span>
                     </a>

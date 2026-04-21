@@ -46,14 +46,6 @@
                     <a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/mensajes}">
-                        Mensajes
-                        <!-- El contador de no leidos se incluye aqui si se pasa noLeidos al modelo -->
-                        <span th:if="${noLeidosNav != null and noLeidosNav > 0}"
-                              class="nav-badge" th:text="${noLeidosNav}">0</span>
-                    </a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/perfil}">
                         <span sec:authentication="name">Usuario</span>
                     </a>

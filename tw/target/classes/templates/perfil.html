@@ -57,27 +57,24 @@
         .estado-abierto { background: #e8f5f1; color: #069c6f; }
         .estado-cerrado { background: #ffebee; color: #d32f2f; }
 
-        /* Favoritos */
+        /* Favoritos - mejorado con vistaImagenService */
         .favorito-row {
             display: flex; align-items: center; gap: 1rem;
             padding: .9rem 0; border-bottom: 1px solid #f0f0f0;
-            text-decoration: none; color: inherit;
+            text-decoration: none; color: inherit; transition: background .15s;
+            border-radius: 8px; padding-left: .5rem;
         }
         .favorito-row:last-child { border-bottom: none; }
+        .favorito-row:hover { background: #f8fffe; }
         .favorito-img {
-            width: 60px; height: 60px; border-radius: 10px;
+            width: 64px; height: 64px; border-radius: 10px;
             object-fit: cover; flex-shrink: 0; border: 2px solid #e8f5f1;
-        }
-        .favorito-placeholder {
-            width: 60px; height: 60px; border-radius: 10px;
-            background: #e8f5f1; display: flex; align-items: center;
-            justify-content: center; flex-shrink: 0;
-            color: #069c6f; font-weight: 700; font-size: 1.4rem;
         }
         .favorito-info { flex: 1; min-width: 0; }
         .favorito-nombre { font-weight: 700; color: #069c6f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .97rem; }
-        .favorito-meta { font-size: .8rem; color: #888; margin-top: .1rem; }
-        .favorito-arrow { color: #bbb; font-size: 1.2rem; }
+        .favorito-meta { font-size: .8rem; color: #888; margin-top: .15rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+        .favorito-arrow { color: #bbb; font-size: 1.2rem; flex-shrink: 0; }
+        .cat-tag-mini { background: #e8f5f1; color: #069c6f; padding: .1rem .4rem; border-radius: 8px; font-size: .72rem; font-weight: 600; }
 
         /* Direcciones */
         .dir-row {
@@ -114,6 +111,11 @@
         /* Flash */
         .msg-ok  { background: #e8f5f1; color: #069c6f; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #069c6f; }
         .msg-err { background: #ffebee; color: #d32f2f; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #d32f2f; }
+
+        /* Preview foto perfil */
+        .foto-preview { display: flex; align-items: center; gap: 1rem; margin-top: .8rem; }
+        .foto-preview img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #069c6f; }
+        .foto-preview small { color: #888; font-size: .82rem; }
     </style>
 </head>
 <body>
@@ -180,8 +182,15 @@
                 </div>
                 <div class="form-field">
                     <label for="fotoFile">Foto de perfil (opcional)</label>
+                    <!-- Mostrar foto actual si existe -->
+                    <div th:if="${usuario.fotoPerfil != null}" class="foto-preview">
+                        <img th:src="@{'/uploads/' + ${usuario.fotoPerfil}}" alt="Foto actual">
+                        <small>Foto actual — sube una nueva para reemplazarla</small>
+                    </div>
                     <input type="file" id="fotoFile" name="fotoFile"
-                           accept="image/jpeg,image/png,image/webp" style="border: none; padding: 0;">
+                           accept="image/jpeg,image/png,image/webp"
+                           style="border: none; padding: 0; margin-top: .5rem;">
+                    <small style="color:#888; font-size:.8rem; display:block; margin-top:.3rem;">Formatos: JPG, PNG, WebP. Max 5MB.</small>
                 </div>
                 <button type="submit" class="btn-primary">Guardar cambios</button>
             </form>
@@ -222,7 +231,7 @@
 
             <div th:if="${direcciones == null or #lists.isEmpty(direcciones)}"
                  style="color: #888; padding: .5rem 0; font-style: italic;">
-                Aun no tienes ninguna direccion. Anade una para que aparezca al buscar restaurantes.
+                Aun no tienes ninguna direccion.
             </div>
 
             <form th:action="@{/perfil/direcciones/nueva}" method="post"
@@ -276,6 +285,12 @@
                 <div style="display: flex; gap: .5rem;">
                     <a th:href="@{/restaurantes/{id}/editar(id=${r.id})}" class="btn-secondary-link">Editar</a>
                     <a th:href="@{/pedidos/restaurante/{id}(id=${r.id})}" class="btn-secondary-link">Pedidos</a>
+                    <form th:action="@{/restaurantes/{id}/eliminar(id=${r.id})}" method="post"
+                          style="display:inline" onsubmit="return confirm('Eliminar este restaurante?')">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <input type="hidden" name="redirectTo" value="/perfil">
+                        <button type="submit" class="btn-sm-danger">Eliminar</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -290,7 +305,8 @@
         </div>
 
         <!-- === FAVORITOS ===
-             Muestra imagen real del restaurante (imagen o imagen banner) -->
+             FIX: Ahora usa vistaImagenService igual que en detalle-restaurante.html
+             para mostrar correctamente la imagen del restaurante -->
         <div class="card" th:if="${usuario.favoritos != null and !#lists.isEmpty(usuario.favoritos)}">
             <h2 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Mis favoritos</h2>
 
@@ -298,35 +314,45 @@
                th:href="@{/restaurantes/{id}(id=${r.id})}"
                class="favorito-row">
 
-                <!-- Imagen del restaurante (primera disponible: imagen o banner) -->
-                <img th:if="${r.imagen != null and !#strings.isEmpty(r.imagen)}"
-                     th:src="@{'/uploads/' + ${r.imagen}}"
+                <!-- FIX: Usar vistaImagenService para obtener la imagen correctamente -->
+                <img th:src="@{${@vistaImagenService.restaurante(r)}}"
                      th:alt="${r.nombre}"
                      class="favorito-img">
-                <img th:if="${(r.imagen == null or #strings.isEmpty(r.imagen)) and (r.imagenBanner != null and !#strings.isEmpty(r.imagenBanner))}"
-                     th:src="@{'/uploads/' + ${r.imagenBanner}}"
-                     th:alt="${r.nombre}"
-                     class="favorito-img">
-                <div th:if="${(r.imagen == null or #strings.isEmpty(r.imagen)) and (r.imagenBanner == null or #strings.isEmpty(r.imagenBanner))}"
-                     class="favorito-placeholder">
-                    <span th:text="${#strings.substring(r.nombre,0,1).toUpperCase()}">R</span>
-                </div>
 
                 <div class="favorito-info">
                     <div class="favorito-nombre" th:text="${r.nombre}">Restaurante</div>
                     <div class="favorito-meta">
-                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}" th:text="${r.localidad}"></span>
-                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad) and r.mediaValoraciones != null and r.mediaValoraciones > 0}"> · </span>
-                        <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}">
-                            ⭐ <span th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}">0.0</span>
+                        <!-- Localidad -->
+                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}"
+                              th:text="${r.localidad}"></span>
+                        <!-- Separador -->
+                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad) and r.mediaValoraciones != null and r.mediaValoraciones > 0}">·</span>
+                        <!-- Valoración -->
+                        <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
+                              style="display:flex;align-items:center;gap:.2rem;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="gold">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <span th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}">0.0</span>
                         </span>
-                        <span th:if="${!r.aceptaPedidos}"
-                              style="color: #d32f2f; font-weight: 600;"> · Cerrado</span>
+                        <!-- Categorías -->
+                        <span th:each="cat : ${r.categorias}" class="cat-tag-mini" th:text="${cat.nombre}">Cat</span>
+                        <!-- Estado -->
+                        <span th:unless="${r.aceptaPedidos}"
+                              style="color: #d32f2f; font-weight: 600;">· Cerrado</span>
                     </div>
                 </div>
 
                 <span class="favorito-arrow">›</span>
             </a>
+        </div>
+
+        <!-- Favoritos vacíos -->
+        <div class="card" th:if="${usuario.favoritos == null or #lists.isEmpty(usuario.favoritos)}"
+             style="text-align:center; padding: 1.5rem; color: #888;">
+            <h2 style="font-size: 1.3rem; margin: 0 0 .5rem; color: #333;">Mis favoritos</h2>
+            <p>Aun no tienes restaurantes favoritos. Explora los restaurantes y guarda tus favoritos.</p>
+            <a th:href="@{/restaurantes}" style="color: #069c6f; font-weight: 600;">Explorar restaurantes</a>
         </div>
 
         <!-- === ZONA PELIGRO === -->

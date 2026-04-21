@@ -23,13 +23,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Construye la ruta absoluta y asegura que termine en /
-        String uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize().toString();
-        if (!uploadPath.endsWith("/")) {
-            uploadPath = uploadPath + "/";
-        }
+        String uploadPath = Paths.get(uploadDir)
+                .toAbsolutePath()
+                .normalize()
+                .toUri()
+                .toString();
 
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:" + uploadPath);
+                .addResourceLocations(uploadPath);
     }
 }
