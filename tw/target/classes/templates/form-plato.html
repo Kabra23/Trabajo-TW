@@ -1,59 +1,168 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Plato')}" th:with="extraCss=~{::link}">
-    <link rel="stylesheet" th:href="@{/css/base.css}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${plato.id == null ? 'Nuevo plato' : 'Editar plato'} + ' - CUMe y Calla'">Plato - CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body { background: #f5f7fa; margin: 0; font-family: 'Segoe UI', sans-serif; }
+        .main-header { background: #069c6f; }
+        .main-header .logo-main, .main-header nav a,
+        .main-header .logo-separator, .main-header .logo-secondary { color: white; }
+        .btn-logout {
+            background: transparent; color: #fff;
+            border: 2px solid rgba(255,255,255,.75); padding: .45rem 1.1rem;
+            border-radius: 25px; cursor: pointer; font-family: inherit;
+            font-size: .95rem; font-weight: 600;
+        }
+
+        .page-wrap { max-width: 600px; margin: 2rem auto; padding: 0 1.5rem; }
+        .back-link { color: #069c6f; text-decoration: none; font-weight: 600; font-size: .9rem; display: inline-flex; align-items: center; gap: .3rem; margin-bottom: 1.2rem; }
+        .back-link:hover { text-decoration: underline; }
+
+        .form-card { background: white; border-radius: 14px; padding: 2.2rem; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+        .form-card h1 { color: #069c6f; font-size: 1.6rem; margin: 0 0 1.8rem; }
+
+        .form-field { margin-bottom: 1.2rem; }
+        .form-field label { display: block; font-weight: 600; color: #333; margin-bottom: .45rem; font-size: .92rem; }
+        .form-field label .req { color: #d32f2f; margin-left: .2rem; }
+        .form-field input, .form-field textarea {
+            width: 100%; padding: .8rem 1rem; border: 2px solid #e0e0e0; border-radius: 8px;
+            font-size: .95rem; font-family: inherit; transition: border-color .2s; background: white;
+            box-sizing: border-box;
+        }
+        .form-field input:focus, .form-field textarea:focus { outline: none; border-color: #069c6f; box-shadow: 0 0 0 3px rgba(6,156,111,.1); }
+        .form-field textarea { resize: vertical; min-height: 90px; }
+        .form-field small { color: #888; font-size: .82rem; display: block; margin-top: .3rem; }
+        .error-msg { color: #d32f2f; font-size: .83rem; display: block; margin-top: .3rem; }
+
+        /* Preview imagen actual */
+        .img-current {
+            margin-top: .8rem; display: flex; align-items: flex-start; gap: 1rem;
+            background: #f0fbf7; border: 2px solid #e8f5f1; border-radius: 10px; padding: .9rem;
+        }
+        .img-current img {
+            width: 100px; height: 100px; object-fit: cover; border-radius: 8px;
+            border: 2px solid #e8f5f1; flex-shrink: 0;
+        }
+        .img-current-info { font-size: .85rem; color: #555; }
+        .img-current-info strong { color: #069c6f; display: block; margin-bottom: .2rem; }
+
+        .form-actions { display: flex; gap: .8rem; justify-content: flex-end; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid #f0f0f0; }
+        .btn-submit { background: #069c6f; color: white; border: none; padding: .8rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit; font-size: .95rem; transition: background .2s; }
+        .btn-submit:hover { background: #038a63; }
+        .btn-cancel-link { background: #f5f5f5; color: #555; border: 2px solid #e0e0e0; padding: .75rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: .95rem; }
+        .btn-cancel-link:hover { border-color: #999; }
+
+        .msg-ok  { background: #e8f5f1; color: #069c6f; padding: 1rem; border-radius: 8px; border-left: 4px solid #069c6f; margin-bottom: 1rem; }
+        .msg-err { background: #ffebee; color: #d32f2f; padding: 1rem; border-radius: 8px; border-left: 4px solid #d32f2f; margin-bottom: 1rem; }
+    </style>
 </head>
 <body>
-<header th:replace="~{fragments/layout :: header}"></header>
-<main>
+
+<header class="main-header">
     <div class="container">
-        <div class="form-container">
-            <h1 class="page-title">
-                <span th:if="${plato.id == null}">Nuevo plato</span>
-                <span th:unless="${plato.id == null}">Editar plato</span>
-                <small class="text-muted"> — <span th:text="${restaurante.nombre}"></span></small>
-            </h1>
-
-            <form th:action="${plato.id == null}
-                      ? @{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}
-                      : @{/restaurantes/{rid}/platos/{pid}/editar(rid=${restaurante.id},pid=${plato.id})}"
-                  method="post" enctype="multipart/form-data">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-                <div class="form-group">
-                    <label for="nombre">Nombre del plato *</label>
-                    <input type="text" id="nombre" name="nombre" th:value="${plato.nombre}" required class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <textarea id="descripcion" name="descripcion" rows="3" class="form-control" th:text="${plato.descripcion}"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="precio">Precio (€) *</label>
-                    <input type="number" id="precio" name="precio" th:value="${plato.precio}" min="0" step="0.01" required class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="imagenFile">Imagen (opcional)</label>
-                    <input type="file" id="imagenFile" name="imagenFile" accept="image/jpeg,image/png,image/webp" class="form-control">
-                    <img th:if="${plato.imagen != null}" th:src="@{'/uploads/' + ${plato.imagen}}" style="margin-top:.5rem; max-height:100px; border-radius:8px">
-                </div>
-
-                <div class="form-actions">
-                    <a th:href="@{/restaurantes/{id}(id=${restaurante.id})}" class="btn btn-cancel">
-                        Cancelar
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        <span th:if="${plato.id == null}">Añadir plato</span>
-                        <span th:unless="${plato.id == null}">Guardar cambios</span>
-                    </button>
-                </div>
-            </form>
+        <div class="logo">
+            <a th:href="@{/}" style="text-decoration: none">
+                <h1><span class="logo-main">CUMe</span><span class="logo-separator">y</span><span class="logo-secondary">Calla</span></h1>
+            </a>
         </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/perfil}"><span sec:authentication="name">Mi perfil</span></a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display: inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-logout">Cerrar sesion</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
     </div>
-</main>
-<footer th:replace="~{fragments/layout :: footer}"></footer>
+</header>
+
+<div class="page-wrap">
+    <a th:href="@{/restaurantes/{id}(id=${restaurante.id})}" class="back-link">
+        &#8592; Volver a <span th:text="${restaurante.nombre}">Restaurante</span>
+    </a>
+
+    <div class="form-card">
+        <h1 th:text="${plato.id == null ? 'Nuevo plato' : 'Editar plato'}">Plato</h1>
+
+        <div th:if="${exito}" class="msg-ok" th:text="${exito}"></div>
+        <div th:if="${error}"  class="msg-err" th:text="${error}"></div>
+
+        <form th:action="${plato.id == null}
+                  ? @{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}
+                  : @{/restaurantes/{rid}/platos/{pid}/editar(rid=${restaurante.id},pid=${plato.id})}"
+              method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div class="form-field">
+                <label for="nombre">Nombre del plato <span class="req">*</span></label>
+                <input type="text" id="nombre" name="nombre" th:value="${plato.nombre}" required
+                       placeholder="Ej: Tortilla española, Bocadillo de jamon...">
+                <span class="error-msg" th:if="${#fields.hasErrors('nombre')}" th:errors="${plato.nombre}"></span>
+            </div>
+
+            <div class="form-field">
+                <label for="descripcion">Descripcion</label>
+                <textarea id="descripcion" name="descripcion" rows="3"
+                          placeholder="Ingredientes, alergenos, informacion adicional..."
+                          th:text="${plato.descripcion}"></textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="precio">Precio (€) <span class="req">*</span></label>
+                <input type="number" id="precio" name="precio" th:value="${plato.precio}"
+                       min="0" step="0.01" required placeholder="0.00">
+                <span class="error-msg" th:if="${#fields.hasErrors('precio')}" th:errors="${plato.precio}"></span>
+            </div>
+
+            <div class="form-field">
+                <label for="etiquetaMenu">Etiqueta del menu</label>
+                <select id="etiquetaMenu" name="etiquetaMenu" style="width:100%;padding:.8rem 1rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.95rem;font-family:inherit;">
+                    <option th:each="etiqueta : ${restaurante.etiquetasMenuLista}"
+                            th:value="${etiqueta}"
+                            th:selected="${plato.etiquetaMenu != null ? plato.etiquetaMenu.equalsIgnoreCase(etiqueta) : etiqueta == restaurante.etiquetasMenuLista[0]}"
+                            th:text="${etiqueta}">
+                        Destacados
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="imagenFile">
+                    <span th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}">Cambiar imagen del plato</span>
+                    <span th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}">Imagen del plato (opcional)</span>
+                </label>
+
+                <!-- IMAGEN ACTUAL (solo en modo edición) -->
+                <div th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}" class="img-current">
+                    <img th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
+                    <div class="img-current-info">
+                        <strong>Imagen actual</strong>
+                        Sube una nueva imagen para reemplazar la actual.
+                        Formatos: JPG, PNG, WebP. Maximo 5MB.
+                    </div>
+                </div>
+
+                <input type="file" id="imagenFile" name="imagenFile"
+                       accept="image/jpeg,image/png,image/webp"
+                       style="border: none; padding: .4rem 0; margin-top: .5rem;">
+                <small th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}">Formatos aceptados: JPG, PNG, WebP. Maximo 5MB.</small>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/restaurantes/{id}(id=${restaurante.id})}" class="btn-cancel-link">Cancelar</a>
+                <button type="submit" class="btn-submit"
+                        th:text="${plato.id == null ? 'Anadir plato' : 'Guardar cambios'}">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

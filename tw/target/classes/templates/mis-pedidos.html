@@ -1,103 +1,399 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Mis pedidos')}" th:with="extraCss=~{::link}">
-    <link rel="stylesheet" th:href="@{/css/base.css}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis pedidos - CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        /* ===== BASE ===== */
+        body { background: #eef3f1; margin: 0; font-family: 'Segoe UI', sans-serif; color: #27312d; }
+        .main-header { background: #069c6f; }
+        .main-header .logo-main, .main-header nav a,
+        .main-header .logo-separator, .main-header .logo-secondary { color: white; }
+        .btn-logout {
+            background: transparent; color: #fff;
+            border: 2px solid rgba(255,255,255,.75); padding: .45rem 1.1rem;
+            border-radius: 25px; cursor: pointer; font-family: inherit;
+            font-size: .95rem; font-weight: 600;
+        }
+
+        /* ===== HERO ===== */
+        .pedidos-hero {
+            background: linear-gradient(135deg, #069c6f 0%, #04b57a 100%);
+            color: white; padding: 2.5rem 0 4rem;
+            position: relative; overflow: hidden;
+        }
+        .pedidos-hero::after {
+            content: '';
+            position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 40px;
+            background: #f0f4f2;
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
+        .pedidos-hero h1 { font-size: 2rem; font-weight: 800; margin: 0 0 .3rem; }
+        .pedidos-hero p { margin: 0; opacity: .85; font-size: .95rem; }
+
+        /* ===== LAYOUT ===== */
+        .page-wrap { max-width: 940px; margin: -1.5rem auto 3rem; padding: 0 1.5rem; }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: flex; gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap;
+        }
+        .stat-chip {
+            background: white; border-radius: 12px; padding: .9rem 1.4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,.07); flex: 1; min-width: 110px;
+            text-align: center;
+        }
+        .stat-chip .num { font-size: 1.6rem; font-weight: 800; color: #069c6f; line-height: 1; }
+        .stat-chip .label { font-size: .75rem; color: #888; text-transform: uppercase; letter-spacing: .06em; margin-top: .3rem; }
+
+        /* ===== FILTROS DE ESTADO ===== */
+        .status-tabs {
+            display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+        }
+        .status-tab {
+            padding: .45rem 1.1rem; border-radius: 20px; border: 2px solid #e0e0e0;
+            background: white; color: #666; font-size: .85rem; font-weight: 600;
+            cursor: pointer; transition: all .2s; text-decoration: none;
+        }
+        .status-tab:hover, .status-tab.active {
+            background: #069c6f; border-color: #069c6f; color: white;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-wrap {
+            background: white; border-radius: 18px; padding: 3.5rem 2rem;
+            text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,.06);
+        }
+        .empty-wrap .icon { font-size: 4rem; margin-bottom: 1rem; opacity: .6; }
+        .empty-wrap h2 { color: #333; margin: 0 0 .5rem; font-size: 1.3rem; }
+        .empty-wrap p { color: #888; margin: 0 0 1.5rem; }
+
+        /* ===== PEDIDO CARD ===== */
+        .pedido-item {
+            background: white; border-radius: 16px; margin-bottom: 1rem;
+            box-shadow: 0 6px 18px rgba(8, 36, 27, .08);
+            overflow: hidden; transition: transform .2s, box-shadow .2s;
+            border-left: 5px solid transparent;
+        }
+        .pedido-item:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(8, 36, 27, .12); }
+        .pedido-item.pendiente   { border-left-color: #f57c00; }
+        .pedido-item.preparacion { border-left-color: #1565c0; }
+        .pedido-item.enviado     { border-left-color: #069c6f; }
+        .pedido-item.entregado   { border-left-color: #6a1b9a; }
+
+        /* ── Cabecera del pedido ── */
+        .pedido-head {
+            display: flex; gap: 1rem; align-items: center;
+            padding: 1.2rem 1.5rem; cursor: pointer;
+            user-select: none; background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
+        }
+        .rest-thumb {
+            width: 56px; height: 56px; border-radius: 12px;
+            object-fit: cover; flex-shrink: 0;
+            border: 2px solid #e8f5f1; background: #e8f5f1;
+        }
+        .pedido-head-info { flex: 1; min-width: 0; }
+        .rest-name {
+            font-weight: 700; font-size: 1rem; color: #333;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .pedido-date { font-size: .8rem; color: #aaa; margin-top: .15rem; }
+        .pedido-head-right { text-align: right; flex-shrink: 0; }
+        .pedido-total-big { font-size: 1.25rem; font-weight: 800; color: #069c6f; }
+        .estado-pill {
+            display: inline-block; padding: .2rem .7rem;
+            border-radius: 12px; font-size: .75rem; font-weight: 700; margin-top: .2rem;
+        }
+        .pill-pendiente   { background: #fff3e0; color: #f57c00; }
+        .pill-preparacion { background: #e3f2fd; color: #1565c0; }
+        .pill-enviado     { background: #e8f5f1; color: #069c6f; }
+        .pill-entregado   { background: #f3e5f5; color: #6a1b9a; }
+        .chevron { transition: transform .25s; font-size: 1rem; color: #bbb; margin-left: .5rem; }
+        .pedido-item.open .chevron { transform: rotate(180deg); }
+
+        /* ── Progreso visual ── */
+        .progress-bar {
+            display: flex; align-items: center;
+            padding: 0 1.5rem .8rem; gap: 0;
+        }
+        .prog-step {
+            display: flex; flex-direction: column; align-items: center;
+            flex: 1; position: relative;
+        }
+        .prog-step::before {
+            content: '';
+            position: absolute; top: 12px; left: 50%; width: 100%; height: 2px;
+            background: #e0e0e0; z-index: 0;
+        }
+        .prog-step:last-child::before { display: none; }
+        .prog-dot {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: #e0e0e0; border: 3px solid white;
+            box-shadow: 0 0 0 2px #e0e0e0;
+            z-index: 1; transition: all .3s;
+        }
+        .prog-dot.done { background: #069c6f; box-shadow: 0 0 0 2px #069c6f; }
+        .prog-dot.active { background: #069c6f; box-shadow: 0 0 0 4px rgba(6,156,111,.25); animation: pulse-dot 1.5s infinite; }
+        .prog-label { font-size: .65rem; color: #aaa; margin-top: .3rem; text-align: center; }
+        .prog-label.done, .prog-label.active { color: #069c6f; font-weight: 600; }
+        @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 4px rgba(6,156,111,.2)} 50%{box-shadow:0 0 0 7px rgba(6,156,111,.1)} }
+
+        /* ── Detalle colapsable ── */
+        .pedido-body { display: none; padding: 0 1.5rem 1.2rem; }
+        .pedido-item.open .pedido-body { display: block; }
+        .lineas-wrap { overflow-x: auto; }
+        .lineas-table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 420px; }
+        .lineas-table th {
+            text-align: left; color: #aaa; font-size: .75rem;
+            text-transform: uppercase; letter-spacing: .05em;
+            padding: .4rem 0; border-bottom: 1px solid #f0f0f0;
+        }
+        .lineas-table td {
+            padding: .55rem 0; border-bottom: 1px solid #fafafa; color: #444;
+        }
+        .lineas-table tr:last-child td { border-bottom: none; }
+        .lineas-table .td-right { text-align: right; }
+        .lineas-table .td-center { text-align: center; }
+        .subtotal { font-weight: 700; color: #069c6f; }
+        .total-row td { font-weight: 700; font-size: 1rem; padding-top: .8rem; color: #333; border-top: 2px solid #f0f0f0; }
+        .total-row .subtotal { font-size: 1.1rem; }
+
+        /* ── Acciones ── */
+        .pedido-actions {
+            display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .8rem;
+            padding-top: .8rem; border-top: 1px solid #f5f5f5;
+        }
+        .btn-ver { background: #069c6f; color: white; border: none; padding: .5rem 1.2rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: .85rem; cursor: pointer; }
+        .btn-rest { background: #f0f4f2; color: #069c6f; border: 2px solid #069c6f; padding: .45rem 1rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: .85rem; }
+        .btn-cancel-ped { background: #ffebee; color: #d32f2f; border: 2px solid #d32f2f; padding: .45rem 1rem; border-radius: 8px; font-weight: 600; font-size: .85rem; cursor: pointer; font-family: inherit; }
+
+        /* ===== MENSAJES FLASH ===== */
+        .msg-ok  { background: #e8f5f1; color: #069c6f; padding: 1rem; border-radius: 10px; border-left: 4px solid #069c6f; margin-bottom: 1rem; }
+        .msg-err { background: #ffebee; color: #d32f2f; padding: 1rem; border-radius: 10px; border-left: 4px solid #d32f2f; margin-bottom: 1rem; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .pedidos-hero h1 { font-size: 1.5rem; }
+            .stat-chip .num { font-size: 1.3rem; }
+            .pedido-head { padding: 1rem; }
+            .pedido-head { flex-wrap: wrap; }
+            .pedido-head-right { text-align: left; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+            .progress-bar { padding: 0 1rem .7rem; }
+            .pedido-body { padding: 0 1rem 1rem; }
+            .pedido-actions { flex-direction: column; }
+            .btn-rest, .btn-cancel-ped { text-align: center; width: 100%; box-sizing: border-box; }
+        }
+    </style>
 </head>
 <body>
-<header th:replace="~{fragments/layout :: header}"></header>
 
-<main>
+<!-- HEADER -->
+<header class="main-header">
     <div class="container">
-        <h1 class="page-title">Mis pedidos</h1>
-
-        <div th:replace="~{fragments/layout :: mensajes}"></div>
-
-        <div th:if="${#lists.isEmpty(pedidos)}" class="empty-state">
-            <p>Aun no has realizado ningun pedido.</p>
-            <a th:href="@{/restaurantes}" class="btn-primary">
-                Explorar restaurantes
+        <div class="logo">
+            <a th:href="@{/}" style="text-decoration:none">
+                <h1><span class="logo-main">CUMe</span><span class="logo-separator">y</span><span class="logo-secondary">Calla</span></h1>
             </a>
         </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+                <li><a th:href="@{/perfil}"><span sec:authentication="name">Mi perfil</span></a></li>
+                <li>
+                    <form th:action="@{/logout}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-logout">Cerrar sesion</button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-        <div th:each="pedido : ${pedidos}" class="pedido-card">
+<!-- HERO -->
+<div class="pedidos-hero">
+    <div class="container">
+        <h1>Mis pedidos</h1>
+        <p>Consulta el estado y el historial de todos tus pedidos</p>
+    </div>
+</div>
 
-            <div class="pedido-card-header">
-                <div class="pedido-card-title">
-                    <img th:if="${pedido.restaurante.imagen != null}"
-                         th:src="@{'/uploads/' + ${pedido.restaurante.imagen}}" alt="Restaurante"
-                         class="pedido-restaurant-thumb">
-                    <img th:unless="${pedido.restaurante.imagen != null}"
-                         th:src="@{/img/logo.png}" alt="Restaurante"
-                         class="pedido-restaurant-thumb">
-                    <div>
-                        <h3 th:text="${pedido.restaurante.nombre}">Restaurante</h3>
-                        <small th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</small>
-                    </div>
-                </div>
-                <div class="pedido-card-summary">
-                    <div class="pedido-total" th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' euro'">0 euro</div>
-                    <!-- Badge de estado sin emojis -->
-                    <span th:switch="${pedido.estado.name()}"
-                          class="pedido-estado">
-                        <span th:case="'PENDIENTE'"
-                              style="display:inline-block;background:#fff3e0;color:#f57c00;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
-                            Pendiente
-                        </span>
-                        <span th:case="'EN_PREPARACION'"
-                              style="display:inline-block;background:#e3f2fd;color:#1565c0;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
-                            En preparacion
-                        </span>
-                        <span th:case="'ENVIADO'"
-                              style="display:inline-block;background:#e8f5e9;color:#2e7d32;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
-                            Enviado
-                        </span>
-                        <span th:case="'ENTREGADO'"
-                              style="display:inline-block;background:#f3e5f5;color:#6a1b9a;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;">
-                            Entregado
-                        </span>
-                        <span th:case="*"
-                              style="display:inline-block;background:#f5f5f5;color:#555;padding:.25rem .7rem;border-radius:999px;font-size:.82rem;font-weight:700;"
-                              th:text="${pedido.estado.name()}">
-                            Estado
-                        </span>
-                    </span>
-                </div>
+<!-- CONTENIDO -->
+<div class="page-wrap">
+
+    <!-- Flash -->
+    <div th:if="${exito}" class="msg-ok" th:text="${exito}"></div>
+    <div th:if="${error}" class="msg-err"  th:text="${error}"></div>
+
+    <!-- EMPTY STATE -->
+    <div th:if="${#lists.isEmpty(pedidos)}" class="empty-wrap">
+        <div class="icon">🛍️</div>
+        <h2>Aun no tienes pedidos</h2>
+        <p>Descubre los restaurantes disponibles y realiza tu primer pedido.</p>
+        <a th:href="@{/restaurantes}" class="btn-ver" style="display:inline-block; text-decoration:none; padding:.75rem 1.8rem; border-radius:12px;">
+            Explorar restaurantes
+        </a>
+    </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div th:unless="${#lists.isEmpty(pedidos)}">
+        <div class="stats-bar">
+            <div class="stat-chip">
+                <div class="num" th:text="${#lists.size(pedidos)}">0</div>
+                <div class="label">Total</div>
             </div>
-
-            <table class="table lineas-pedido">
-                <thead>
-                <tr>
-                    <th>Plato</th>
-                    <th class="text-center">Cantidad</th>
-                    <th class="text-right">Precio u.</th>
-                    <th class="text-right">Subtotal</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="linea : ${pedido.lineas}">
-                    <td th:text="${linea.nombrePlato}">Plato</td>
-                    <td class="text-center" th:text="${linea.cantidad}">1</td>
-                    <td class="text-right" th:text="${#numbers.formatDecimal(linea.precio,1,2)} + ' euro'">0 euro</td>
-                    <td class="text-right font-weight-bold" th:text="${#numbers.formatDecimal(linea.precio * linea.cantidad,1,2)} + ' euro'">0 euro</td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td colspan="3" class="text-right font-weight-bold" style="padding:.7rem 1rem;">Total:</td>
-                    <td class="text-right font-weight-bold" style="padding:.7rem 1rem;color:#069c6f;"
-                        th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' euro'">0 euro</td>
-                </tr>
-                </tfoot>
-            </table>
-
-            <div class="pedido-card-actions">
-                <a th:href="@{/pedidos/{id}(id=${pedido.id})}" class="btn-primary" style="text-decoration:none;font-size:.9rem;padding:.5rem 1.2rem;">Ver detalle</a>
-                <a th:href="@{/restaurantes/{id}(id=${pedido.restaurante.id})}" class="btn-secondary" style="text-decoration:none;">Ver restaurante</a>
+            <div class="stat-chip">
+                <div class="num" th:text="${pedidos.stream().filter(p -> p.getEstado().name() == 'PENDIENTE' or p.getEstado().name() == 'EN_PREPARACION' or p.getEstado().name() == 'ENVIADO').count()}">0</div>
+                <div class="label">En curso</div>
+            </div>
+            <div class="stat-chip">
+                <div class="num" th:text="${pedidos.stream().filter(p -> p.getEstado().name() == 'ENTREGADO').count()}">0</div>
+                <div class="label">Entregados</div>
+            </div>
+            <div class="stat-chip">
+                <div class="num" th:text="${'€ ' + #numbers.formatDecimal(pedidos.stream().mapToDouble(p -> p.getTotal() != null ? p.getTotal() : 0).sum(), 1, 2)}">€ 0</div>
+                <div class="label">Gastado</div>
             </div>
         </div>
-    </div>
-</main>
 
-<footer th:replace="~{fragments/layout :: footer}"></footer>
+        <!-- LISTA DE PEDIDOS -->
+        <div th:each="pedido, iterStat : ${pedidos}"
+             class="pedido-item"
+             th:classappend="${pedido.estado.name() == 'PENDIENTE'} ? ' pendiente' :
+                             (${pedido.estado.name() == 'EN_PREPARACION'} ? ' preparacion' :
+                             (${pedido.estado.name() == 'ENVIADO'} ? ' enviado' : ' entregado'))"
+             th:id="'pedido-' + ${pedido.id}">
+
+            <!-- Cabecera (click para expandir) -->
+            <div class="pedido-head" th:onclick="'togglePedido(' + ${pedido.id} + ')'">
+                <!-- Imagen del restaurante -->
+                <img th:if="${pedido.restaurante.imagen != null and !#strings.isEmpty(pedido.restaurante.imagen)}"
+                     th:src="@{'/uploads/' + ${pedido.restaurante.imagen}}"
+                     th:alt="${pedido.restaurante.nombre}" class="rest-thumb">
+                <img th:unless="${pedido.restaurante.imagen != null and !#strings.isEmpty(pedido.restaurante.imagen)}"
+                     th:src="@{/img/banner.png}"
+                     th:alt="${pedido.restaurante.nombre}" class="rest-thumb">
+
+                <div class="pedido-head-info">
+                    <div class="rest-name" th:text="${pedido.restaurante.nombre}">Restaurante</div>
+                    <div class="pedido-date"
+                         th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy · HH:mm')}">Fecha</div>
+                </div>
+
+                <div class="pedido-head-right">
+                    <div class="pedido-total-big"
+                         th:text="'€ ' + ${#numbers.formatDecimal(pedido.total, 1, 2)}">€ 0</div>
+                    <!-- Estado pill -->
+                    <span th:switch="${pedido.estado.name()}">
+                        <span th:case="'PENDIENTE'" class="estado-pill pill-pendiente">Pendiente</span>
+                        <span th:case="'EN_PREPARACION'" class="estado-pill pill-preparacion">En preparacion</span>
+                        <span th:case="'ENVIADO'" class="estado-pill pill-enviado">Enviado</span>
+                        <span th:case="'ENTREGADO'" class="estado-pill pill-entregado">Entregado</span>
+                    </span>
+                </div>
+
+                <span class="chevron">▼</span>
+            </div>
+
+            <!-- Barra de progreso -->
+            <div class="progress-bar">
+                <div class="prog-step">
+                    <div class="prog-dot done"></div>
+                    <div class="prog-label done">Recibido</div>
+                </div>
+                <div class="prog-step">
+                    <div class="prog-dot"
+                         th:classappend="${pedido.estado.name() == 'EN_PREPARACION'} ? ' active' :
+                                         (${pedido.estado.name() == 'ENVIADO' or pedido.estado.name() == 'ENTREGADO'} ? ' done' : '')"></div>
+                    <div class="prog-label"
+                         th:classappend="${pedido.estado.name() == 'EN_PREPARACION' or pedido.estado.name() == 'ENVIADO' or pedido.estado.name() == 'ENTREGADO'} ? ' done' : ''">
+                        Preparando
+                    </div>
+                </div>
+                <div class="prog-step">
+                    <div class="prog-dot"
+                         th:classappend="${pedido.estado.name() == 'ENVIADO'} ? ' active' :
+                                         (${pedido.estado.name() == 'ENTREGADO'} ? ' done' : '')"></div>
+                    <div class="prog-label"
+                         th:classappend="${pedido.estado.name() == 'ENVIADO' or pedido.estado.name() == 'ENTREGADO'} ? ' done' : ''">
+                        En camino
+                    </div>
+                </div>
+                <div class="prog-step">
+                    <div class="prog-dot"
+                         th:classappend="${pedido.estado.name() == 'ENTREGADO'} ? ' done' : ''"></div>
+                    <div class="prog-label"
+                         th:classappend="${pedido.estado.name() == 'ENTREGADO'} ? ' done' : ''">
+                        Entregado
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuerpo colapsable -->
+            <div class="pedido-body">
+                <div class="lineas-wrap">
+                <table class="lineas-table">
+                    <thead>
+                        <tr>
+                            <th>Plato</th>
+                            <th class="td-center">Cant.</th>
+                            <th class="td-right">P. unitario</th>
+                            <th class="td-right">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="linea : ${pedido.lineas}">
+                            <td th:text="${linea.nombrePlato}">Plato</td>
+                            <td class="td-center" th:text="${linea.cantidad}">1</td>
+                            <td class="td-right" th:text="'€ ' + ${#numbers.formatDecimal(linea.precio, 1, 2)}">€ 0</td>
+                            <td class="td-right subtotal"
+                                th:text="'€ ' + ${#numbers.formatDecimal(linea.precio * linea.cantidad, 1, 2)}">€ 0</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="3">Total del pedido</td>
+                            <td class="td-right subtotal"
+                                th:text="'€ ' + ${#numbers.formatDecimal(pedido.total, 1, 2)}">€ 0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+
+                <!-- Acciones -->
+                <div class="pedido-actions">
+                    <a th:href="@{/restaurantes/{id}(id=${pedido.restaurante.id})}"
+                       class="btn-rest">Ver restaurante</a>
+
+                    <!-- Cancelar solo si pendiente o en preparacion -->
+                    <form th:if="${pedido.estado.name() == 'PENDIENTE' or pedido.estado.name() == 'EN_PREPARACION'}"
+                          th:action="@{/pedidos/{id}/eliminar(id=${pedido.id})}" method="post"
+                          style="display:inline"
+                          onsubmit="return confirm('Cancelar este pedido?')">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-cancel-ped">Cancelar pedido</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- fin th:each -->
+    </div>
+</div>
+
+<script>
+function togglePedido(id) {
+    var el = document.getElementById('pedido-' + id);
+    el.classList.toggle('open');
+}
+// Abrir el primero automáticamente si hay pedidos
+document.addEventListener('DOMContentLoaded', function() {
+    var first = document.querySelector('.pedido-item');
+    if (first) first.classList.add('open');
+});
+</script>
 </body>
 </html>

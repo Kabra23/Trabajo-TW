@@ -253,10 +253,9 @@ public class RestauranteService {
         if (datos.getImagen() != null) {
             existente.setImagen(datos.getImagen());
         }
-        // Guardar etiquetas de menú editables
-        if (datos.getEtiquetasMenu() != null) {
-            existente.setEtiquetasMenu(datos.getEtiquetasMenu());
-        }
+        String etiquetasNormalizadas = normalizarEtiquetasMenu(datos.getEtiquetasMenu());
+        existente.setEtiquetasMenu(etiquetasNormalizadas);
+        reasignarEtiquetasPlatos(existente, etiquetasNormalizadas);
 
         actualizarCategorias(existente, categoriaIds);
         return restauranteRepo.save(existente);
@@ -279,7 +278,9 @@ public class RestauranteService {
     public void guardarEtiquetasMenu(Long id, String etiquetas, String email) {
         Restaurante restaurante = buscarPorId(id);
         verificarPropietario(restaurante, email);
-        restaurante.setEtiquetasMenu(etiquetas);
+        String etiquetasNormalizadas = normalizarEtiquetasMenu(etiquetas);
+        restaurante.setEtiquetasMenu(etiquetasNormalizadas);
+        reasignarEtiquetasPlatos(restaurante, etiquetasNormalizadas);
         restauranteRepo.save(restaurante);
     }
 
@@ -315,5 +316,41 @@ public class RestauranteService {
         }
         List<Categoria> categorias = categoriaRepo.findAllById(categoriaIds);
         restaurante.setCategorias(new HashSet<>(categorias));
+    }
+
+    private String normalizarEtiquetasMenu(String etiquetasRaw) {
+        if (etiquetasRaw == null || etiquetasRaw.isBlank()) {
+            return null;
+        }
+
+        LinkedHashSet<String> unicas = Arrays.stream(etiquetasRaw.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(s -> s.length() > 40 ? s.substring(0, 40) : s)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        if (unicas.isEmpty()) {
+            return null;
+        }
+        return String.join(",", unicas);
+    }
+
+    private void reasignarEtiquetasPlatos(Restaurante restaurante, String etiquetasRaw) {
+        List<String> etiquetas = etiquetasRaw == null || etiquetasRaw.isBlank()
+                ? restaurante.getEtiquetasMenuLista()
+                : Arrays.stream(etiquetasRaw.split(",")).map(String::trim).filter(s -> !s.isEmpty()).toList();
+
+        if (etiquetas.isEmpty() || restaurante.getPlatos() == null) {
+            return;
+        }
+
+        String etiquetaPorDefecto = etiquetas.get(0);
+        for (var plato : restaurante.getPlatos()) {
+            String actual = plato.getEtiquetaMenu();
+            boolean valida = actual != null && etiquetas.stream().anyMatch(e -> e.equalsIgnoreCase(actual.trim()));
+            if (!valida) {
+                plato.setEtiquetaMenu(etiquetaPorDefecto);
+            }
+        }
     }
 }

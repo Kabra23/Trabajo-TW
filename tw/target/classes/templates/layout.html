@@ -11,6 +11,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo} + ' - CUMe y Calla'">CUMe y Calla</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        /* Header siempre verde */
+        .main-header { background: #069c6f !important; color: white !important; }
+        .main-header .logo-main, .main-header .logo-separator,
+        .main-header .logo-secondary { color: white !important; }
+        .main-header .main-nav a { color: white !important; }
+        .main-header .main-nav a:hover { background: rgba(255,255,255,.15) !important; border-radius: 20px; }
+        .btn-link {
+            background: none; border: none; color: white; cursor: pointer;
+            font-family: inherit; font-size: inherit; font-weight: 500; padding: .5rem 1rem;
+        }
+        .btn-link:hover { background: rgba(255,255,255,.15); border-radius: 20px; }
+        .btn-logout {
+            background: transparent; color: #fff !important;
+            border: 2px solid rgba(255,255,255,.75); padding: .45rem 1.1rem;
+            border-radius: 25px; cursor: pointer; font-family: inherit;
+            font-size: .95rem; font-weight: 600;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,.18); }
+    </style>
 </head>
 
 <!-- ============================================================
@@ -20,7 +40,7 @@
 <header th:fragment="header" class="main-header">
     <div class="container">
         <div class="logo">
-            <a th:href="@{/}" style="text-decoration:none">
+            <a th:href="@{/}" style="text-decoration: none">
                 <h1>
                     <span class="logo-main">CUMe</span>
                     <span class="logo-separator">y</span>
@@ -31,13 +51,17 @@
         <nav class="main-nav">
             <ul>
                 <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+                <li><a th:href="@{/busqueda}">Busqueda avanzada</a></li>
 
                 <!-- Autenticado -->
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/restaurantes/nuevo}" class="btn-secondary">+ Mi restaurante</a>
+                    <a th:href="@{/restaurantes/nuevo}">+ Mi restaurante</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/mensajes}">Mensajes</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/perfil}">
@@ -45,7 +69,7 @@
                     </a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="post" style="display:inline">
+                    <form th:action="@{/logout}" method="post" style="display: inline">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <button type="submit" class="btn-logout">Cerrar sesion</button>
                     </form>
@@ -53,10 +77,10 @@
 
                 <!-- No autenticado -->
                 <li sec:authorize="!isAuthenticated()">
-                    <a th:href="@{/login}" class="btn-secondary">Inicia sesion</a>
+                    <a th:href="@{/login}">Inicia sesion</a>
                 </li>
                 <li sec:authorize="!isAuthenticated()">
-                    <a th:href="@{/registro}" class="btn-primary">Registrate</a>
+                    <a th:href="@{/registro}">Registrate</a>
                 </li>
             </ul>
         </nav>

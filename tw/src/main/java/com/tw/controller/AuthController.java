@@ -89,7 +89,7 @@ public class AuthController {
     // ---- Perfil ----
     @GetMapping("/perfil")
     public String perfil(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Usuario usuario = usuarioService.buscarPorEmailConRestaurantes(userDetails.getUsername());
+        Usuario usuario = usuarioService.buscarPorEmailConFavoritos(userDetails.getUsername());
         model.addAttribute("usuario", usuario);
         model.addAttribute("direcciones", direccionRepo.findByUsuarioId(usuario.getId()));
         return "perfil";

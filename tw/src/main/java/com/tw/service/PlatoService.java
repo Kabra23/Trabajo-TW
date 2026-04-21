@@ -43,6 +43,7 @@ public class PlatoService {
     public Plato crear(Long restauranteId, Plato plato, String emailPropietario) {
         Restaurante restaurante = verificarPropietario(restauranteId, emailPropietario);
         plato.setRestaurante(restaurante);
+        plato.setEtiquetaMenu(normalizarEtiqueta(restaurante, plato.getEtiquetaMenu()));
         return platoRepo.save(plato);
     }
 
@@ -53,6 +54,7 @@ public class PlatoService {
         existente.setNombre(datos.getNombre());
         existente.setDescripcion(datos.getDescripcion());
         existente.setPrecio(datos.getPrecio());
+        existente.setEtiquetaMenu(normalizarEtiqueta(existente.getRestaurante(), datos.getEtiquetaMenu()));
         if (datos.getImagen() != null) {
             existente.setImagen(datos.getImagen());
         }
@@ -77,6 +79,20 @@ public class PlatoService {
         }
         
         return restaurante;
+    }
+
+    private String normalizarEtiqueta(Restaurante restaurante, String etiqueta) {
+        var disponibles = restaurante.getEtiquetasMenuLista();
+        if (disponibles.isEmpty()) {
+            return "Destacados";
+        }
+        if (etiqueta == null || etiqueta.isBlank()) {
+            return disponibles.get(0);
+        }
+        return disponibles.stream()
+                .filter(e -> e.equalsIgnoreCase(etiqueta.trim()))
+                .findFirst()
+                .orElse(disponibles.get(0));
     }
 }
 

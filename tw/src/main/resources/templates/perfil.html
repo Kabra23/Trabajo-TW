@@ -299,15 +299,15 @@
                class="favorito-row">
 
                 <!-- Imagen del restaurante (primera disponible: imagen o banner) -->
-                <img th:if="${r.imagen != null}"
+                <img th:if="${r.imagen != null and !#strings.isEmpty(r.imagen)}"
                      th:src="@{'/uploads/' + ${r.imagen}}"
                      th:alt="${r.nombre}"
                      class="favorito-img">
-                <img th:if="${r.imagen == null and r.imagenBanner != null}"
+                <img th:if="${(r.imagen == null or #strings.isEmpty(r.imagen)) and (r.imagenBanner != null and !#strings.isEmpty(r.imagenBanner))}"
                      th:src="@{'/uploads/' + ${r.imagenBanner}}"
                      th:alt="${r.nombre}"
                      class="favorito-img">
-                <div th:if="${r.imagen == null and r.imagenBanner == null}"
+                <div th:if="${(r.imagen == null or #strings.isEmpty(r.imagen)) and (r.imagenBanner == null or #strings.isEmpty(r.imagenBanner))}"
                      class="favorito-placeholder">
                     <span th:text="${#strings.substring(r.nombre,0,1).toUpperCase()}">R</span>
                 </div>

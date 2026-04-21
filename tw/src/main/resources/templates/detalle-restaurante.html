@@ -43,10 +43,10 @@
     <!-- Hero imagen -->
     <section class="restaurant-hero">
         <div class="hero-image-large">
-            <img th:if="${restaurante.imagen != null}"
+            <img th:if="${restaurante.imagen != null and !#strings.isEmpty(restaurante.imagen)}"
                  th:src="@{'/uploads/' + ${restaurante.imagen}}"
                  th:alt="${restaurante.nombre}" class="hero-image">
-            <img th:unless="${restaurante.imagen != null}"
+            <img th:unless="${restaurante.imagen != null and !#strings.isEmpty(restaurante.imagen)}"
                  th:src="@{/img/banner.png}" th:alt="${restaurante.nombre}" class="hero-image">
         </div>
     </section>
@@ -209,7 +209,7 @@
                     <button th:each="etiqueta, it : ${restaurante.etiquetasMenuLista}"
                             class="tab-btn"
                             th:classappend="${it.first} ? ' active' : ''"
-                            th:attr="data-tab=${etiqueta}"
+                            th:attr="data-tab=${etiqueta},data-category=${etiqueta}"
                             th:text="${etiqueta}"
                             onclick="switchTab(this)">Etiqueta</button>
                 </nav>
@@ -229,7 +229,10 @@
                     </p>
 
                     <div class="menu-grid" th:if="${!#lists.isEmpty(restaurante.platos)}">
-                        <article th:each="plato : ${restaurante.platos}" class="dish-card">
+                        <article th:each="plato : ${restaurante.platos}"
+                                 th:with="etiquetaPlato=${(plato.etiquetaMenu != null and !#strings.isEmpty(plato.etiquetaMenu)) ? plato.etiquetaMenu : restaurante.etiquetasMenuLista[0]}"
+                                 class="dish-card"
+                                 th:attr="data-category=${etiquetaPlato}">
                             <div class="dish-info">
                                 <h3 th:text="${plato.nombre}">Nombre</h3>
                                 <p class="dish-description" th:text="${plato.descripcion}">Descripcion</p>
@@ -263,9 +266,9 @@
                             </div>
                             <!-- Imagen del plato -->
                             <div class="dish-image">
-                                <img th:if="${plato.imagen != null}"
+                                <img th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}"
                                      th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
-                                <img th:unless="${plato.imagen != null}"
+                                <img th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}"
                                      th:src="@{/img/pizza.png}" th:alt="${plato.nombre}">
                             </div>
                         </article>

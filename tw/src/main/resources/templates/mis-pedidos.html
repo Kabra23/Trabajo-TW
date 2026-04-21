@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
         /* ===== BASE ===== */
-        body { background: #f0f4f2; margin: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background: #eef3f1; margin: 0; font-family: 'Segoe UI', sans-serif; color: #27312d; }
         .main-header { background: #069c6f; }
         .main-header .logo-main, .main-header nav a,
         .main-header .logo-separator, .main-header .logo-secondary { color: white; }
@@ -36,7 +36,7 @@
         .pedidos-hero p { margin: 0; opacity: .85; font-size: .95rem; }
 
         /* ===== LAYOUT ===== */
-        .page-wrap { max-width: 860px; margin: -1.5rem auto 3rem; padding: 0 1.5rem; }
+        .page-wrap { max-width: 940px; margin: -1.5rem auto 3rem; padding: 0 1.5rem; }
 
         /* ===== STATS BAR ===== */
         .stats-bar {
@@ -75,11 +75,11 @@
         /* ===== PEDIDO CARD ===== */
         .pedido-item {
             background: white; border-radius: 16px; margin-bottom: 1rem;
-            box-shadow: 0 2px 12px rgba(0,0,0,.07);
+            box-shadow: 0 6px 18px rgba(8, 36, 27, .08);
             overflow: hidden; transition: transform .2s, box-shadow .2s;
             border-left: 5px solid transparent;
         }
-        .pedido-item:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+        .pedido-item:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(8, 36, 27, .12); }
         .pedido-item.pendiente   { border-left-color: #f57c00; }
         .pedido-item.preparacion { border-left-color: #1565c0; }
         .pedido-item.enviado     { border-left-color: #069c6f; }
@@ -89,7 +89,7 @@
         .pedido-head {
             display: flex; gap: 1rem; align-items: center;
             padding: 1.2rem 1.5rem; cursor: pointer;
-            user-select: none;
+            user-select: none; background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
         }
         .rest-thumb {
             width: 56px; height: 56px; border-radius: 12px;
@@ -145,7 +145,8 @@
         /* ── Detalle colapsable ── */
         .pedido-body { display: none; padding: 0 1.5rem 1.2rem; }
         .pedido-item.open .pedido-body { display: block; }
-        .lineas-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+        .lineas-wrap { overflow-x: auto; }
+        .lineas-table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 420px; }
         .lineas-table th {
             text-align: left; color: #aaa; font-size: .75rem;
             text-transform: uppercase; letter-spacing: .05em;
@@ -179,6 +180,12 @@
             .pedidos-hero h1 { font-size: 1.5rem; }
             .stat-chip .num { font-size: 1.3rem; }
             .pedido-head { padding: 1rem; }
+            .pedido-head { flex-wrap: wrap; }
+            .pedido-head-right { text-align: left; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+            .progress-bar { padding: 0 1rem .7rem; }
+            .pedido-body { padding: 0 1rem 1rem; }
+            .pedido-actions { flex-direction: column; }
+            .btn-rest, .btn-cancel-ped { text-align: center; width: 100%; box-sizing: border-box; }
         }
     </style>
 </head>
@@ -264,10 +271,10 @@
             <!-- Cabecera (click para expandir) -->
             <div class="pedido-head" th:onclick="'togglePedido(' + ${pedido.id} + ')'">
                 <!-- Imagen del restaurante -->
-                <img th:if="${pedido.restaurante.imagen != null}"
+                <img th:if="${pedido.restaurante.imagen != null and !#strings.isEmpty(pedido.restaurante.imagen)}"
                      th:src="@{'/uploads/' + ${pedido.restaurante.imagen}}"
                      th:alt="${pedido.restaurante.nombre}" class="rest-thumb">
-                <img th:unless="${pedido.restaurante.imagen != null}"
+                <img th:unless="${pedido.restaurante.imagen != null and !#strings.isEmpty(pedido.restaurante.imagen)}"
                      th:src="@{/img/banner.png}"
                      th:alt="${pedido.restaurante.nombre}" class="rest-thumb">
 
@@ -328,6 +335,7 @@
 
             <!-- Cuerpo colapsable -->
             <div class="pedido-body">
+                <div class="lineas-wrap">
                 <table class="lineas-table">
                     <thead>
                         <tr>
@@ -354,6 +362,7 @@
                         </tr>
                     </tfoot>
                 </table>
+                </div>
 
                 <!-- Acciones -->
                 <div class="pedido-actions">

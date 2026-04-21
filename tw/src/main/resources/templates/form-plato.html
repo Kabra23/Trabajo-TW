@@ -123,13 +123,25 @@
             </div>
 
             <div class="form-field">
+                <label for="etiquetaMenu">Etiqueta del menu</label>
+                <select id="etiquetaMenu" name="etiquetaMenu" style="width:100%;padding:.8rem 1rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.95rem;font-family:inherit;">
+                    <option th:each="etiqueta : ${restaurante.etiquetasMenuLista}"
+                            th:value="${etiqueta}"
+                            th:selected="${plato.etiquetaMenu != null ? plato.etiquetaMenu.equalsIgnoreCase(etiqueta) : etiqueta == restaurante.etiquetasMenuLista[0]}"
+                            th:text="${etiqueta}">
+                        Destacados
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-field">
                 <label for="imagenFile">
-                    <span th:if="${plato.imagen != null}">Cambiar imagen del plato</span>
-                    <span th:unless="${plato.imagen != null}">Imagen del plato (opcional)</span>
+                    <span th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}">Cambiar imagen del plato</span>
+                    <span th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}">Imagen del plato (opcional)</span>
                 </label>
 
                 <!-- IMAGEN ACTUAL (solo en modo edición) -->
-                <div th:if="${plato.imagen != null}" class="img-current">
+                <div th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}" class="img-current">
                     <img th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
                     <div class="img-current-info">
                         <strong>Imagen actual</strong>
@@ -141,7 +153,7 @@
                 <input type="file" id="imagenFile" name="imagenFile"
                        accept="image/jpeg,image/png,image/webp"
                        style="border: none; padding: .4rem 0; margin-top: .5rem;">
-                <small th:unless="${plato.imagen != null}">Formatos aceptados: JPG, PNG, WebP. Maximo 5MB.</small>
+                <small th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}">Formatos aceptados: JPG, PNG, WebP. Maximo 5MB.</small>
             </div>
 
             <div class="form-actions">

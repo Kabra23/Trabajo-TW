@@ -83,6 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== FUNCIONALIDAD DE PESTAÑAS ==========
     const tabButtons = document.querySelectorAll('.tab-btn');
     const dishCards = document.querySelectorAll('.dish-card');
+    let activeCategory = tabButtons.length > 0
+        ? (tabButtons[0].getAttribute('data-category') || tabButtons[0].getAttribute('data-tab') || '').toLowerCase().trim()
+        : '';
 
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -93,10 +96,11 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
 
             // Obtener la categoría seleccionada
-            const selectedCategory = this.getAttribute('data-category');
+            const selectedCategory = (this.getAttribute('data-category') || this.getAttribute('data-tab') || '').toLowerCase().trim();
+            activeCategory = selectedCategory;
 
             // Filtrar platos por categoría
-            filterDishesByCategory(selectedCategory);
+            applyDishFilters();
         });
     });
 
@@ -104,13 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let visibleCount = 0;
 
         dishCards.forEach(card => {
-            const dishCategory = card.getAttribute('data-category');
+            const dishCategory = (card.getAttribute('data-category') || '').toLowerCase().trim();
 
-            if (category === 'destacados') {
-                // Mostrar todos los platos en destacados
-                card.style.display = 'grid';
-                visibleCount++;
-            } else if (dishCategory === category) {
+            if (!category || dishCategory === category) {
                 card.style.display = 'grid';
                 visibleCount++;
             } else {
@@ -127,20 +127,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (searchInput) {
         searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            filterDishesBySearch(searchTerm);
+            applyDishFilters();
         });
     }
 
-    function filterDishesBySearch(searchTerm) {
+    function filterDishesBySearch(searchTerm, category) {
         let visibleCount = 0;
 
         dishCards.forEach(card => {
             const dishTitle = card.querySelector('h3').textContent.toLowerCase();
             const dishDescription = card.querySelector('.dish-description').textContent.toLowerCase();
+            const dishCategory = (card.getAttribute('data-category') || '').toLowerCase().trim();
+            const coincideCategoria = !category || dishCategory === category;
 
             // Buscar en título y descripción
-            if (dishTitle.includes(searchTerm) || dishDescription.includes(searchTerm)) {
+            if (coincideCategoria && (dishTitle.includes(searchTerm) || dishDescription.includes(searchTerm))) {
                 card.style.display = 'grid';
                 visibleCount++;
             } else {
@@ -151,13 +152,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Actualizar el contador de productos
         updateProductCount(visibleCount);
 
-        // Si hay búsqueda activa, marcar la pestaña "Destacados" como activa
-        if (searchTerm !== '') {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            const destacadosBtn = document.querySelector('[data-category="destacados"]');
-            if (destacadosBtn) {
-                destacadosBtn.classList.add('active');
-            }
+    }
+
+    function applyDishFilters() {
+        const term = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        if (term) {
+            filterDishesBySearch(term, activeCategory);
+        } else {
+            filterDishesByCategory(activeCategory);
         }
     }
 
@@ -188,5 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { threshold: 0.1 });
 
     dishCards.forEach(card => observer.observe(card));
+
+    applyDishFilters();
 });
 

@@ -164,7 +164,25 @@
     .plato-info { flex:1; }
     .plato-info h3 { margin:0 0 .25rem;font-size:1rem;color:#333; }
     .plato-info .precio { color:#069c6f;font-weight:700;font-size:.95rem; }
+    .plato-info .etiqueta { display:inline-block;margin-top:.3rem;padding:.2rem .55rem;border-radius:999px;background:#e8f5f1;color:#069c6f;font-size:.78rem;font-weight:700; }
     .plato-actions { display:flex;gap:.5rem;flex-shrink:0; }
+
+    .etiquetas-box { border:2px solid #e0e0e0;border-radius:10px;padding:1rem;background:#fafdfc;margin-bottom:1.2rem; }
+    .etiquetas-lista { display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem; }
+    .etiqueta-chip {
+        display:inline-flex;align-items:center;gap:.4rem;
+        background:#e8f5f1;color:#069c6f;border:1px solid #cbece0;
+        padding:.35rem .65rem;border-radius:999px;font-size:.83rem;font-weight:700;
+    }
+    .etiqueta-chip button { border:none;background:transparent;cursor:pointer;font-size:.9rem;line-height:1;color:#069c6f;padding:0; }
+    .etiquetas-add { display:flex;gap:.5rem;flex-wrap:wrap; }
+    .etiquetas-add input { flex:1;min-width:200px; }
+    .menu-filtros { display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem; }
+    .menu-filtros button {
+        border:2px solid #dcebe5;background:white;color:#4f6f63;
+        border-radius:999px;padding:.4rem .9rem;font-size:.82rem;font-weight:700;cursor:pointer;
+    }
+    .menu-filtros button.active { background:#069c6f;color:white;border-color:#069c6f; }
 
     @media(max-width:900px){
         .edit-layout { grid-template-columns:1fr; }
@@ -323,7 +341,7 @@
                     <input type="file" id="imagenFile" name="imagenFile"
                            accept="image/jpeg,image/png,image/webp"
                            style="border:none;padding:.4rem 0;">
-                    <div class="img-preview" th:if="${restaurante.imagen != null}">
+                    <div class="img-preview" th:if="${restaurante.imagen != null and !#strings.isEmpty(restaurante.imagen)}">
                         <img th:src="@{'/uploads/' + ${restaurante.imagen}}" alt="Imagen actual">
                         <small>Imagen actual &mdash; sube una nueva para reemplazarla</small>
                     </div>
@@ -334,17 +352,33 @@
             <div id="menu" class="form-section" th:if="${modo == 'editar'}">
                 <h2>Carta del menu</h2>
 
+                <div class="etiquetas-box">
+                    <input type="hidden" id="etiquetasMenu" th:field="*{etiquetasMenu}">
+                    <label style="font-weight:600;display:block;margin-bottom:.45rem;color:#333;font-size:.92rem;">Etiquetas del menu</label>
+                    <div id="etiquetasLista" class="etiquetas-lista"></div>
+                    <div class="etiquetas-add">
+                        <input type="text" id="nuevaEtiqueta" maxlength="40" placeholder="Nueva etiqueta (ej: Postres)">
+                        <button type="button" class="btn-xs primary" onclick="agregarEtiqueta()">Anadir</button>
+                    </div>
+                    <small>Puedes anadir, renombrar o eliminar etiquetas. Si eliminas una usada, los platos pasan a la primera etiqueta.</small>
+                </div>
+
+                <div class="menu-filtros" id="menuFiltros"></div>
+
                 <a th:href="@{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}"
                    style="display:inline-block;background:#069c6f;color:white;padding:.7rem 1.5rem;border-radius:8px;text-decoration:none;font-weight:700;margin-bottom:1.2rem;">
                     + Anadir plato
                 </a>
 
                 <div class="plato-list" th:if="${!#lists.isEmpty(restaurante.platos)}">
-                    <div th:each="plato : ${restaurante.platos}" class="plato-card">
+                    <div th:each="plato : ${restaurante.platos}"
+                         th:with="etiquetaPlato=${(plato.etiquetaMenu != null and !#strings.isEmpty(plato.etiquetaMenu)) ? plato.etiquetaMenu : restaurante.etiquetasMenuLista[0]}"
+                         class="plato-card"
+                         th:attr="data-etiqueta=${etiquetaPlato}">
                         <div class="plato-img">
-                            <img th:if="${plato.imagen != null}"
+                            <img th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}"
                                  th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
-                            <svg th:unless="${plato.imagen != null}" width="32" height="32" viewBox="0 0 24 24"
+                            <svg th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}" width="32" height="32" viewBox="0 0 24 24"
                                  fill="#069c6f" opacity=".4">
                                 <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8.63-15.03-8.63-15.03 0h15.03zM1.02 17h15v2h-15z"/>
                             </svg>
@@ -352,6 +386,7 @@
                         <div class="plato-info">
                             <h3 th:text="${plato.nombre}">Nombre</h3>
                             <div class="precio" th:text="${#numbers.formatDecimal(plato.precio,1,2)} + ' euro'">0 euro</div>
+                            <span class="etiqueta" th:text="${etiquetaPlato}">Destacados</span>
                         </div>
                         <div class="plato-actions">
                             <a th:href="@{/restaurantes/{rid}/platos/{pid}/editar(rid=${restaurante.id},pid=${plato.id})}"
@@ -482,6 +517,132 @@
             this.classList.add('active');
         });
     });
+
+    var etiquetasInput = document.getElementById('etiquetasMenu');
+    var listaEtiquetas = [];
+
+    function normalizarEtiqueta(txt) {
+        return (txt || '').trim();
+    }
+
+    function inicializarEtiquetas() {
+        if (!etiquetasInput) return;
+        listaEtiquetas = (etiquetasInput.value || '')
+            .split(',')
+            .map(normalizarEtiqueta)
+            .filter(function(v, i, arr) { return v && arr.indexOf(v) === i; });
+        if (!listaEtiquetas.length) {
+            listaEtiquetas = ['Destacados', 'Desayunos', 'Bocadillos y Montaditos', 'Bebidas', 'Ensaladas'];
+        }
+        pintarEtiquetas();
+        pintarFiltros();
+        filtrarPlatos('TODOS');
+    }
+
+    function sincronizarEtiquetasInput() {
+        etiquetasInput.value = listaEtiquetas.join(',');
+    }
+
+    function pintarEtiquetas() {
+        var cont = document.getElementById('etiquetasLista');
+        if (!cont) return;
+        cont.innerHTML = '';
+        listaEtiquetas.forEach(function(etiqueta, idx) {
+            var chip = document.createElement('span');
+            chip.className = 'etiqueta-chip';
+            chip.innerHTML = '<span>' + etiqueta + '</span>' +
+                '<button type="button" title="Renombrar" onclick="renombrarEtiqueta(' + idx + ')">Editar</button>' +
+                '<button type="button" title="Eliminar" onclick="eliminarEtiqueta(' + idx + ')">X</button>';
+            cont.appendChild(chip);
+        });
+        sincronizarEtiquetasInput();
+    }
+
+    function pintarFiltros() {
+        var cont = document.getElementById('menuFiltros');
+        if (!cont) return;
+        cont.innerHTML = '';
+
+        var todos = document.createElement('button');
+        todos.type = 'button';
+        todos.className = 'active';
+        todos.textContent = 'Todos';
+        todos.onclick = function() { activarFiltro(this); filtrarPlatos('TODOS'); };
+        cont.appendChild(todos);
+
+        listaEtiquetas.forEach(function(etiqueta) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = etiqueta;
+            btn.onclick = function() { activarFiltro(this); filtrarPlatos(etiqueta); };
+            cont.appendChild(btn);
+        });
+    }
+
+    function activarFiltro(btn) {
+        document.querySelectorAll('#menuFiltros button').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+    }
+
+    function filtrarPlatos(etiqueta) {
+        document.querySelectorAll('.plato-list .plato-card[data-etiqueta]').forEach(function(card) {
+            var actual = normalizarEtiqueta(card.getAttribute('data-etiqueta'));
+            card.style.display = (etiqueta === 'TODOS' || actual === etiqueta) ? 'flex' : 'none';
+        });
+    }
+
+    function agregarEtiqueta() {
+        var input = document.getElementById('nuevaEtiqueta');
+        if (!input) return;
+        var valor = normalizarEtiqueta(input.value);
+        if (!valor) return;
+        if (listaEtiquetas.indexOf(valor) !== -1) {
+            input.value = '';
+            return;
+        }
+        listaEtiquetas.push(valor);
+        input.value = '';
+        pintarEtiquetas();
+        pintarFiltros();
+    }
+
+    function renombrarEtiqueta(idx) {
+        var actual = listaEtiquetas[idx];
+        var nuevo = normalizarEtiqueta(prompt('Nuevo nombre de etiqueta', actual));
+        if (!nuevo || nuevo === actual) return;
+        if (listaEtiquetas.indexOf(nuevo) !== -1) return;
+        listaEtiquetas[idx] = nuevo;
+        document.querySelectorAll('.plato-list .plato-card[data-etiqueta]').forEach(function(card) {
+            if (normalizarEtiqueta(card.getAttribute('data-etiqueta')) === actual) {
+                card.setAttribute('data-etiqueta', nuevo);
+                var badge = card.querySelector('.etiqueta');
+                if (badge) badge.textContent = nuevo;
+            }
+        });
+        pintarEtiquetas();
+        pintarFiltros();
+    }
+
+    function eliminarEtiqueta(idx) {
+        if (listaEtiquetas.length <= 1) {
+            alert('Debe quedar al menos una etiqueta.');
+            return;
+        }
+        var eliminada = listaEtiquetas[idx];
+        var destino = listaEtiquetas[idx === 0 ? 1 : 0];
+        listaEtiquetas.splice(idx, 1);
+        document.querySelectorAll('.plato-list .plato-card[data-etiqueta]').forEach(function(card) {
+            if (normalizarEtiqueta(card.getAttribute('data-etiqueta')) === eliminada) {
+                card.setAttribute('data-etiqueta', destino);
+                var badge = card.querySelector('.etiqueta');
+                if (badge) badge.textContent = destino;
+            }
+        });
+        pintarEtiquetas();
+        pintarFiltros();
+    }
+
+    inicializarEtiquetas();
 </script>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>

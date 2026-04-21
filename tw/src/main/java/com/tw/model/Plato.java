@@ -26,6 +26,9 @@ public class Plato {
 
     private String imagen; // extra imágenes
 
+    @Column(length = 80)
+    private String etiquetaMenu;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurante_id", nullable = false)
     private Restaurante restaurante;

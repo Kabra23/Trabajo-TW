@@ -41,6 +41,12 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
+    @Transactional(readOnly = true)
+    public Usuario buscarPorEmailConFavoritos(String email) {
+        return usuarioRepository.findByEmailWithFavoritos(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
     /** Actualiza los datos del perfil (nombre, apellidos, etc.). */
     public Usuario actualizarPerfil(Long id, String nombre, String apellidos, String fotoPerfil) {
         Usuario usuario = usuarioRepository.findById(id)
