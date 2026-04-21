@@ -227,12 +227,9 @@
         <div th:if="${exito}" class="msg-ok" th:text="${exito}"></div>
         <div th:if="${error}" class="msg-err" th:text="${error}"></div>
 
-        <form id="restauranteForm"
-              th:action="${modo == 'crear'} ? @{/restaurantes/nuevo} : @{/restaurantes/{id}/editar(id=${restaurante.id})}"
-              th:object="${restaurante}"
-              method="post"
-              enctype="multipart/form-data"
-              novalidate>
+        <form method="post"
+              th:action="${modo == 'crear' ? '/restaurantes/nuevo' : '/restaurantes/' + restaurante.id + '/editar'}"
+              th:object="${restaurante}">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
             <!-- ====== INFORMACIÓN GENERAL ====== -->
