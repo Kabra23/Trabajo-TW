@@ -19,15 +19,15 @@ public class Restaurante {
     @Column(nullable = false)
     private String nombre;
 
-    @NotBlank(message = "La dirección es obligatoria")
+    @NotBlank(message = "La direccion es obligatoria")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String direccion;
 
-    @NotBlank(message = "El teléfono es obligatorio")
+    @NotBlank(message = "El telefono es obligatorio")
     @Column(nullable = false)
     private String telefono;
 
-    @Email(message = "El correo no es válido")
+    @Email(message = "El correo no es valido")
     @NotBlank(message = "El correo de contacto es obligatorio")
     @Column(nullable = false)
     private String email;
@@ -50,12 +50,18 @@ public class Restaurante {
 
     private String localidad;
 
+    /**
+     * Etiquetas del menú personalizadas por el propietario.
+     * Se almacenan como texto separado por comas, ej: "Destacados,Desayunos,Bocadillos,Bebidas"
+     * Si es null o vacío, se usan las etiquetas por defecto.
+     */
+    @Column(columnDefinition = "TEXT")
+    private String etiquetasMenu;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "propietario_id", nullable = false)
     private Usuario propietario;
 
-    // CORRECCIÓN PROBLEMA 2: EAGER para evitar LazyInitializationException
-    // cuando Thymeleaf accede a categorias fuera de la sesión JPA
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "restaurante_categorias",
@@ -86,5 +92,18 @@ public class Restaurante {
                     .average()
                     .orElse(0.0);
         }
+    }
+
+    /**
+     * Devuelve las etiquetas como lista. Si no hay personalizadas, devuelve las por defecto.
+     */
+    public java.util.List<String> getEtiquetasMenuLista() {
+        if (etiquetasMenu != null && !etiquetasMenu.isBlank()) {
+            return java.util.Arrays.stream(etiquetasMenu.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .collect(java.util.stream.Collectors.toList());
+        }
+        return java.util.List.of("Destacados", "Desayunos", "Bocadillos y Montaditos", "Bebidas", "Ensaladas");
     }
 }

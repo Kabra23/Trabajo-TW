@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade estilos y mejoras de diseño: actualiza el diseño de la gestión de cambios y mejora la estructura del proyecto.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/ImagenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/ImagenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +186,7 @@
       <workItem from="1776525792172" duration="100000" />
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
-      <workItem from="1776758751874" duration="849000" />
+      <workItem from="1776758751874" duration="1772000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -394,7 +396,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776759008084</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas.">
+      <option name="closed" value="true" />
+      <created>1776759633109</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1776759633109</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,7 +441,8 @@
     <MESSAGE value="Añade gestión de direcciones: crea el repositorio y modelo de Direccion, implementa controlador para añadir, marcar como principal y eliminar direcciones; actualiza el perfil de usuario para incluir direcciones." />
     <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para botones de logout, ajusta la disposición de formularios y mejora la responsividad de las páginas." />
     <MESSAGE value="Añade estilos y mejoras de diseño: actualiza el diseño de la gestión de cambios y mejora la estructura del proyecto." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade estilos y mejoras de diseño: actualiza el diseño de la gestión de cambios y mejora la estructura del proyecto." />
+    <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

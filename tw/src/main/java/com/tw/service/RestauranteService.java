@@ -10,11 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,7 +21,6 @@ public class RestauranteService {
     private final RestauranteRepository restauranteRepo;
     private final UsuarioRepository usuarioRepo;
     private final CategoriaRepository categoriaRepo;
-
 
     // ---- Lectura ----
 
@@ -69,8 +65,13 @@ public class RestauranteService {
         return restauranteRepo.findAllByOrderByMediaValoracionesDesc();
     }
 
+    /**
+     * Búsqueda principal con todos los filtros (req. mínimo 6 y 7).
+     */
     @Transactional(readOnly = true)
-    public List<Restaurante> buscar(String q, Long categoriaId, String filtro, Integer valoracion, Integer precio, Boolean bikeFriendly, String orden) {
+    public List<Restaurante> buscar(String q, Long categoriaId, String filtro,
+                                    Integer valoracion, Integer precio,
+                                    Boolean bikeFriendly, String orden) {
         return restauranteRepo.findAll((root, query, cb) -> {
             var predicates = new java.util.ArrayList<jakarta.persistence.criteria.Predicate>();
 
@@ -94,12 +95,7 @@ public class RestauranteService {
             }
 
             if (valoracion != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("mediaValoraciones"), valoracion));
-            }
-
-            if (precio != null) {
-                // Asumiendo que tienes un campo 'rangoPrecio' o similar
-                // predicates.add(cb.equal(root.get("rangoPrecio"), precio));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("mediaValoraciones"), (double) valoracion));
             }
 
             if (bikeFriendly != null && bikeFriendly) {
@@ -108,21 +104,11 @@ public class RestauranteService {
 
             if (orden != null) {
                 switch (orden) {
-                    case "nombre_asc":
-                        query.orderBy(cb.asc(root.get("nombre")));
-                        break;
-                    case "nombre_desc":
-                        query.orderBy(cb.desc(root.get("nombre")));
-                        break;
-                    case "precio_asc":
-                        query.orderBy(cb.asc(root.get("precioMin")));
-                        break;
-                    case "precio_desc":
-                        query.orderBy(cb.desc(root.get("precioMin")));
-                        break;
-                    case "valoracion_desc":
-                        query.orderBy(cb.desc(root.get("mediaValoraciones")));
-                        break;
+                    case "nombre_asc" -> query.orderBy(cb.asc(root.get("nombre")));
+                    case "nombre_desc" -> query.orderBy(cb.desc(root.get("nombre")));
+                    case "precio_asc" -> query.orderBy(cb.asc(root.get("precioMin")));
+                    case "precio_desc" -> query.orderBy(cb.desc(root.get("precioMin")));
+                    case "valoracion_desc" -> query.orderBy(cb.desc(root.get("mediaValoraciones")));
                 }
             }
 
@@ -130,6 +116,116 @@ public class RestauranteService {
         });
     }
 
+    /**
+     * Búsqueda AVANZADA (extra 3): busca en nombre, localidad, platos, comentarios y rango de precios.
+     */
+    @Transactional(readOnly = true)
+    public List<Restaurante> busquedaAvanzada(String q, Long categoriaId, String localidad,
+                                               Double precioMin, Double precioMax) {
+        // Obtenemos todos y filtramos en memoria para poder cruzar con platos y valoraciones
+        List<Restaurante> todos = restauranteRepo.findAll();
+
+        return todos.stream().filter(r -> {
+            // Filtro por texto (nombre, localidad, platos, comentarios/valoraciones)
+            if (q != null && !q.isBlank()) {
+                String ql = q.toLowerCase();
+                boolean enNombre = r.getNombre() != null && r.getNombre().toLowerCase().contains(ql);
+                boolean enLocalidad = r.getLocalidad() != null && r.getLocalidad().toLowerCase().contains(ql);
+                boolean enPlatos = r.getPlatos() != null && r.getPlatos().stream().anyMatch(p ->
+                        (p.getNombre() != null && p.getNombre().toLowerCase().contains(ql)) ||
+                        (p.getDescripcion() != null && p.getDescripcion().toLowerCase().contains(ql))
+                );
+                boolean enComentarios = r.getValoraciones() != null && r.getValoraciones().stream().anyMatch(v ->
+                        v.getComentario() != null && v.getComentario().toLowerCase().contains(ql)
+                );
+                if (!enNombre && !enLocalidad && !enPlatos && !enComentarios) return false;
+            }
+
+            // Filtro por categoría
+            if (categoriaId != null) {
+                boolean tieneCategoria = r.getCategorias() != null &&
+                        r.getCategorias().stream().anyMatch(c -> c.getId().equals(categoriaId));
+                if (!tieneCategoria) return false;
+            }
+
+            // Filtro por localidad exacta (insensible a mayúsculas)
+            if (localidad != null && !localidad.isBlank()) {
+                if (r.getLocalidad() == null ||
+                        !r.getLocalidad().toLowerCase().contains(localidad.toLowerCase())) return false;
+            }
+
+            // Filtro rango de precios
+            if (precioMin != null && r.getPrecioMin() != null && r.getPrecioMax() != null) {
+                if (r.getPrecioMax() < precioMin) return false;
+            }
+            if (precioMax != null && r.getPrecioMin() != null) {
+                if (r.getPrecioMin() > precioMax) return false;
+            }
+
+            return true;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * Restaurantes relacionados (extra 4): busca restaurantes similares al dado
+     * en función de categoría, localidad, precio y valoración.
+     * Devuelve máximo 4 resultados (excluye el propio restaurante).
+     */
+    @Transactional(readOnly = true)
+    public List<Restaurante> buscarRelacionados(Restaurante restaurante) {
+        Set<Long> categoriaIds = restaurante.getCategorias() == null ? Set.of() :
+                restaurante.getCategorias().stream().map(Categoria::getId).collect(Collectors.toSet());
+
+        List<Restaurante> todos = restauranteRepo.findAll();
+
+        // Puntuación de similitud: más puntos = más relacionado
+        Map<Restaurante, Integer> puntos = new LinkedHashMap<>();
+
+        for (Restaurante r : todos) {
+            if (r.getId().equals(restaurante.getId())) continue;
+
+            int score = 0;
+
+            // +3 por cada categoría en común
+            if (r.getCategorias() != null) {
+                for (Categoria c : r.getCategorias()) {
+                    if (categoriaIds.contains(c.getId())) score += 3;
+                }
+            }
+
+            // +2 por misma localidad
+            if (restaurante.getLocalidad() != null && r.getLocalidad() != null
+                    && restaurante.getLocalidad().equalsIgnoreCase(r.getLocalidad())) {
+                score += 2;
+            }
+
+            // +1 si el rango de precio se solapa
+            if (restaurante.getPrecioMin() != null && r.getPrecioMin() != null) {
+                double minA = restaurante.getPrecioMin();
+                double maxA = restaurante.getPrecioMax() != null ? restaurante.getPrecioMax() : minA + 10;
+                double minB = r.getPrecioMin();
+                double maxB = r.getPrecioMax() != null ? r.getPrecioMax() : minB + 10;
+                if (minA <= maxB && minB <= maxA) score += 1;
+            }
+
+            // +1 si valoración similar (diferencia <= 1)
+            if (restaurante.getMediaValoraciones() != null && r.getMediaValoraciones() != null) {
+                if (Math.abs(restaurante.getMediaValoraciones() - r.getMediaValoraciones()) <= 1.0) {
+                    score += 1;
+                }
+            }
+
+            if (score > 0) {
+                puntos.put(r, score);
+            }
+        }
+
+        return puntos.entrySet().stream()
+                .sorted(Map.Entry.<Restaurante, Integer>comparingByValue().reversed())
+                .limit(4)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
 
     // ---- Escritura ----
 
@@ -148,10 +244,18 @@ public class RestauranteService {
         existente.setDireccion(datos.getDireccion());
         existente.setLocalidad(datos.getLocalidad());
         existente.setTelefono(datos.getTelefono());
+        existente.setEmail(datos.getEmail());
+        existente.setPrecioMin(datos.getPrecioMin());
+        existente.setPrecioMax(datos.getPrecioMax());
+        existente.setBikeFriendly(datos.getBikeFriendly());
         existente.setAceptaPedidos(datos.getAceptaPedidos());
 
         if (datos.getImagen() != null) {
             existente.setImagen(datos.getImagen());
+        }
+        // Guardar etiquetas de menú editables
+        if (datos.getEtiquetasMenu() != null) {
+            existente.setEtiquetasMenu(datos.getEtiquetasMenu());
         }
 
         actualizarCategorias(existente, categoriaIds);
@@ -171,6 +275,14 @@ public class RestauranteService {
         restauranteRepo.save(restaurante);
     }
 
+    /** Guarda las etiquetas del menú (tabs editables por el propietario) */
+    public void guardarEtiquetasMenu(Long id, String etiquetas, String email) {
+        Restaurante restaurante = buscarPorId(id);
+        verificarPropietario(restaurante, email);
+        restaurante.setEtiquetasMenu(etiquetas);
+        restauranteRepo.save(restaurante);
+    }
+
     public void toggleFavorito(Long restauranteId, String email) {
         Usuario usuario = obtenerUsuario(email);
         Restaurante restaurante = buscarPorId(restauranteId);
@@ -183,7 +295,6 @@ public class RestauranteService {
         usuarioRepo.save(usuario);
     }
 
-
     // ---- Privados ----
 
     private Usuario obtenerUsuario(String email) {
@@ -193,7 +304,7 @@ public class RestauranteService {
 
     private void verificarPropietario(Restaurante r, String email) {
         if (!r.getPropietario().getEmail().equals(email)) {
-            throw new SecurityException("No tienes permiso para realizar esta acción");
+            throw new SecurityException("No tienes permiso para realizar esta accion");
         }
     }
 

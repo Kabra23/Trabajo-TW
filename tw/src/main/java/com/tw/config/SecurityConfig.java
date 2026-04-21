@@ -23,11 +23,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // Recursos estaticos y paginas publicas
-                .requestMatchers("/css/**", "/js/**", "/imagenes/**", "/img/**", "/uploads/**").permitAll()
+                // Recursos estáticos y páginas públicas
+                .requestMatchers("/css/**", "/js/**", "/imagenes/**", "/img/**").permitAll()
+                // CRÍTICO: /uploads/** debe ser accesible sin autenticación para las imágenes
+                .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/", "/restaurantes", "/restaurantes/{id}").permitAll()
+                .requestMatchers("/busqueda").permitAll()
                 .requestMatchers("/login", "/registro", "/registro-exitoso").permitAll()
-                // El resto requiere autenticacion
+                // Mensajería y perfil requieren autenticación
+                .requestMatchers("/mensajes/**").authenticated()
+                .requestMatchers("/perfil/**").authenticated()
+                // El resto requiere autenticación
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

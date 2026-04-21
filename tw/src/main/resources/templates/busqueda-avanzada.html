@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busqueda avanzada - CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body { background:#f5f7fa;font-family:'Segoe UI',sans-serif;margin:0; }
+        .main-header { background:#069c6f; }
+        .main-header .logo-main,.main-header nav a,.main-header .logo-separator,.main-header .logo-secondary { color:white; }
+        .btn-logout { background:transparent;color:#fff;border:2px solid rgba(255,255,255,.75);padding:.45rem 1.1rem;border-radius:25px;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:600; }
+
+        /* Layout */
+        .search-page { max-width:1100px;margin:0 auto;padding:2rem 1.5rem;display:grid;grid-template-columns:300px 1fr;gap:2rem; }
+        @media(max-width:860px){ .search-page{grid-template-columns:1fr;} }
+
+        /* Panel de filtros */
+        .filters-panel {
+            background:white;border-radius:14px;padding:1.8rem;
+            box-shadow:0 2px 10px rgba(0,0,0,.07);height:fit-content;position:sticky;top:90px;
+        }
+        .filters-panel h2 { color:#069c6f;font-size:1.2rem;margin:0 0 1.5rem;font-weight:700; }
+        .filter-block { margin-bottom:1.4rem; }
+        .filter-block label { display:block;font-weight:600;color:#333;font-size:.88rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.04em; }
+        .filter-block input,.filter-block select {
+            width:100%;padding:.75rem .9rem;border:2px solid #e0e0e0;border-radius:8px;
+            font-size:.93rem;font-family:inherit;transition:border-color .2s;box-sizing:border-box;
+        }
+        .filter-block input:focus,.filter-block select:focus { outline:none;border-color:#069c6f;box-shadow:0 0 0 3px rgba(6,156,111,.1); }
+        .filter-row-2 { display:grid;grid-template-columns:1fr 1fr;gap:.7rem; }
+        .filter-hint { color:#aaa;font-size:.78rem;margin-top:.3rem;display:block; }
+
+        /* Hero de búsqueda */
+        .search-hero { background:linear-gradient(135deg,#069c6f 0%,#04b57a 100%);padding:2.2rem 1.5rem;text-align:center;color:white; }
+        .search-hero h1 { font-size:2rem;margin:0 0 .5rem;font-weight:700; }
+        .search-hero p { margin:0;opacity:.9;font-size:1rem; }
+
+        /* Filtros de texto que buscan en */
+        .search-scope { display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem; }
+        .scope-tag { background:#e8f5f1;color:#069c6f;border:1px solid #c8e6c9;padding:.25rem .7rem;border-radius:12px;font-size:.78rem;font-weight:600; }
+
+        /* Botones */
+        .btn-search-adv {
+            width:100%;background:#069c6f;color:white;border:none;padding:.9rem;border-radius:8px;
+            font-weight:700;font-size:1rem;cursor:pointer;font-family:inherit;transition:background .2s;margin-top:.5rem;
+        }
+        .btn-search-adv:hover { background:#038a63; }
+        .btn-clear { display:block;text-align:center;color:#888;text-decoration:none;font-size:.85rem;margin-top:.7rem;transition:color .2s; }
+        .btn-clear:hover { color:#d32f2f; }
+
+        /* Resultados */
+        .results-area {}
+        .results-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem; }
+        .results-header h2 { color:#333;font-size:1.3rem;margin:0; }
+        .results-header span { color:#888;font-size:.9rem; }
+
+        /* Tarjeta de resultado */
+        .result-card {
+            background:white;border-radius:12px;padding:0;overflow:hidden;
+            box-shadow:0 2px 8px rgba(0,0,0,.07);margin-bottom:1rem;
+            display:flex;gap:0;border:2px solid transparent;transition:all .2s;text-decoration:none;color:inherit;
+        }
+        .result-card:hover { border-color:#069c6f;transform:translateY(-2px);box-shadow:0 6px 18px rgba(6,156,111,.12); }
+        .result-img { width:130px;flex-shrink:0;background:#e8f5f1;overflow:hidden;display:flex;align-items:center;justify-content:center; }
+        .result-img img { width:100%;height:100%;object-fit:cover; }
+        .result-img .no-img { color:#069c6f;opacity:.3; }
+        .result-info { flex:1;padding:1.2rem 1.4rem; }
+        .result-info h3 { margin:0 0 .4rem;font-size:1.1rem;color:#333;font-weight:700; }
+        .result-meta { display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:.5rem; }
+        .result-rating { display:flex;align-items:center;gap:.25rem;font-weight:700;color:#333;font-size:.9rem; }
+        .result-localidad { color:#888;font-size:.85rem; }
+        .result-cats { display:flex;flex-wrap:wrap;gap:.3rem; }
+        .cat-tag { background:#e8f5f1;color:#069c6f;border-radius:12px;padding:.15rem .55rem;font-size:.75rem;font-weight:600; }
+        .result-precio { color:#069c6f;font-weight:700;font-size:.9rem; }
+        .result-match { font-size:.78rem;color:#aaa;margin-top:.4rem; }
+        .result-match span { color:#069c6f;font-weight:600; }
+
+        /* Sin resultados */
+        .no-results { text-align:center;padding:4rem 2rem;background:white;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.06); }
+        .no-results p { color:#888;font-size:1rem;margin:.5rem 0; }
+
+        /* Estado inicial */
+        .initial-state { text-align:center;padding:5rem 2rem;color:#bbb; }
+        .initial-state svg { opacity:.2;margin-bottom:1rem; }
+        .initial-state p { font-size:1.1rem; }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <a th:href="@{/}" style="text-decoration:none">
+                <h1><span class="logo-main">CUMe</span><span class="logo-separator">y</span><span class="logo-secondary">Calla</span></h1>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/mensajes}">Mensajes</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/perfil}"><span sec:authentication="name">Mi perfil</span></a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-logout">Cerrar sesion</button>
+                    </form>
+                </li>
+                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Inicia sesion</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="search-hero">
+    <h1>Busqueda avanzada</h1>
+    <p>Filtra por nombre, platos, comentarios, localidad y rango de precios</p>
+</div>
+
+<div class="search-page">
+
+    <!-- PANEL DE FILTROS -->
+    <aside class="filters-panel">
+        <h2>Filtros de busqueda</h2>
+
+        <form th:action="@{/busqueda}" method="get" id="searchForm">
+
+            <div class="filter-block">
+                <label for="q">Texto libre</label>
+                <input type="text" id="q" name="q" th:value="${q}"
+                       placeholder="Nombre, plato, comentario...">
+                <span class="filter-hint">Busca en: nombre, platos, comentarios y localidad</span>
+            </div>
+
+            <div class="filter-block">
+                <label for="categoria">Categoria</label>
+                <select id="categoria" name="categoria">
+                    <option value="">Todas las categorias</option>
+                    <option th:each="cat : ${categorias}"
+                            th:value="${cat.id}"
+                            th:text="${cat.nombre}"
+                            th:selected="${categoria != null and categoria == cat.id}">Categoria</option>
+                </select>
+            </div>
+
+            <div class="filter-block">
+                <label for="localidad">Localidad</label>
+                <input type="text" id="localidad" name="localidad" th:value="${localidad}"
+                       placeholder="Ej: Merida, Badajoz...">
+            </div>
+
+            <div class="filter-block">
+                <label>Rango de precio (€)</label>
+                <div class="filter-row-2">
+                    <div>
+                        <input type="number" name="precioMin" th:value="${precioMin}"
+                               min="0" step="0.5" placeholder="Min">
+                    </div>
+                    <div>
+                        <input type="number" name="precioMax" th:value="${precioMax}"
+                               min="0" step="0.5" placeholder="Max">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Etiquetas de lo que se busca -->
+            <div style="margin-bottom:.8rem;">
+                <p style="font-size:.8rem;color:#888;margin:0 0 .4rem;font-weight:600;">Esta busqueda incluye:</p>
+                <div class="search-scope">
+                    <span class="scope-tag">Nombre del restaurante</span>
+                    <span class="scope-tag">Platos ofertados</span>
+                    <span class="scope-tag">Comentarios de valoraciones</span>
+                    <span class="scope-tag">Localidad</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-search-adv">Buscar</button>
+            <a th:href="@{/busqueda}" class="btn-clear">Limpiar filtros</a>
+        </form>
+    </aside>
+
+    <!-- RESULTADOS -->
+    <section class="results-area">
+
+        <!-- Estado inicial (aún no ha buscado) -->
+        <div th:unless="${buscado}" class="initial-state">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="#069c6f">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            <p>Usa los filtros para encontrar el restaurante perfecto.</p>
+        </div>
+
+        <!-- Sin resultados tras busqueda -->
+        <div th:if="${buscado and (resultados == null or #lists.isEmpty(resultados))}" class="no-results">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="#069c6f" style="opacity:.2;margin-bottom:1rem;">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            <p>No hemos encontrado restaurantes con esos criterios.</p>
+            <p>Prueba a ampliar los filtros o usar otras palabras clave.</p>
+        </div>
+
+        <!-- Con resultados -->
+        <div th:if="${buscado and resultados != null and !#lists.isEmpty(resultados)}">
+            <div class="results-header">
+                <h2>Resultados</h2>
+                <span th:text="${#lists.size(resultados)} + ' encontrado' + (${#lists.size(resultados)} != 1 ? 's' : '')">0 encontrados</span>
+            </div>
+
+            <a th:each="r : ${resultados}"
+               th:href="@{/restaurantes/{id}(id=${r.id})}"
+               class="result-card">
+                <div class="result-img">
+                    <img th:if="${r.imagen != null}" th:src="@{'/uploads/' + ${r.imagen}}" th:alt="${r.nombre}">
+                    <svg th:unless="${r.imagen != null}" class="no-img" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05z"/>
+                    </svg>
+                </div>
+                <div class="result-info">
+                    <h3 th:text="${r.nombre}">Nombre</h3>
+                    <div class="result-meta">
+                        <div class="result-rating" th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="gold"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <span th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}">0.0</span>
+                        </div>
+                        <span class="result-localidad" th:if="${r.localidad}" th:text="${r.localidad}">Localidad</span>
+                        <span class="result-precio" th:if="${r.precioMin != null}">
+                            <span th:text="${#numbers.formatDecimal(r.precioMin,1,2)}">0</span>-<span th:text="${#numbers.formatDecimal(r.precioMax,1,2)}">0</span> euro
+                        </span>
+                    </div>
+                    <div class="result-cats" th:if="${r.categorias != null and !#lists.isEmpty(r.categorias)}">
+                        <span th:each="cat : ${r.categorias}" class="cat-tag" th:text="${cat.nombre}">Cat</span>
+                    </div>
+                    <!-- Indicar qué platos o comentarios coincidieron si hay texto de búsqueda -->
+                    <div class="result-match" th:if="${q != null and !q.isBlank()}">
+                        <span th:if="${r.platos != null and r.platos.stream().anyMatch(p -> p.getNombre().toLowerCase().contains(q.toLowerCase()))}">
+                            Plato coincidente: <span th:text="${r.platos.stream().filter(p -> p.getNombre().toLowerCase().contains(q.toLowerCase())).findFirst().get().getNombre()}">Plato</span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
