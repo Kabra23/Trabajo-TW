@@ -191,11 +191,7 @@
                     <article th:each="r : ${restaurantes}" class="restaurant-card">
                         <a th:href="@{/restaurantes/{id}(id=${r.id})}" class="restaurant-link">
                             <div class="restaurant-image" style="position:relative;">
-                                <img th:if="${r.imagen != null}"
-                                     th:src="@{'/uploads/' + ${r.imagen}}" th:alt="${r.nombre}"
-                                     sizes="300px" class="category-icon">
-                                <img th:unless="${r.imagen != null}"
-                                     th:src="@{/img/banner.png}" th:alt="${r.nombre}"
+                                <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}"
                                      sizes="300px" class="category-icon">
                                 <span th:unless="${r.aceptaPedidos}"
                                       style="position:absolute;top:.8rem;left:.8rem;background:#d32f2f;color:white;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600;">

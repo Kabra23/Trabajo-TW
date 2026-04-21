@@ -43,11 +43,8 @@
     <!-- Hero imagen -->
     <section class="restaurant-hero">
         <div class="hero-image-large">
-            <img th:if="${restaurante.imagen != null and !#strings.isEmpty(restaurante.imagen)}"
-                 th:src="@{'/uploads/' + ${restaurante.imagen}}"
+            <img th:src="@{${@vistaImagenService.restaurante(restaurante)}}"
                  th:alt="${restaurante.nombre}" class="hero-image">
-            <img th:unless="${restaurante.imagen != null and !#strings.isEmpty(restaurante.imagen)}"
-                 th:src="@{/img/banner.png}" th:alt="${restaurante.nombre}" class="hero-image">
         </div>
     </section>
 
@@ -266,10 +263,7 @@
                             </div>
                             <!-- Imagen del plato -->
                             <div class="dish-image">
-                                <img th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}"
-                                     th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
-                                <img th:unless="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}"
-                                     th:src="@{/img/pizza.png}" th:alt="${plato.nombre}">
+                                <img th:src="@{${@vistaImagenService.plato(plato)}}" th:alt="${plato.nombre}">
                             </div>
                         </article>
                     </div>
@@ -337,12 +331,8 @@
                            th:href="@{/restaurantes/{id}(id=${r.id})}"
                            style="background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07);text-decoration:none;color:inherit;border:2px solid transparent;transition:all .2s;display:block;">
                             <div style="height:110px;overflow:hidden;background:#e8f5f1;display:flex;align-items:center;justify-content:center;">
-                                <img th:if="${r.imagen != null}"
-                                     th:src="@{'/uploads/' + ${r.imagen}}" th:alt="${r.nombre}"
+                                <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}"
                                      style="width:100%;height:100%;object-fit:cover;">
-                                <svg th:unless="${r.imagen != null}" width="36" height="36" viewBox="0 0 24 24" fill="#069c6f" style="opacity:.3;">
-                                    <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05z"/>
-                                </svg>
                             </div>
                             <div style="padding:.9rem;">
                                 <h3 style="margin:0 0 .3rem;font-size:.95rem;color:#333;font-weight:700;" th:text="${r.nombre}">Nombre</h3>

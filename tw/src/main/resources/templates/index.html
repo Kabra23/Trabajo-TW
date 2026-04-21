@@ -106,11 +106,8 @@
                 <article th:each="cat : ${categorias}" class="category-card">
                     <a th:href="@{/restaurantes(categoria=${cat.id})}" style="text-decoration:none;color:inherit;display:block">
                         <div class="category-image">
-                            <img th:if="${cat.imagen != null}"
-                                 th:src="@{'/img/' + ${cat.imagen}}"
+                            <img th:src="@{${@vistaImagenService.categoria(cat)}}"
                                  th:alt="${cat.nombre}" sizes="300px" class="category-icon">
-                            <img th:unless="${cat.imagen != null}"
-                                 th:src="@{/img/logo.png}" alt="Categoria" sizes="300px" class="category-icon">
                         </div>
                         <h3 th:text="${cat.nombre}">Categoria</h3>
                     </a>

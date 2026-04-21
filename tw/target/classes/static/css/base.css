@@ -288,6 +288,40 @@ body {
     gap: 0.8rem;
 }
 
+/* Corrección de alineación para la cabecera del pedido */
+.pedido-info-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.pedido-id {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.cliente-info {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+}
+
+/* Asegurar que el select de cambio de estado no rompa la línea */
+.form-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.form-inline select {
+    width: auto; /* Evita que el select ocupe el 100% */
+}
+
+
+
 .pedido-restaurant-thumb {
     width: 48px;
     height: 48px;

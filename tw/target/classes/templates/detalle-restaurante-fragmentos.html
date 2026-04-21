@@ -75,10 +75,13 @@
                      th:onmouseout="this.style.borderColor='transparent'">
                     <!-- Imagen -->
                     <div style="height:130px;overflow:hidden;background:#e8f5f1;display:flex;align-items:center;justify-content:center;">
-                        <img th:if="${r.imagen != null}"
+                        <img th:if="${r.imagen != null and !#strings.isEmpty(r.imagen)}"
                              th:src="@{'/uploads/' + ${r.imagen}}" th:alt="${r.nombre}"
                              style="width:100%;height:100%;object-fit:cover;">
-                        <svg th:unless="${r.imagen != null}" width="40" height="40" viewBox="0 0 24 24" fill="#069c6f" style="opacity:.3;">
+                        <img th:if="${(r.imagen == null or #strings.isEmpty(r.imagen)) and (r.imagenBanner != null and !#strings.isEmpty(r.imagenBanner))}"
+                             th:src="@{'/uploads/' + ${r.imagenBanner}}" th:alt="${r.nombre}"
+                             style="width:100%;height:100%;object-fit:cover;">
+                        <svg th:if="${(r.imagen == null or #strings.isEmpty(r.imagen)) and (r.imagenBanner == null or #strings.isEmpty(r.imagenBanner))}" width="40" height="40" viewBox="0 0 24 24" fill="#069c6f" style="opacity:.3;">
                             <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05z"/>
                         </svg>
                     </div>

@@ -4,13 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía.">
+      <change afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/VistaImagenService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/PedidoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/base.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/americana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/asiatica.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/banner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/cafe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/ensalada.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/italiana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/mexicana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/montadito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/oferta.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/pizza.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/pollo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/tortilla.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/tostada.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/imagenes/zumo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante-fragmentos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante-fragmentos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/pedidos-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/pedidos-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro-exitoso.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/PedidoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/PedidoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante-fragmentos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante-fragmentos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro-exitoso.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/surefire-reports/TEST-com.tw.CrudIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/surefire-reports/TEST-com.tw.CrudIntegrationTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/surefire-reports/com.tw.CrudIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/surefire-reports/com.tw.CrudIntegrationTest.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,8 +61,8 @@
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
-      <entry key="agent-panel" value="GPT-5.3-Codex" />
-      <entry key="chat-panel" value="GPT-5.3-Codex" />
+      <entry key="agent-panel" value="Claude Haiku 4.5" />
+      <entry key="chat-panel" value="Claude Haiku 4.5" />
     </selectedModels>
   </component>
   <component name="ExternalProjectsData">
@@ -186,7 +218,7 @@
       <workItem from="1776525792172" duration="100000" />
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
-      <workItem from="1776758751874" duration="8926000" />
+      <workItem from="1776758751874" duration="13803000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -444,7 +476,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776784087950</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Optimiza formularios de platos y restaurantes: actualiza la gestión de campos en los formularios, mejora la legibilidad del código y ajusta los tiempos de ejecución de las pruebas.">
+      <option name="closed" value="true" />
+      <created>1776784911708</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1776784911708</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía.">
+      <option name="closed" value="true" />
+      <created>1776785783433</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1776785783433</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +510,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Inicio del proyecto" />
     <MESSAGE value="Comienza el proyecto" />
     <MESSAGE value="Cambios en restaurante.css" />
     <MESSAGE value="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml" />
@@ -486,7 +533,9 @@
     <MESSAGE value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes." />
     <MESSAGE value="Añade gestión de categorías: implementa el controlador, repositorio y vistas para la administración de categorías; incluye redirección y restricciones de acceso para usuarios ADMIN." />
     <MESSAGE value="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas." />
+    <MESSAGE value="Optimiza formularios de platos y restaurantes: actualiza la gestión de campos en los formularios, mejora la legibilidad del código y ajusta los tiempos de ejecución de las pruebas." />
+    <MESSAGE value="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

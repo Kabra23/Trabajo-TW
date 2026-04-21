@@ -28,7 +28,34 @@ public class PedidoController {
     public String misPedidos(@AuthenticationPrincipal UserDetails userDetails,
                            Model model) {
         List<Pedido> pedidos = pedidoService.listarMisPedidos(userDetails.getUsername());
+        long pedidosEnCurso = 0;
+        long pedidosEntregados = 0;
+        double totalGastado = 0.0;
+
+        for (Pedido pedido : pedidos) {
+            if (pedido == null) {
+                continue;
+            }
+
+            Pedido.EstadoPedido estado = pedido.getEstado();
+            if (estado == Pedido.EstadoPedido.ENTREGADO) {
+                pedidosEntregados++;
+            }
+            if (estado == Pedido.EstadoPedido.PENDIENTE
+                    || estado == Pedido.EstadoPedido.EN_PREPARACION
+                    || estado == Pedido.EstadoPedido.ENVIADO) {
+                pedidosEnCurso++;
+            }
+
+            if (pedido.getTotal() != null) {
+                totalGastado += pedido.getTotal();
+            }
+        }
+
         model.addAttribute("pedidos", pedidos);
+        model.addAttribute("pedidosEnCurso", pedidosEnCurso);
+        model.addAttribute("pedidosEntregados", pedidosEntregados);
+        model.addAttribute("totalGastado", totalGastado);
         model.addAttribute("esPropio", true);
         return "mis-pedidos";
     }

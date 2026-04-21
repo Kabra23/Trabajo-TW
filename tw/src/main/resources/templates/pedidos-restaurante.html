@@ -26,21 +26,20 @@
         </div>
 
         <div th:each="pedido : ${pedidos}" class="pedido-card">
-
             <div class="pedido-card-header">
-                <div>
-                    <strong>Pedido #<span th:text="${pedido.id}">0</span></strong>
+                <div class="pedido-info-principal">
+                    <h3 class="pedido-id">Pedido #<span th:text="${pedido.id}">0</span></h3>
                     <span class="text-muted" th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</span>
-                    <br>
-                    <span class="text-muted">
-                        Cliente:
+                    <div class="cliente-info">
+                        <span class="text-muted">Cliente: </span>
                         <strong th:text="${pedido.usuario.nombre} + ' ' + ${pedido.usuario.apellidos}">Usuario</strong>
-                    </span>
+                    </div>
                 </div>
                 <div class="pedido-card-summary">
                     <div class="pedido-total" th:text="${#numbers.formatDecimal(pedido.total,1,2)} + ' €'">0 €</div>
-                    <span class="badge" th:classappend="'badge-' + ${pedido.estado.name().toLowerCase()}" th:text="${pedido.estado.name()}">Estado</span>
+                    <span class="pedido-estado" th:classappend="${pedido.estado.name().toLowerCase()}" th:text="${pedido.estado.name()}">Estado</span>
                 </div>
+            </div>
             </div>
 
             <table class="table lineas-pedido">

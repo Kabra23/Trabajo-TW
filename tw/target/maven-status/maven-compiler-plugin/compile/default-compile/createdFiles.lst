@@ -28,6 +28,7 @@ com\tw\repository\RestauranteRepository.class
 com\tw\model\Pedido$PedidoBuilder.class
 com\tw\model\Restaurante$RestauranteBuilder.class
 com\tw\service\PlatoService.class
+com\tw\service\VistaImagenService.class
 com\tw\service\RestauranteService.class
 com\tw\model\Categoria.class
 com\tw\model\LineaPedido$LineaPedidoBuilder.class
