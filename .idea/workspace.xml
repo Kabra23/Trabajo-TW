@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar y ver mensajes.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tw/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController_v2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/ImagenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/ImagenService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-    </list>
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -194,7 +179,7 @@
       <workItem from="1776525792172" duration="100000" />
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
-      <workItem from="1776758751874" duration="4962000" />
+      <workItem from="1776758751874" duration="5797000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -420,7 +405,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776761027326</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes.">
+      <option name="closed" value="true" />
+      <created>1776780689915</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1776780689915</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes.">
+      <option name="closed" value="true" />
+      <created>1776780719967</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1776780719967</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -459,7 +460,8 @@
     <MESSAGE value="Añade estilos y mejoras de diseño: actualiza el diseño de la gestión de cambios y mejora la estructura del proyecto." />
     <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas." />
     <MESSAGE value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar y ver mensajes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar y ver mensajes." />
+    <MESSAGE value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

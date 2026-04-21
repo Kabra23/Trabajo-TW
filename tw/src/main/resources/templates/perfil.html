@@ -7,45 +7,116 @@
     <title>Mi perfil - CUMe y Calla</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
-        .main-header { background:#069c6f; }
-        .main-header .logo-main,.main-header nav a,.main-header .logo-secondary,.main-header .logo-separator { color:white; }
+        body { background: #f5f5f5; margin: 0; font-family: 'Segoe UI', sans-serif; }
+        .main-header { background: #069c6f; }
+        .main-header .logo-main, .main-header nav a,
+        .main-header .logo-secondary, .main-header .logo-separator { color: white; }
         .main-header .main-nav a:hover { background: rgba(255,255,255,.15); border-radius: 20px; }
-        .btn-logout { background:transparent;color:#fff;border:2px solid rgba(255,255,255,.75);padding:.45rem 1.1rem;border-radius:25px;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:600; }
-        .avatar-circle { width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #069c6f; }
-        .avatar-placeholder { width:100px;height:100px;border-radius:50%;background:#e8f5f1;border:3px solid #069c6f;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:#069c6f;font-weight:700; }
-        .card { background:white;border-radius:12px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:1.5rem; }
-        .form-field { margin-bottom:1rem; }
-        .form-field label { font-weight:600;display:block;margin-bottom:.4rem;color:#333; }
-        .form-field input,.form-field textarea { width:100%;padding:.8rem;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;box-sizing:border-box;font-family:inherit; }
-        .form-field input:focus,.form-field textarea:focus { outline:none;border-color:#069c6f; }
-        .form-field input:disabled { background:#f9f9f9;color:#888; }
-        .btn-primary { background:#069c6f;color:white;border:none;padding:.7rem 1.8rem;border-radius:25px;font-weight:600;cursor:pointer;font-size:1rem;transition:background .2s;text-decoration:none;display:inline-block; }
-        .btn-primary:hover { background:#038a63; }
-        .btn-secondary-link { color:#069c6f;border:2px solid #069c6f;padding:.4rem .9rem;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:600; }
-        .restaurante-row { display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid #f0f0f0; }
-        .estado-badge { font-size:.8rem;padding:.2rem .6rem;border-radius:12px;font-weight:600; }
-        .estado-abierto { background:#e8f5f1;color:#069c6f; }
-        .estado-cerrado { background:#ffebee;color:#d32f2f; }
+        .btn-logout {
+            background: transparent; color: #fff;
+            border: 2px solid rgba(255,255,255,.75); padding: .45rem 1.1rem;
+            border-radius: 25px; cursor: pointer; font-family: inherit;
+            font-size: .95rem; font-weight: 600;
+        }
+
+        /* Avatar */
+        .avatar-circle { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #069c6f; }
+        .avatar-placeholder {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: #e8f5f1; border: 3px solid #069c6f;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; color: #069c6f; font-weight: 700;
+        }
+
+        /* Tarjeta */
+        .card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,.05); margin-bottom: 1.5rem; }
+
+        /* Campos form */
+        .form-field { margin-bottom: 1rem; }
+        .form-field label { font-weight: 600; display: block; margin-bottom: .4rem; color: #333; }
+        .form-field input, .form-field textarea {
+            width: 100%; padding: .8rem; border: 2px solid #e0e0e0; border-radius: 8px;
+            font-size: 1rem; box-sizing: border-box; font-family: inherit;
+        }
+        .form-field input:focus, .form-field textarea:focus { outline: none; border-color: #069c6f; }
+        .form-field input:disabled { background: #f9f9f9; color: #888; }
+
+        /* Botones */
+        .btn-primary {
+            background: #069c6f; color: white; border: none;
+            padding: .7rem 1.8rem; border-radius: 25px; font-weight: 600;
+            cursor: pointer; font-size: 1rem; transition: background .2s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-primary:hover { background: #038a63; }
+        .btn-secondary-link { color: #069c6f; border: 2px solid #069c6f; padding: .4rem .9rem; border-radius: 8px; text-decoration: none; font-size: .85rem; font-weight: 600; }
+
+        /* Restaurantes */
+        .restaurante-row { display: flex; justify-content: space-between; align-items: center; padding: .8rem 0; border-bottom: 1px solid #f0f0f0; }
+        .estado-badge { font-size: .8rem; padding: .2rem .6rem; border-radius: 12px; font-weight: 600; }
+        .estado-abierto { background: #e8f5f1; color: #069c6f; }
+        .estado-cerrado { background: #ffebee; color: #d32f2f; }
+
+        /* Favoritos */
+        .favorito-row {
+            display: flex; align-items: center; gap: 1rem;
+            padding: .9rem 0; border-bottom: 1px solid #f0f0f0;
+            text-decoration: none; color: inherit;
+        }
+        .favorito-row:last-child { border-bottom: none; }
+        .favorito-img {
+            width: 60px; height: 60px; border-radius: 10px;
+            object-fit: cover; flex-shrink: 0; border: 2px solid #e8f5f1;
+        }
+        .favorito-placeholder {
+            width: 60px; height: 60px; border-radius: 10px;
+            background: #e8f5f1; display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0;
+            color: #069c6f; font-weight: 700; font-size: 1.4rem;
+        }
+        .favorito-info { flex: 1; min-width: 0; }
+        .favorito-nombre { font-weight: 700; color: #069c6f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .97rem; }
+        .favorito-meta { font-size: .8rem; color: #888; margin-top: .1rem; }
+        .favorito-arrow { color: #bbb; font-size: 1.2rem; }
 
         /* Direcciones */
-        .dir-row { display:flex;justify-content:space-between;align-items:center;padding:.9rem 1rem;border:2px solid #e0e0e0;border-radius:10px;margin-bottom:.7rem;background:white;gap:1rem; }
-        .dir-row.principal { border-color:#069c6f;background:#f0fbf7; }
-        .dir-info { flex:1; }
-        .dir-info strong { display:block;color:#333;font-size:.95rem; }
-        .dir-info small { color:#888;font-size:.8rem; }
-        .dir-badge-principal { background:#069c6f;color:white;font-size:.75rem;padding:.15rem .55rem;border-radius:12px;font-weight:700;margin-left:.5rem;vertical-align:middle; }
-        .dir-actions { display:flex;gap:.5rem;flex-shrink:0; }
-        .btn-sm-outline { border:2px solid #069c6f;color:#069c6f;background:white;padding:.3rem .8rem;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit; }
-        .btn-sm-outline:hover { background:#069c6f;color:white; }
-        .btn-sm-danger { border:2px solid #d32f2f;color:#d32f2f;background:white;padding:.3rem .8rem;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit; }
-        .btn-sm-danger:hover { background:#d32f2f;color:white; }
-        .form-inline-dir { display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-top:1rem; }
-        .form-inline-dir .form-field { margin-bottom:0;flex:1;min-width:180px; }
-        .checkbox-inline { display:flex;align-items:center;gap:.4rem;font-size:.9rem;padding-top:.2rem; }
-        .checkbox-inline input { width:18px;height:18px;accent-color:#069c6f;cursor:pointer; }
+        .dir-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: .9rem 1rem; border: 2px solid #e0e0e0; border-radius: 10px;
+            margin-bottom: .7rem; background: white; gap: 1rem;
+        }
+        .dir-row.principal { border-color: #069c6f; background: #f0fbf7; }
+        .dir-info { flex: 1; }
+        .dir-info strong { display: block; color: #333; font-size: .95rem; }
+        .dir-badge-principal {
+            background: #069c6f; color: white; font-size: .75rem;
+            padding: .15rem .55rem; border-radius: 12px; font-weight: 700;
+            margin-left: .5rem; vertical-align: middle;
+        }
+        .dir-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+        .btn-sm-outline {
+            border: 2px solid #069c6f; color: #069c6f; background: white;
+            padding: .3rem .8rem; border-radius: 8px; font-size: .82rem;
+            font-weight: 600; cursor: pointer; transition: all .2s; font-family: inherit;
+        }
+        .btn-sm-outline:hover { background: #069c6f; color: white; }
+        .btn-sm-danger {
+            border: 2px solid #d32f2f; color: #d32f2f; background: white;
+            padding: .3rem .8rem; border-radius: 8px; font-size: .82rem;
+            font-weight: 600; cursor: pointer; font-family: inherit;
+        }
+        .btn-sm-danger:hover { background: #d32f2f; color: white; }
+        .form-inline-dir { display: flex; gap: .7rem; flex-wrap: wrap; align-items: flex-end; margin-top: 1rem; }
+        .form-inline-dir .form-field { margin-bottom: 0; flex: 1; min-width: 180px; }
+        .checkbox-inline { display: flex; align-items: center; gap: .4rem; font-size: .9rem; padding-top: .2rem; }
+        .checkbox-inline input { width: 18px; height: 18px; accent-color: #069c6f; cursor: pointer; }
+
+        /* Flash */
+        .msg-ok  { background: #e8f5f1; color: #069c6f; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #069c6f; }
+        .msg-err { background: #ffebee; color: #d32f2f; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #d32f2f; }
     </style>
 </head>
-<body style="background:#f5f5f5;margin:0;font-family:'Segoe UI',sans-serif;">
+<body>
 
 <header class="main-header">
     <div class="container">
@@ -72,89 +143,76 @@
     </div>
 </header>
 
-<main style="min-height:70vh;padding:2rem 0;">
-    <div class="container" style="max-width:720px;">
-        <h1 style="color:#069c6f;margin-bottom:1.5rem;">Mi perfil</h1>
+<main style="min-height: 70vh; padding: 2rem 0;">
+    <div class="container" style="max-width: 720px;">
+        <h1 style="color: #069c6f; margin-bottom: 1.5rem;">Mi perfil</h1>
 
-        <div th:if="${exito}" style="background:#e8f5f1;color:#069c6f;padding:1rem;border-radius:8px;margin-bottom:1rem;border-left:4px solid #069c6f;" th:text="${exito}"></div>
-        <div th:if="${error}" style="background:#ffebee;color:#d32f2f;padding:1rem;border-radius:8px;margin-bottom:1rem;border-left:4px solid #d32f2f;" th:text="${error}"></div>
+        <div th:if="${exito}" class="msg-ok" th:text="${exito}"></div>
+        <div th:if="${error}" class="msg-err" th:text="${error}"></div>
 
-        <!-- === INFORMACION PERSONAL === -->
+        <!-- === INFORMACIÓN PERSONAL === -->
         <div class="card">
-            <h2 style="font-size:1.3rem;margin-bottom:1.5rem;color:#333;">Informacion personal</h2>
+            <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem; color: #333;">Informacion personal</h2>
 
-            <div style="text-align:center;margin-bottom:1.5rem;">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
                 <img th:if="${usuario.fotoPerfil != null}"
                      th:src="@{'/uploads/' + ${usuario.fotoPerfil}}"
-                     th:alt="${usuario.nombre}"
-                     class="avatar-circle">
-                <div th:unless="${usuario.fotoPerfil != null}" class="avatar-placeholder"
-                     style="margin:0 auto;">
+                     th:alt="${usuario.nombre}" class="avatar-circle">
+                <div th:unless="${usuario.fotoPerfil != null}" class="avatar-placeholder" style="margin: 0 auto;">
                     <span th:text="${usuario.nombre != null ? #strings.substring(usuario.nombre,0,1).toUpperCase() : '?'}">U</span>
                 </div>
             </div>
 
             <form th:action="@{/perfil/editar}" method="post" enctype="multipart/form-data">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
                 <div class="form-field">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}" required>
                 </div>
-
                 <div class="form-field">
                     <label for="apellidos">Apellidos</label>
                     <input type="text" id="apellidos" name="apellidos" th:value="${usuario.apellidos}" required>
                 </div>
-
                 <div class="form-field">
                     <label>Correo electronico</label>
                     <input type="email" th:value="${usuario.email}" disabled>
-                    <small style="color:#aaa;display:block;margin-top:.3rem;">El email no se puede cambiar</small>
+                    <small style="color: #aaa; display: block; margin-top: .3rem;">El email no se puede cambiar</small>
                 </div>
-
                 <div class="form-field">
                     <label for="fotoFile">Foto de perfil (opcional)</label>
-                    <input type="file" id="fotoFile" name="fotoFile" accept="image/jpeg,image/png,image/webp"
-                           style="border:none;padding:0;">
+                    <input type="file" id="fotoFile" name="fotoFile"
+                           accept="image/jpeg,image/png,image/webp" style="border: none; padding: 0;">
                 </div>
-
                 <button type="submit" class="btn-primary">Guardar cambios</button>
             </form>
         </div>
 
         <!-- === MIS DIRECCIONES === -->
         <div class="card">
-            <h2 style="font-size:1.3rem;margin-bottom:1rem;color:#333;">Mis direcciones de entrega</h2>
-            <p style="color:#888;font-size:.9rem;margin-bottom:1.2rem;">
+            <h2 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Mis direcciones de entrega</h2>
+            <p style="color: #888; font-size: .9rem; margin-bottom: 1.2rem;">
                 La direccion marcada como principal aparecera en la busqueda de restaurantes.
             </p>
 
-            <!-- Lista de direcciones existentes -->
             <div th:if="${direcciones != null and !#lists.isEmpty(direcciones)}">
-                <div th:each="dir : ${direcciones}"
-                     class="dir-row"
+                <div th:each="dir : ${direcciones}" class="dir-row"
                      th:classappend="${dir.principal} ? ' principal' : ''">
                     <div class="dir-info">
                         <strong>
-                            <span th:if="${dir.etiqueta != null}"
-                                  th:text="${dir.etiqueta} + ': '"></span>
+                            <span th:if="${dir.etiqueta != null}" th:text="${dir.etiqueta} + ': '"></span>
                             <span th:text="${dir.direccion}">Direccion</span>
                             <span th:if="${dir.principal}" class="dir-badge-principal">Principal</span>
                         </strong>
                     </div>
                     <div class="dir-actions">
-                        <!-- Marcar como principal (solo si no lo es ya) -->
                         <form th:unless="${dir.principal}"
                               th:action="@{/perfil/direcciones/{id}/principal(id=${dir.id})}" method="post"
-                              style="display:inline">
+                              style="display: inline">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <button type="submit" class="btn-sm-outline">Hacer principal</button>
                         </form>
-                        <!-- Eliminar -->
                         <form th:action="@{/perfil/direcciones/{id}/eliminar(id=${dir.id})}" method="post"
-                              style="display:inline"
-                              onsubmit="return confirm('Eliminar esta direccion?')">
+                              style="display: inline" onsubmit="return confirm('Eliminar esta direccion?')">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <button type="submit" class="btn-sm-danger">Eliminar</button>
                         </form>
@@ -163,31 +221,31 @@
             </div>
 
             <div th:if="${direcciones == null or #lists.isEmpty(direcciones)}"
-                 style="color:#888;padding:.5rem 0;font-style:italic;">
+                 style="color: #888; padding: .5rem 0; font-style: italic;">
                 Aun no tienes ninguna direccion. Anade una para que aparezca al buscar restaurantes.
             </div>
 
-            <!-- Formulario añadir nueva dirección -->
-            <form th:action="@{/perfil/direcciones/nueva}" method="post" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #f0f0f0;">
+            <form th:action="@{/perfil/direcciones/nueva}" method="post"
+                  style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #f0f0f0;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <h3 style="font-size:1rem;color:#333;margin-bottom:.8rem;">Anadir nueva direccion</h3>
+                <h3 style="font-size: 1rem; color: #333; margin-bottom: .8rem;">Anadir nueva direccion</h3>
                 <div class="form-inline-dir">
                     <div class="form-field">
                         <label for="etiqueta">Etiqueta (opcional)</label>
                         <input type="text" id="etiqueta" name="etiqueta" placeholder="Ej: Casa, Trabajo">
                     </div>
-                    <div class="form-field" style="flex:2;">
+                    <div class="form-field" style="flex: 2;">
                         <label for="nuevaDireccion">Direccion *</label>
                         <input type="text" id="nuevaDireccion" name="direccion"
                                placeholder="Calle, numero, ciudad..." required>
                     </div>
                 </div>
-                <label class="checkbox-inline" style="margin-top:.8rem;">
+                <label class="checkbox-inline" style="margin-top: .8rem;">
                     <input type="checkbox" name="principal" value="true">
                     <span>Usar como direccion principal</span>
                 </label>
-                <div style="margin-top:1rem;">
-                    <button type="submit" class="btn-primary" style="font-size:.9rem;padding:.6rem 1.4rem;">
+                <div style="margin-top: 1rem;">
+                    <button type="submit" class="btn-primary" style="font-size: .9rem; padding: .6rem 1.4rem;">
                         Guardar direccion
                     </button>
                 </div>
@@ -196,26 +254,26 @@
 
         <!-- === MIS RESTAURANTES === -->
         <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-                <h2 style="font-size:1.3rem;margin:0;color:#333;">Mis restaurantes</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="font-size: 1.3rem; margin: 0; color: #333;">Mis restaurantes</h2>
                 <a th:href="@{/restaurantes/nuevo}" class="btn-secondary-link">+ Nuevo</a>
             </div>
 
             <div th:if="${usuario.restaurantes == null or #lists.isEmpty(usuario.restaurantes)}"
-                 style="color:#888;padding:.5rem 0;">
+                 style="color: #888; padding: .5rem 0;">
                 Aun no tienes restaurantes.
-                <a th:href="@{/restaurantes/nuevo}" style="color:#069c6f;">Crea uno</a>
+                <a th:href="@{/restaurantes/nuevo}" style="color: #069c6f;">Crea uno</a>
             </div>
 
             <div th:each="r : ${usuario.restaurantes}" class="restaurante-row">
                 <div>
                     <a th:href="@{/restaurantes/{id}(id=${r.id})}"
                        th:text="${r.nombre}"
-                       style="color:#069c6f;font-weight:600;text-decoration:none;">Restaurante</a>
-                    <span th:if="${r.aceptaPedidos}" class="estado-badge estado-abierto" style="margin-left:.5rem;">Abierto</span>
-                    <span th:unless="${r.aceptaPedidos}" class="estado-badge estado-cerrado" style="margin-left:.5rem;">Cerrado</span>
+                       style="color: #069c6f; font-weight: 600; text-decoration: none;">Restaurante</a>
+                    <span th:if="${r.aceptaPedidos}"  class="estado-badge estado-abierto" style="margin-left: .5rem;">Abierto</span>
+                    <span th:unless="${r.aceptaPedidos}" class="estado-badge estado-cerrado" style="margin-left: .5rem;">Cerrado</span>
                 </div>
-                <div style="display:flex;gap:.5rem;">
+                <div style="display: flex; gap: .5rem;">
                     <a th:href="@{/restaurantes/{id}/editar(id=${r.id})}" class="btn-secondary-link">Editar</a>
                     <a th:href="@{/pedidos/restaurante/{id}(id=${r.id})}" class="btn-secondary-link">Pedidos</a>
                 </div>
@@ -224,47 +282,69 @@
 
         <!-- === MIS VALORACIONES === -->
         <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <h2 style="font-size:1.3rem;margin:0;color:#333;">Mis valoraciones</h2>
-                <a th:href="@{/mis-valoraciones}" style="color:#069c6f;font-size:.9rem;">Ver todas</a>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="font-size: 1.3rem; margin: 0; color: #333;">Mis valoraciones</h2>
+                <a th:href="@{/mis-valoraciones}" style="color: #069c6f; font-size: .9rem;">Ver todas</a>
             </div>
-            <p style="color:#888;margin-top:.8rem;">Accede al historial de valoraciones que has dejado en los restaurantes.</p>
+            <p style="color: #888; margin-top: .8rem;">Accede al historial de valoraciones que has dejado en los restaurantes.</p>
         </div>
 
-        <!-- === FAVORITOS (extra) === -->
+        <!-- === FAVORITOS ===
+             Muestra imagen real del restaurante (imagen o imagen banner) -->
         <div class="card" th:if="${usuario.favoritos != null and !#lists.isEmpty(usuario.favoritos)}">
-            <h2 style="font-size:1.3rem;margin-bottom:1rem;color:#333;">Mis favoritos</h2>
-            <div th:each="r : ${usuario.favoritos}"
-                 style="display:flex;align-items:center;gap:1rem;padding:.8rem 0;border-bottom:1px solid #f0f0f0;">
+            <h2 style="font-size: 1.3rem; margin-bottom: 1rem; color: #333;">Mis favoritos</h2>
+
+            <a th:each="r : ${usuario.favoritos}"
+               th:href="@{/restaurantes/{id}(id=${r.id})}"
+               class="favorito-row">
+
+                <!-- Imagen del restaurante (primera disponible: imagen o banner) -->
                 <img th:if="${r.imagen != null}"
                      th:src="@{'/uploads/' + ${r.imagen}}"
                      th:alt="${r.nombre}"
-                     style="width:50px;height:50px;border-radius:8px;object-fit:cover;">
-                <div th:unless="${r.imagen != null}"
-                     style="width:50px;height:50px;border-radius:8px;background:#e8f5f1;display:flex;align-items:center;justify-content:center;color:#069c6f;font-weight:700;">
-                    R
+                     class="favorito-img">
+                <img th:if="${r.imagen == null and r.imagenBanner != null}"
+                     th:src="@{'/uploads/' + ${r.imagenBanner}}"
+                     th:alt="${r.nombre}"
+                     class="favorito-img">
+                <div th:if="${r.imagen == null and r.imagenBanner == null}"
+                     class="favorito-placeholder">
+                    <span th:text="${#strings.substring(r.nombre,0,1).toUpperCase()}">R</span>
                 </div>
-                <a th:href="@{/restaurantes/{id}(id=${r.id})}"
-                   th:text="${r.nombre}"
-                   style="color:#069c6f;font-weight:600;text-decoration:none;">Restaurante</a>
-            </div>
+
+                <div class="favorito-info">
+                    <div class="favorito-nombre" th:text="${r.nombre}">Restaurante</div>
+                    <div class="favorito-meta">
+                        <span th:if="${r.localidad}" th:text="${r.localidad}"></span>
+                        <span th:if="${r.localidad and r.mediaValoraciones != null and r.mediaValoraciones > 0}"> · </span>
+                        <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}">
+                            ⭐ <span th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}">0.0</span>
+                        </span>
+                        <span th:if="${!r.aceptaPedidos}"
+                              style="color: #d32f2f; font-weight: 600;"> · Cerrado</span>
+                    </div>
+                </div>
+
+                <span class="favorito-arrow">›</span>
+            </a>
         </div>
 
         <!-- === ZONA PELIGRO === -->
-        <div style="background:#fff5f5;border:2px solid #ffcdd2;border-radius:12px;padding:2rem;">
-            <h2 style="font-size:1.3rem;color:#d32f2f;margin-bottom:.5rem;">Zona de peligro</h2>
-            <p style="color:#888;margin-bottom:1rem;">
+        <div style="background: #fff5f5; border: 2px solid #ffcdd2; border-radius: 12px; padding: 2rem;">
+            <h2 style="font-size: 1.3rem; color: #d32f2f; margin-bottom: .5rem;">Zona de peligro</h2>
+            <p style="color: #888; margin-bottom: 1rem;">
                 Al eliminar tu cuenta se borraran todos tus datos. Esta accion no se puede deshacer.
             </p>
             <form th:action="@{/perfil/eliminar}" method="post"
                   onsubmit="return confirm('Seguro que quieres eliminar tu cuenta?')">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <button type="submit"
-                        style="background:#d32f2f;color:white;border:none;padding:.8rem 1.5rem;border-radius:8px;cursor:pointer;font-weight:600;">
+                        style="background: #d32f2f; color: white; border: none; padding: .8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: inherit;">
                     Eliminar mi cuenta
                 </button>
             </form>
         </div>
+
     </div>
 </main>
 </body>
