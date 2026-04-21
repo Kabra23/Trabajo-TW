@@ -117,16 +117,14 @@ public class RestauranteService {
     }
 
     /**
-     * Búsqueda AVANZADA (extra 3): busca en nombre, localidad, platos, comentarios y rango de precios.
+     * Búsqueda AVANZADA (extra 3).
      */
     @Transactional(readOnly = true)
     public List<Restaurante> busquedaAvanzada(String q, Long categoriaId, String localidad,
                                                Double precioMin, Double precioMax) {
-        // Obtenemos todos y filtramos en memoria para poder cruzar con platos y valoraciones
         List<Restaurante> todos = restauranteRepo.findAll();
 
         return todos.stream().filter(r -> {
-            // Filtro por texto (nombre, localidad, platos, comentarios/valoraciones)
             if (q != null && !q.isBlank()) {
                 String ql = q.toLowerCase();
                 boolean enNombre = r.getNombre() != null && r.getNombre().toLowerCase().contains(ql);
@@ -141,20 +139,17 @@ public class RestauranteService {
                 if (!enNombre && !enLocalidad && !enPlatos && !enComentarios) return false;
             }
 
-            // Filtro por categoría
             if (categoriaId != null) {
                 boolean tieneCategoria = r.getCategorias() != null &&
                         r.getCategorias().stream().anyMatch(c -> c.getId().equals(categoriaId));
                 if (!tieneCategoria) return false;
             }
 
-            // Filtro por localidad exacta (insensible a mayúsculas)
             if (localidad != null && !localidad.isBlank()) {
                 if (r.getLocalidad() == null ||
                         !r.getLocalidad().toLowerCase().contains(localidad.toLowerCase())) return false;
             }
 
-            // Filtro rango de precios
             if (precioMin != null && r.getPrecioMin() != null && r.getPrecioMax() != null) {
                 if (r.getPrecioMax() < precioMin) return false;
             }
@@ -167,9 +162,7 @@ public class RestauranteService {
     }
 
     /**
-     * Restaurantes relacionados (extra 4): busca restaurantes similares al dado
-     * en función de categoría, localidad, precio y valoración.
-     * Devuelve máximo 4 resultados (excluye el propio restaurante).
+     * Restaurantes relacionados (extra 4).
      */
     @Transactional(readOnly = true)
     public List<Restaurante> buscarRelacionados(Restaurante restaurante) {
@@ -177,8 +170,6 @@ public class RestauranteService {
                 restaurante.getCategorias().stream().map(Categoria::getId).collect(Collectors.toSet());
 
         List<Restaurante> todos = restauranteRepo.findAll();
-
-        // Puntuación de similitud: más puntos = más relacionado
         Map<Restaurante, Integer> puntos = new LinkedHashMap<>();
 
         for (Restaurante r : todos) {
@@ -186,20 +177,17 @@ public class RestauranteService {
 
             int score = 0;
 
-            // +3 por cada categoría en común
             if (r.getCategorias() != null) {
                 for (Categoria c : r.getCategorias()) {
                     if (categoriaIds.contains(c.getId())) score += 3;
                 }
             }
 
-            // +2 por misma localidad
             if (restaurante.getLocalidad() != null && r.getLocalidad() != null
                     && restaurante.getLocalidad().equalsIgnoreCase(r.getLocalidad())) {
                 score += 2;
             }
 
-            // +1 si el rango de precio se solapa
             if (restaurante.getPrecioMin() != null && r.getPrecioMin() != null) {
                 double minA = restaurante.getPrecioMin();
                 double maxA = restaurante.getPrecioMax() != null ? restaurante.getPrecioMax() : minA + 10;
@@ -208,7 +196,6 @@ public class RestauranteService {
                 if (minA <= maxB && minB <= maxA) score += 1;
             }
 
-            // +1 si valoración similar (diferencia <= 1)
             if (restaurante.getMediaValoraciones() != null && r.getMediaValoraciones() != null) {
                 if (Math.abs(restaurante.getMediaValoraciones() - r.getMediaValoraciones()) <= 1.0) {
                     score += 1;
@@ -236,10 +223,16 @@ public class RestauranteService {
         return restauranteRepo.save(restaurante);
     }
 
+    /**
+     * Actualiza SOLO los campos editables del restaurante.
+     * MUY IMPORTANTE: NO toca la colección de platos para evitar borrarlos.
+     * Los platos se gestionan exclusivamente desde PlatoController/PlatoService.
+     */
     public Restaurante actualizar(Long id, Restaurante datos, String email, List<Long> categoriaIds) {
         Restaurante existente = buscarPorId(id);
         verificarPropietario(existente, email);
 
+        // Actualizar solo campos informativos del restaurante
         existente.setNombre(datos.getNombre());
         existente.setDireccion(datos.getDireccion());
         existente.setLocalidad(datos.getLocalidad());
@@ -248,16 +241,26 @@ public class RestauranteService {
         existente.setPrecioMin(datos.getPrecioMin());
         existente.setPrecioMax(datos.getPrecioMax());
         existente.setBikeFriendly(datos.getBikeFriendly());
-        existente.setAceptaPedidos(datos.getAceptaPedidos());
+        existente.setAceptaPedidos(datos.getAceptaPedidos() != null ? datos.getAceptaPedidos() : existente.getAceptaPedidos());
 
-        if (datos.getImagen() != null) {
+        // Solo actualizar imagen si se proporcionó una nueva (no null y no vacía)
+        if (datos.getImagen() != null && !datos.getImagen().isBlank()) {
             existente.setImagen(datos.getImagen());
         }
+        // Solo actualizar banner si se proporcionó uno nuevo
+        if (datos.getImagenBanner() != null && !datos.getImagenBanner().isBlank()) {
+            existente.setImagenBanner(datos.getImagenBanner());
+        }
+
+        // Actualizar etiquetas del menú y reasignar platos si cambiaron
         String etiquetasNormalizadas = normalizarEtiquetasMenu(datos.getEtiquetasMenu());
         existente.setEtiquetasMenu(etiquetasNormalizadas);
+        // Reasignar etiquetas de platos sin borrarlos
         reasignarEtiquetasPlatos(existente, etiquetasNormalizadas);
 
+        // Actualizar categorías (ManyToMany — no afecta a platos)
         actualizarCategorias(existente, categoriaIds);
+
         return restauranteRepo.save(existente);
     }
 
@@ -274,7 +277,6 @@ public class RestauranteService {
         restauranteRepo.save(restaurante);
     }
 
-    /** Guarda las etiquetas del menú (tabs editables por el propietario) */
     public void guardarEtiquetasMenu(Long id, String etiquetas, String email) {
         Restaurante restaurante = buscarPorId(id);
         verificarPropietario(restaurante, email);
@@ -335,6 +337,10 @@ public class RestauranteService {
         return String.join(",", unicas);
     }
 
+    /**
+     * Reasigna la etiqueta de cada plato si ya no existe en la nueva lista de etiquetas.
+     * NO borra ningún plato.
+     */
     private void reasignarEtiquetasPlatos(Restaurante restaurante, String etiquetasRaw) {
         List<String> etiquetas = etiquetasRaw == null || etiquetasRaw.isBlank()
                 ? restaurante.getEtiquetasMenuLista()

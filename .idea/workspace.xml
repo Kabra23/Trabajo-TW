@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía.">
-      <change afterPath="$PROJECT_DIR$/tw/uploads/platos/1e6e6064-ce7e-4217-bada-8a4d11c9ea5a.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/uploads/platos/4e88a6e9-86ac-4084-a167-611efa22368e.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/uploads/platos/b1540f2e-7730-4062-84ff-964beac0ec84.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tw/uploads/usuarios/48985ca1-541c-4013-a17f-dfb92f006d59.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/paginas-verdes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/paginas-verdes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante-fragmentos.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/paginas-verdes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/paginas-verdes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +182,7 @@
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
       <workItem from="1776758751874" duration="14063000" />
-      <workItem from="1776795281121" duration="2910000" />
+      <workItem from="1776795281121" duration="3576000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -478,7 +464,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776791628201</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía.">
+      <option name="closed" value="true" />
+      <created>1776798234071</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1776798234071</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

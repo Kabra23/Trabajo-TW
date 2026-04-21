@@ -61,7 +61,6 @@ public class RestauranteController {
         model.addAttribute("bikeFriendly", bikeFriendly);
         model.addAttribute("orden", orden);
 
-        // Dirección del usuario logueado
         if (userDetails != null) {
             try {
                 Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
@@ -112,7 +111,6 @@ public class RestauranteController {
         Restaurante restaurante = restauranteService.buscarPorId(id);
         model.addAttribute("restaurante", restaurante);
 
-        // Restaurantes relacionados (extra 4)
         List<Restaurante> relacionados = restauranteService.buscarRelacionados(restaurante);
         model.addAttribute("relacionados", relacionados);
 
@@ -126,7 +124,7 @@ public class RestauranteController {
         return "detalle-restaurante";
     }
 
-    // ---- Guardar etiquetas del menú (tabs editables) ----
+    // ---- Guardar etiquetas del menú ----
     @PostMapping("/restaurantes/{id}/etiquetas")
     public String guardarEtiquetas(@PathVariable Long id,
                                    @RequestParam String etiquetasMenu,
@@ -159,6 +157,7 @@ public class RestauranteController {
                         BindingResult result,
                         @RequestParam(required = false) List<Long> categoriaIds,
                         @RequestParam(required = false) MultipartFile imagenFile,
+                        @RequestParam(required = false) MultipartFile imagenBannerFile,
                         @AuthenticationPrincipal UserDetails userDetails,
                         Model model, RedirectAttributes flash) {
         if (result.hasErrors()) {
@@ -166,7 +165,11 @@ public class RestauranteController {
             model.addAttribute("modo", "crear");
             return "form-restaurante";
         }
-        subirImagen(restaurante, imagenFile);
+        // Subir imagen principal (tarjeta)
+        subirImagenPrincipal(restaurante, imagenFile);
+        // Subir imagen banner
+        subirImagenBanner(restaurante, imagenBannerFile);
+
         restauranteService.crear(restaurante, userDetails.getUsername(), categoriaIds);
         flash.addFlashAttribute("exito", "Restaurante creado correctamente");
         return "redirect:/restaurantes";
@@ -191,6 +194,7 @@ public class RestauranteController {
                          BindingResult result,
                          @RequestParam(required = false) List<Long> categoriaIds,
                          @RequestParam(required = false) MultipartFile imagenFile,
+                         @RequestParam(required = false) MultipartFile imagenBannerFile,
                          @AuthenticationPrincipal UserDetails userDetails,
                          Model model, RedirectAttributes flash) {
         if (result.hasErrors()) {
@@ -199,7 +203,11 @@ public class RestauranteController {
             return "form-restaurante";
         }
         try {
-            subirImagen(datos, imagenFile);
+            // Subir imagen principal si se proporcionó una nueva
+            subirImagenPrincipal(datos, imagenFile);
+            // Subir imagen banner si se proporcionó una nueva
+            subirImagenBanner(datos, imagenBannerFile);
+
             restauranteService.actualizar(id, datos, userDetails.getUsername(), categoriaIds);
             flash.addFlashAttribute("exito", "Restaurante actualizado correctamente");
         } catch (SecurityException e) {
@@ -238,7 +246,7 @@ public class RestauranteController {
         return "redirect:/restaurantes/" + id;
     }
 
-    // ---- Favoritos (extra) ----
+    // ---- Favoritos ----
     @PostMapping("/restaurantes/{id}/favorito")
     public String toggleFavorito(@PathVariable Long id,
                                  @AuthenticationPrincipal UserDetails userDetails,
@@ -255,14 +263,34 @@ public class RestauranteController {
         }
     }
 
-    private void subirImagen(Restaurante restaurante, MultipartFile file) {
+    /**
+     * Sube la imagen principal del restaurante (la que aparece en el listado/tarjeta).
+     * Solo actualiza si se envía un archivo no vacío.
+     */
+    private void subirImagenPrincipal(Restaurante restaurante, MultipartFile file) {
         if (file != null && !file.isEmpty()) {
             try {
                 imagenService.validarImagen(file);
                 String ruta = imagenService.guardar(file, "restaurantes");
                 restaurante.setImagen(ruta);
             } catch (IOException e) {
-                System.err.println("Error al subir imagen: " + e.getMessage());
+                System.err.println("Error al subir imagen principal: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Sube la imagen banner del restaurante (la que aparece en el hero del detalle).
+     * Solo actualiza si se envía un archivo no vacío.
+     */
+    private void subirImagenBanner(Restaurante restaurante, MultipartFile file) {
+        if (file != null && !file.isEmpty()) {
+            try {
+                imagenService.validarImagen(file);
+                String ruta = imagenService.guardar(file, "restaurantes");
+                restaurante.setImagenBanner(ruta);
+            } catch (IOException e) {
+                System.err.println("Error al subir imagen banner: " + e.getMessage());
             }
         }
     }
