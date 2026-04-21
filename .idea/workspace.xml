@@ -4,28 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade gestión de categorías: implementa el controlador, repositorio y vistas para la administración de categorías; incluye redirección y restricciones de acceso para usuarios ADMIN.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Plato.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Plato.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/UsuarioRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/PlatoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/PlatoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/js/detalle-restaurante.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/js/detalle-restaurante.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +186,7 @@
       <workItem from="1776525792172" duration="100000" />
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
-      <workItem from="1776758751874" duration="8077000" />
+      <workItem from="1776758751874" duration="8926000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -451,7 +436,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776782397787</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas.">
+      <option name="closed" value="true" />
+      <created>1776784087950</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1776784087950</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,7 +485,8 @@
     <MESSAGE value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar y ver mensajes." />
     <MESSAGE value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar, ver y eliminar mensajes." />
     <MESSAGE value="Añade gestión de categorías: implementa el controlador, repositorio y vistas para la administración de categorías; incluye redirección y restricciones de acceso para usuarios ADMIN." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade gestión de categorías: implementa el controlador, repositorio y vistas para la administración de categorías; incluye redirección y restricciones de acceso para usuarios ADMIN." />
+    <MESSAGE value="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade gestión de etiquetas de menú: implementa la funcionalidad para añadir, renombrar y eliminar etiquetas en los platos; incluye mejoras en la interfaz para la administración de etiquetas." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

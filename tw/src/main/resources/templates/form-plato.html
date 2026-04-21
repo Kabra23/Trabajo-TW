@@ -98,36 +98,36 @@
         <form th:action="${plato.id == null}
                   ? @{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}
                   : @{/restaurantes/{rid}/platos/{pid}/editar(rid=${restaurante.id},pid=${plato.id})}"
+              th:object="${plato}"
               method="post" enctype="multipart/form-data">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
             <div class="form-field">
                 <label for="nombre">Nombre del plato <span class="req">*</span></label>
-                <input type="text" id="nombre" name="nombre" th:value="${plato.nombre}" required
+                <input type="text" id="nombre" th:field="*{nombre}" required
                        placeholder="Ej: Tortilla española, Bocadillo de jamon...">
-                <span class="error-msg" th:if="${#fields.hasErrors('nombre')}" th:errors="${plato.nombre}"></span>
+                <span class="error-msg" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
             </div>
 
             <div class="form-field">
                 <label for="descripcion">Descripcion</label>
-                <textarea id="descripcion" name="descripcion" rows="3"
+                <textarea id="descripcion" th:field="*{descripcion}" rows="3"
                           placeholder="Ingredientes, alergenos, informacion adicional..."
-                          th:text="${plato.descripcion}"></textarea>
+                          ></textarea>
             </div>
 
             <div class="form-field">
                 <label for="precio">Precio (€) <span class="req">*</span></label>
-                <input type="number" id="precio" name="precio" th:value="${plato.precio}"
+                <input type="number" id="precio" th:field="*{precio}"
                        min="0" step="0.01" required placeholder="0.00">
-                <span class="error-msg" th:if="${#fields.hasErrors('precio')}" th:errors="${plato.precio}"></span>
+                <span class="error-msg" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
             </div>
 
             <div class="form-field">
                 <label for="etiquetaMenu">Etiqueta del menu</label>
-                <select id="etiquetaMenu" name="etiquetaMenu" style="width:100%;padding:.8rem 1rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.95rem;font-family:inherit;">
+                <select id="etiquetaMenu" th:field="*{etiquetaMenu}" style="width:100%;padding:.8rem 1rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.95rem;font-family:inherit;">
                     <option th:each="etiqueta : ${restaurante.etiquetasMenuLista}"
                             th:value="${etiqueta}"
-                            th:selected="${plato.etiquetaMenu != null ? plato.etiquetaMenu.equalsIgnoreCase(etiqueta) : etiqueta == restaurante.etiquetasMenuLista[0]}"
                             th:text="${etiqueta}">
                         Destacados
                     </option>
