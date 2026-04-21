@@ -479,7 +479,7 @@
                 <div th:each="r : ${misRestaurantes}" class="rest-item">
                     <div class="rest-item-info">
                         <h3 th:text="${r.nombre}">Nombre</h3>
-                        <p th:if="${r.localidad}" th:text="${r.localidad}">Localidad</p>
+                        <p th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}" th:text="${r.localidad}">Localidad</p>
                     </div>
                     <div class="rest-item-actions">
                         <a th:href="@{/restaurantes/{id}(id=${r.id})}" class="btn-xs">Ver</a>

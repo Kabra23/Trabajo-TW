@@ -354,7 +354,7 @@
                                     <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
                                           th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}"
                                           style="font-weight:700;color:#333;">0.0</span>
-                                    <span th:if="${r.localidad}" style="color:#aaa;" th:text="'· ' + ${r.localidad}">loc</span>
+                                    <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}" style="color:#aaa;" th:text="'· ' + ${r.localidad}">loc</span>
                                 </div>
                                 <span th:unless="${r.aceptaPedidos}"
                                       style="display:inline-block;margin-top:.4rem;background:#ffebee;color:#d32f2f;border-radius:8px;padding:.1rem .5rem;font-size:.72rem;font-weight:600;">

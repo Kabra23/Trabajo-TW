@@ -106,7 +106,7 @@
             <div>
                 <h2 th:text="${r.nombre}">Nombre</h2>
                 <p class="meta">
-                    <span th:if="${r.localidad}" th:text="${r.localidad}"></span>
+                    <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}" th:text="${r.localidad}"></span>
                     <span th:if="${r.categorias != null and !#lists.isEmpty(r.categorias)}">
                         &nbsp;·&nbsp;
                         <span th:text="${#strings.replace(r.categorias.![nombre].toString(),'[','').replace(']','')}"></span>

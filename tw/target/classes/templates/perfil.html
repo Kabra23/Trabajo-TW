@@ -315,8 +315,8 @@
                 <div class="favorito-info">
                     <div class="favorito-nombre" th:text="${r.nombre}">Restaurante</div>
                     <div class="favorito-meta">
-                        <span th:if="${r.localidad}" th:text="${r.localidad}"></span>
-                        <span th:if="${r.localidad and r.mediaValoraciones != null and r.mediaValoraciones > 0}"> · </span>
+                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}" th:text="${r.localidad}"></span>
+                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad) and r.mediaValoraciones != null and r.mediaValoraciones > 0}"> · </span>
                         <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}">
                             ⭐ <span th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}">0.0</span>
                         </span>
