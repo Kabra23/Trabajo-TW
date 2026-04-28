@@ -120,7 +120,7 @@
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/negro/OneDrive - Universidad de Extremadura/Escritorio/Tecnologias Web/tw&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -186,7 +186,9 @@
       <workItem from="1776525933707" duration="1166000" />
       <workItem from="1776612629458" duration="24882000" />
       <workItem from="1776758751874" duration="14063000" />
-      <workItem from="1776795281121" duration="10064000" />
+      <workItem from="1776795281121" duration="10264000" />
+      <workItem from="1776842214108" duration="1203000" />
+      <workItem from="1777384760228" duration="202000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -492,7 +494,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776805841598</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Elimina la sección de mensajes en el menú de navegación y ajusta el estilo del botón de cerrar sesión. Añade redirección tras la eliminación de restaurantes y mejora la gestión de imágenes en el formulario de restaurantes.">
+      <option name="closed" value="true" />
+      <created>1776806957386</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1776806957387</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
