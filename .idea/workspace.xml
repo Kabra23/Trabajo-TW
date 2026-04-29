@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Elimina la sección de mensajes en el menú de navegación y ajusta el estilo del botón de cerrar sesión. Añade redirección tras la eliminación de restaurantes y mejora la gestión de imágenes en el formulario de restaurantes.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/TANI.sqbpro" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.sqbpro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +194,9 @@
       <workItem from="1776758751874" duration="14063000" />
       <workItem from="1776795281121" duration="10264000" />
       <workItem from="1776842214108" duration="1203000" />
-      <workItem from="1777384760228" duration="202000" />
+      <workItem from="1777384760228" duration="1021000" />
+      <workItem from="1777386737629" duration="46000" />
+      <workItem from="1777446580965" duration="1963000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -502,7 +510,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776806957387</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo.">
+      <option name="closed" value="true" />
+      <created>1777386408985</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1777386408985</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,7 +536,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml" />
     <MESSAGE value="Actualiza el color de fondo del botón primario en restaurantes.css" />
     <MESSAGE value="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js" />
     <MESSAGE value="Elimina la transición y establece el color de fondo como transparente en restaurantes.css" />
@@ -545,7 +560,8 @@
     <MESSAGE value="Mejora la visualización de localidad en las páginas: actualiza las condiciones para mostrar la localidad en los resultados de búsqueda, detalles de restaurante y perfil, asegurando que no se muestre si está vacía." />
     <MESSAGE value="Mejora la visualización de pedidos: actualiza el diseño de la página de pedidos recibidos, optimiza la gestión de estados y mejora la experiencia del usuario con un nuevo estilo y funcionalidades interactivas." />
     <MESSAGE value="Elimina la sección de mensajes en el menú de navegación y ajusta el estilo del botón de cerrar sesión. Añade redirección tras la eliminación de restaurantes y mejora la gestión de imágenes en el formulario de restaurantes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Elimina la sección de mensajes en el menú de navegación y ajusta el estilo del botón de cerrar sesión. Añade redirección tras la eliminación de restaurantes y mejora la gestión de imágenes en el formulario de restaurantes." />
+    <MESSAGE value="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo." />
+    <option name="LAST_COMMIT_MESSAGE" value="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
