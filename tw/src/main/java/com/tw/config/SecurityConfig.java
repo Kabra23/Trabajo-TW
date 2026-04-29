@@ -46,6 +46,11 @@ public class SecurityConfig {
                 .requestMatchers("GET", "/api/restaurantes/{id}").permitAll()
                 .requestMatchers("GET", "/api/restaurantes/{id}/platos").permitAll()
                 .requestMatchers("GET", "/api/restaurantes/{id}/valoraciones").permitAll()
+                // Categorías: listado y detalle público
+                .requestMatchers("GET",  "/api/categorias").permitAll()
+                .requestMatchers("GET",  "/api/categorias/{id}").permitAll()
+                .requestMatchers("GET",  "/api/categorias/{id}/restaurantes").permitAll()
+
                 // Registro y login no requieren auth
                 .requestMatchers("POST", "/api/usuarios").permitAll()
                 .requestMatchers("POST", "/api/sesiones").permitAll()

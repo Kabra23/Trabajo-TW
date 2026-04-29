@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${modo == 'crear'} ? 'Nueva categoría — Admin' : 'Editar ' + ${categoria.nombre} + ' — Admin'">Categoría — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde:      #069c6f;
+            --verde-d:    #047a57;
+            --verde-bg:   #e6f7f1;
+            --verde-light:#d0ede3;
+            --accent:     #f5c518;
+            --rojo:       #e63946;
+            --bg:         #f4f7f5;
+            --surface:    #ffffff;
+            --border:     #dde8e2;
+            --txt:        #1a2e25;
+            --txt-muted:  #6b8878;
+            --shadow:     0 2px 12px rgba(6,156,111,.10);
+            --shadow-lg:  0 8px 32px rgba(6,156,111,.15);
+            --radius:     14px;
+            --radius-sm:  8px;
+        }
+        *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+        body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--txt); min-height:100vh; }
+
+        /* HEADER */
+        .admin-header {
+            background:var(--verde); padding:1rem 2rem;
+            display:flex; align-items:center; justify-content:space-between;
+            box-shadow:0 2px 10px rgba(0,0,0,.15); position:sticky; top:0; z-index:100;
+        }
+        .admin-header .logo {
+            font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800;
+            color:#fff; text-decoration:none; display:flex; align-items:center; gap:.5rem;
+        }
+        .admin-header .logo .badge-admin {
+            background:var(--accent); color:#1a2e25; font-size:.65rem; font-weight:800;
+            padding:.2rem .55rem; border-radius:999px; letter-spacing:.08em; text-transform:uppercase;
+        }
+        .header-nav { display:flex; align-items:center; gap:.8rem; }
+        .header-nav a { color:rgba(255,255,255,.85); text-decoration:none; font-size:.9rem; font-weight:500; padding:.4rem .8rem; border-radius:var(--radius-sm); transition:background .2s; }
+        .header-nav a:hover { background:rgba(255,255,255,.15); color:#fff; }
+        .btn-logout { background:transparent; color:#fff; border:2px solid rgba(255,255,255,.6); padding:.4rem 1rem; border-radius:999px; cursor:pointer; font-family:inherit; font-size:.88rem; font-weight:600; transition:all .2s; }
+        .btn-logout:hover { background:rgba(255,255,255,.18); border-color:#fff; }
+
+        /* LAYOUT */
+        .page { max-width:780px; margin:2.5rem auto; padding:0 1.5rem 4rem; }
+
+        /* BREADCRUMB */
+        .breadcrumb { font-size:.82rem; color:var(--txt-muted); margin-bottom:1.5rem; }
+        .breadcrumb a { color:inherit; text-decoration:none; }
+        .breadcrumb a:hover { color:var(--verde); }
+
+        /* CARD FORMULARIO */
+        .form-card {
+            background:var(--surface);
+            border-radius:var(--radius);
+            border:2px solid var(--border);
+            overflow:hidden;
+            box-shadow:var(--shadow);
+        }
+
+        .form-card-header {
+            padding:1.5rem 2rem;
+            border-bottom:2px solid var(--verde-light);
+            background:linear-gradient(135deg, var(--verde-bg) 0%, #f0faf5 100%);
+            display:flex;
+            align-items:center;
+            gap:1rem;
+        }
+        .form-card-header .icon-wrap {
+            width:48px; height:48px;
+            background:var(--verde);
+            border-radius:12px;
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0;
+        }
+        .form-card-header h1 {
+            font-family:'Syne',sans-serif;
+            font-size:1.5rem;
+            font-weight:800;
+            color:var(--verde-d);
+        }
+        .form-card-header p { font-size:.85rem; color:var(--txt-muted); margin-top:.2rem; }
+
+        .form-card-body { padding:2rem; }
+
+        /* FORM ELEMENTS */
+        .form-section {
+            margin-bottom:2rem;
+            padding-bottom:2rem;
+            border-bottom:1px solid var(--border);
+        }
+        .form-section:last-child { border-bottom:none; margin-bottom:0; }
+        .form-section-title {
+            font-weight:700;
+            font-size:.8rem;
+            text-transform:uppercase;
+            letter-spacing:.1em;
+            color:var(--txt-muted);
+            margin-bottom:1rem;
+            display:flex;
+            align-items:center;
+            gap:.5rem;
+        }
+        .form-section-title::after {
+            content:'';
+            flex:1;
+            height:1px;
+            background:var(--border);
+        }
+
+        .form-group { margin-bottom:1.2rem; }
+        .form-group label { display:block; font-weight:600; font-size:.88rem; color:var(--txt); margin-bottom:.45rem; }
+        .form-group label .req { color:var(--rojo); margin-left:.2rem; }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width:100%; padding:.8rem 1rem;
+            border:2px solid var(--border); border-radius:var(--radius-sm);
+            font-size:.93rem; font-family:inherit;
+            transition:border-color .2s, box-shadow .2s;
+            background:#fff; box-sizing:border-box;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline:none; border-color:var(--verde);
+            box-shadow:0 0 0 3px rgba(6,156,111,.1);
+        }
+        .form-group textarea { resize:vertical; min-height:100px; }
+        .form-group small { color:var(--txt-muted); font-size:.78rem; display:block; margin-top:.3rem; }
+        .err-msg { color:var(--rojo); font-size:.8rem; display:block; margin-top:.3rem; }
+
+        /* IMAGEN PREVIEW */
+        .img-preview-wrap {
+            display:flex;
+            align-items:center;
+            gap:1rem;
+            padding:1rem;
+            background:var(--verde-bg);
+            border-radius:var(--radius-sm);
+            border:2px solid var(--verde-light);
+            margin-top:.7rem;
+        }
+        .img-preview-wrap img {
+            width:80px; height:80px;
+            object-fit:cover; border-radius:8px;
+            border:2px solid var(--verde-light);
+        }
+        .img-preview-wrap .img-info { font-size:.82rem; color:var(--verde-d); }
+        .img-preview-wrap .img-info strong { display:block; margin-bottom:.2rem; }
+
+        /* LISTA DE RESTAURANTES AFECTADOS */
+        .rest-afectados {
+            background:var(--verde-bg);
+            border-radius:var(--radius-sm);
+            padding:1rem 1.2rem;
+            border:2px solid var(--verde-light);
+        }
+        .rest-afectados h3 {
+            font-size:.85rem; font-weight:700; color:var(--verde-d); margin-bottom:.7rem;
+            display:flex; align-items:center; gap:.4rem;
+        }
+        .rest-tag {
+            display:inline-flex; align-items:center; gap:.4rem;
+            background:#fff; border:1px solid var(--verde-light);
+            color:var(--verde-d); padding:.25rem .75rem;
+            border-radius:999px; font-size:.8rem; font-weight:600;
+            text-decoration:none; margin:.2rem;
+            transition:all .2s;
+        }
+        .rest-tag:hover { background:var(--verde); color:#fff; border-color:var(--verde); }
+
+        /* FORM ACTIONS */
+        .form-actions {
+            display:flex; gap:.8rem; justify-content:flex-end;
+            padding-top:1.5rem;
+            border-top:2px solid var(--border);
+            margin-top:1.5rem;
+        }
+
+        /* BOTONES */
+        .btn {
+            display:inline-flex; align-items:center; gap:.5rem;
+            padding:.7rem 1.5rem; border-radius:999px;
+            font-size:.9rem; font-weight:600; cursor:pointer;
+            text-decoration:none; border:2px solid transparent;
+            transition:all .2s; font-family:inherit;
+        }
+        .btn-primary { background:var(--verde); color:#fff; }
+        .btn-primary:hover { background:var(--verde-d); box-shadow:var(--shadow); }
+        .btn-outline { background:transparent; color:var(--verde); border-color:var(--verde); }
+        .btn-outline:hover { background:var(--verde-bg); }
+        .btn-ghost { background:transparent; color:var(--txt-muted); border-color:var(--border); }
+        .btn-ghost:hover { border-color:var(--txt-muted); color:var(--txt); }
+
+        @media(max-width:600px){
+            .form-card-body { padding:1.2rem; }
+            .form-actions { flex-direction:column; }
+            .btn { width:100%; justify-content:center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="admin-header">
+    <a class="logo" th:href="@{/}">
+        CUMe y Calla
+        <span class="badge-admin">Admin</span>
+    </a>
+    <nav class="header-nav">
+        <a th:href="@{/admin/categorias}">Categorías</a>
+        <a th:href="@{/restaurantes}">Restaurantes</a>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="btn-logout">Cerrar sesión</button>
+        </form>
+    </nav>
+</header>
+
+<!-- CONTENIDO -->
+<main class="page">
+
+    <!-- Breadcrumb -->
+    <p class="breadcrumb">
+        <a th:href="@{/}">Inicio</a> /
+        <a th:href="@{/admin/categorias}">Categorías</a> /
+        <strong th:text="${modo == 'crear'} ? 'Nueva' : ${categoria.nombre}"
+                style="color:var(--verde)">...</strong>
+    </p>
+
+    <div class="form-card">
+
+        <!-- Cabecera del formulario -->
+        <div class="form-card-header">
+            <div class="icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+            </div>
+            <div>
+                <h1 th:text="${modo == 'crear'} ? 'Nueva categoría' : 'Editar categoría'">Categoría</h1>
+                <p th:text="${modo == 'crear'}
+                    ? 'Crea una categoría para clasificar restaurantes'
+                    : 'Modifica los datos de esta categoría'">Subtítulo</p>
+            </div>
+        </div>
+
+        <!-- Cuerpo del formulario -->
+        <div class="form-card-body">
+            <form th:action="${modo == 'crear'}
+                        ? @{/admin/categorias/nueva}
+                        : @{/admin/categorias/{id}/editar(id=${categoria.id})}"
+                  th:object="${categoria}"
+                  method="post"
+                  enctype="multipart/form-data">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <!-- ══ Información básica ══ -->
+                <div class="form-section">
+                    <p class="form-section-title">Información básica</p>
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre de la categoría <span class="req">*</span></label>
+                        <input type="text" id="nombre" th:field="*{nombre}"
+                               placeholder="Ej: Italiana, Americana, Japonesa…" required
+                               autofocus>
+                        <span class="err-msg"
+                              th:if="${#fields.hasErrors('nombre')}"
+                              th:errors="*{nombre}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" th:field="*{descripcion}"
+                                  placeholder="Describe brevemente esta categoría…"></textarea>
+                        <small>Visible para los usuarios al filtrar restaurantes.</small>
+                    </div>
+                </div>
+
+                <!-- ══ Imagen ══ -->
+                <div class="form-section">
+                    <p class="form-section-title">Imagen representativa</p>
+
+                    <div class="form-group">
+                        <label for="imagenFile">
+                            <span th:if="${modo == 'editar' and categoria.imagen != null}">
+                                Cambiar imagen
+                            </span>
+                            <span th:unless="${modo == 'editar' and categoria.imagen != null}">
+                                Subir imagen (opcional)
+                            </span>
+                        </label>
+                        <input type="file" id="imagenFile" name="imagenFile"
+                               accept="image/jpeg,image/png,image/webp">
+                        <small>Formatos: JPG, PNG, WebP. Máximo 5 MB. Recomendado: 400×300 px.</small>
+                    </div>
+
+                    <!-- Imagen actual (modo editar) -->
+                    <div class="img-preview-wrap"
+                         th:if="${modo == 'editar' and categoria.imagen != null and !#strings.isEmpty(categoria.imagen)}">
+                        <img th:src="@{'/uploads/' + ${categoria.imagen}}" th:alt="${categoria.nombre}">
+                        <div class="img-info">
+                            <strong>Imagen actual</strong>
+                            Sube una nueva imagen para reemplazarla.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══ Restaurantes afectados (solo edición) ══ -->
+                <div class="form-section"
+                     th:if="${modo == 'editar' and restaurantesConCat != null and !#lists.isEmpty(restaurantesConCat)}">
+                    <p class="form-section-title">Restaurantes con esta categoría</p>
+                    <div class="rest-afectados">
+                        <h3>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05z"/>
+                            </svg>
+                            <span th:text="${#lists.size(restaurantesConCat)} + ' restaurante' + (${#lists.size(restaurantesConCat)} != 1 ? 's' : '') + ' usan esta categoría'">0 restaurantes</span>
+                        </h3>
+                        <div>
+                            <a th:each="r : ${restaurantesConCat}"
+                               th:href="@{/restaurantes/{id}(id=${r.id})}"
+                               th:text="${r.nombre}"
+                               class="rest-tag"
+                               target="_blank">Restaurante</a>
+                        </div>
+                    </div>
+                    <p style="font-size:.8rem;color:var(--txt-muted);margin-top:.7rem;">
+                        ⚠️ Si eliminas esta categoría, primero deberás quitarla de todos estos restaurantes.
+                    </p>
+                </div>
+
+                <!-- Botones -->
+                <div class="form-actions">
+                    <a th:href="@{/admin/categorias}" class="btn btn-ghost">Cancelar</a>
+                    <button type="submit" class="btn btn-primary"
+                            th:text="${modo == 'crear'} ? 'Crear categoría' : 'Guardar cambios'">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+
+            <!-- Zona peligro: eliminar (solo edición) -->
+            <div th:if="${modo == 'editar'}"
+                 style="margin-top:2rem;padding:1.2rem;background:#fef0f0;border-radius:var(--radius-sm);
+                        border:2px solid #fca5a5;">
+                <h3 style="font-size:.9rem;color:var(--rojo);margin-bottom:.4rem;font-weight:700;">Eliminar categoría</h3>
+                <p style="font-size:.82rem;color:#7f1d1d;margin-bottom:.8rem;">
+                    Solo se puede eliminar si ningún restaurante la usa.
+                </p>
+                <form th:action="@{/admin/categorias/{id}/eliminar(id=${categoria.id})}"
+                      method="post"
+                      onsubmit="return confirm('¿Eliminar la categoría «' + document.getElementById('nombre').value + '»? Esta acción no se puede deshacer.')">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit"
+                            style="background:var(--rojo);color:#fff;border:none;padding:.6rem 1.3rem;
+                                   border-radius:999px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.88rem;">
+                        Eliminar categoría
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

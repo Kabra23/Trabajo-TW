@@ -1,12 +1,15 @@
 com\tw\api\dto\UsuarioDTO$LoginRequest.class
 com\tw\controller\PlatoController.class
+com\tw\api\CategoriaApiController$CategoriaRequest.class
 com\tw\service\ImagenService.class
 com\tw\repository\PedidoRepository.class
 com\tw\model\Direccion$DireccionBuilder.class
 com\tw\api\dto\RestauranteDTO$RestauranteRequest.class
 com\tw\controller\AuthController.class
 com\tw\repository\ValoracionRepository.class
+com\tw\api\CategoriaApiController.class
 com\tw\repository\PlatoRepository.class
+com\tw\api\CategoriaApiController$CategoriaResponse.class
 com\tw\api\dto\ValoracionDTO.class
 com\tw\service\UsuarioService.class
 com\tw\controller\GlobalExceptionHandler.class
@@ -19,6 +22,7 @@ com\tw\api\dto\PlatoDTO$PlatoResponse.class
 com\tw\controller\CategoriaController.class
 com\tw\api\dto\UsuarioDTO$ActualizarRequest.class
 com\tw\repository\DireccionRepository.class
+com\tw\controller\CategoriaAdminController.class
 com\tw\controller\RestauranteController.class
 com\tw\model\Restaurante.class
 com\tw\repository\UsuarioRepository.class
@@ -72,4 +76,6 @@ com\tw\model\Valoracion$ValoracionBuilder.class
 com\tw\api\dto\PlatoDTO$PlatoRequest.class
 com\tw\api\PlatoApiController.class
 com\tw\api\dto\UsuarioDTO$RegistroRequest.class
+com\tw\api\CategoriaApiController$RestauranteResumen.class
 com\tw\controller\ValoracionController.class
+com\tw\api\CategoriaApiController$1.class

@@ -45,7 +45,7 @@ public class CategoriaController {
     // Accesibles desde el formulario de restaurante vía AJAX
     // -------------------------------------------------------
 
-    @PostMapping("/admin/categorias/nueva")
+    @PostMapping("/restaurantes/categorias/nueva")
     @PreAuthorize("hasRole('ADMIN')")
     public String nueva(@Valid @ModelAttribute("categoria") Categoria categoria,
                         BindingResult result,
@@ -74,7 +74,7 @@ public class CategoriaController {
         return "redirect:/restaurantes/nuevo";
     }
 
-    @PostMapping("/admin/categorias/{id}/eliminar")
+    @PostMapping("/restaurantes/categorias/{id}/eliminar")
     @PreAuthorize("hasRole('ADMIN')")
     public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
         categoriaRepo.findById(id).ifPresent(cat -> {
