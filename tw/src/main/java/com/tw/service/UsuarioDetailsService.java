@@ -9,13 +9,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servicio de autenticación de Spring Security.
+ *
+ * Lee el campo `admin` directamente de la base de datos en lugar de
+ * comparar contra un email hardcodeado. Así cualquier usuario al que
+ * otro admin le conceda el rol obtendrá ROLE_ADMIN en el siguiente login.
+ */
 @Service
 public class UsuarioDetailsService implements UserDetailsService {
-
-    // Cambia este email por el tuyo de admin
-    private static final String ADMIN_EMAIL = "admin@cume.es";
 
     private final UsuarioRepository usuarioRepository;
 
@@ -28,15 +33,12 @@ public class UsuarioDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
 
-        // Si el email coincide con el admin, asignar ROLE_ADMIN ademas de ROLE_USER
-        List<SimpleGrantedAuthority> authorities;
-        if (ADMIN_EMAIL.equalsIgnoreCase(email)) {
-            authorities = List.of(
-                    new SimpleGrantedAuthority("ROLE_USER"),
-                    new SimpleGrantedAuthority("ROLE_ADMIN")
-            );
-        } else {
-            authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        // El rol ADMIN se asigna dinámicamente desde el campo de la BD
+        if (Boolean.TRUE.equals(usuario.getAdmin())) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
         return new User(usuario.getEmail(), usuario.getPassword(), authorities);

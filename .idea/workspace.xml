@@ -4,13 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo.">
-      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade gestión de categorías: implementa API REST y controlador MVC para crear, editar y eliminar categorías, junto con la visualización en la interfaz de usuario.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/TANI.sqbpro" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.sqbpro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/CategoriaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/CategoriaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/UsuarioDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Usuario$UsuarioBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Usuario$UsuarioBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Usuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Usuario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/UsuarioDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/UsuarioDetailsService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
@@ -199,7 +204,7 @@
       <workItem from="1777384760228" duration="1021000" />
       <workItem from="1777386737629" duration="46000" />
       <workItem from="1777446580965" duration="2628000" />
-      <workItem from="1777478998931" duration="1227000" />
+      <workItem from="1777478998931" duration="3869000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -529,7 +534,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777449879717</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Añade gestión de categorías: implementa API REST y controlador MVC para crear, editar y eliminar categorías, junto con la visualización en la interfaz de usuario.">
+      <option name="closed" value="true" />
+      <created>1777480607179</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1777480607179</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,7 +560,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Actualiza el color de fondo del botón primario en restaurantes.css" />
     <MESSAGE value="Añade interactividad al filtro de estrellas en restaurantes.html y star-filter.js" />
     <MESSAGE value="Elimina la transición y establece el color de fondo como transparente en restaurantes.css" />
     <MESSAGE value="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html" />
@@ -572,7 +584,8 @@
     <MESSAGE value="Mejora la visualización de pedidos: actualiza el diseño de la página de pedidos recibidos, optimiza la gestión de estados y mejora la experiencia del usuario con un nuevo estilo y funcionalidades interactivas." />
     <MESSAGE value="Elimina la sección de mensajes en el menú de navegación y ajusta el estilo del botón de cerrar sesión. Añade redirección tras la eliminación de restaurantes y mejora la gestión de imágenes en el formulario de restaurantes." />
     <MESSAGE value="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo." />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualiza la configuración del editor y ajusta la duración de los elementos de trabajo en el archivo de configuración del espacio de trabajo." />
+    <MESSAGE value="Añade gestión de categorías: implementa API REST y controlador MVC para crear, editar y eliminar categorías, junto con la visualización en la interfaz de usuario." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade gestión de categorías: implementa API REST y controlador MVC para crear, editar y eliminar categorías, junto con la visualización en la interfaz de usuario." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

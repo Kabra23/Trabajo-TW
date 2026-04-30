@@ -67,6 +67,7 @@ com\tw\service\UsuarioDetailsService.class
 com\tw\model\Plato$PlatoBuilder.class
 com\tw\model\Pedido$EstadoPedido.class
 com\tw\model\Pedido.class
+com\tw\api\AdminApiController.class
 com\tw\controller\WebController.class
 com\tw\api\dto\RestauranteDTO$RestauranteResponse.class
 com\tw\config\SecurityConfig.class

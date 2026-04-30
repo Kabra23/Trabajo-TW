@@ -93,24 +93,6 @@
             <aside class="filters-sidebar">
                 <h2>Filtros</h2>
 
-                <!-- Filtro estado (req. minimo 7) -->
-                <aside class="filters-sidebar">
-                    <h2>Filtros</h2>
-
-                    <!-- ▼▼▼ PEGAR AQUÍ ▼▼▼ -->
-                    <div class="filter-section">
-                        <h3>Categorías</h3>
-                        <a th:href="@{/restaurantes}"
-                           class="filter-link"
-                           th:classappend="${categoria == null} ? ' active' : ''">Todas</a>
-                        <a th:each="cat : ${categorias}"
-                           th:href="@{/restaurantes(categoria=${cat.id})}"
-                           th:text="${cat.nombre}"
-                           class="filter-link"
-                           th:classappend="${categoria != null and categoria == cat.id} ? ' active' : ''">
-                            Categoría
-                        </a>
-                    </div>
 
                 <div class="filter-section">
                     <h3>Valoracion</h3>

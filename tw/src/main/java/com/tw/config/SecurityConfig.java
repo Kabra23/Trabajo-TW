@@ -54,6 +54,9 @@ public class SecurityConfig {
                 // Registro y login no requieren auth
                 .requestMatchers("POST", "/api/usuarios").permitAll()
                 .requestMatchers("POST", "/api/sesiones").permitAll()
+                // Gestión de admins: solo ROLE_ADMIN
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                 // El resto de la API requiere autenticación
                 .requestMatchers("/api/**").authenticated()
 

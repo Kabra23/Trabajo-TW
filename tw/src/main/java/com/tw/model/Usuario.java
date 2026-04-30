@@ -27,11 +27,19 @@ public class Usuario {
     @Column(unique = true, nullable = false)
     private String email;
 
-    // Sin @NotBlank porque la contraseña llega como @RequestParam separado
     @Column(nullable = false)
     private String password;
 
     private String fotoPerfil;
+
+    /**
+     * Indica si el usuario tiene rol de administrador.
+     * Solo un admin puede conceder o revocar este privilegio a otro usuario.
+     * La columna se añade automáticamente a la BD gracias a ddl-auto=update.
+     */
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean admin = false;
 
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Restaurante> restaurantes;
@@ -51,16 +59,19 @@ public class Usuario {
     @ToString.Exclude
     private List<Restaurante> favoritos;
 
-    /** Direcciones del usuario (extra: gestión de direcciones) */
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Direccion> direcciones;
 
-    /** Devuelve la dirección principal o null si no tiene ninguna */
     public Direccion getDireccionPrincipal() {
         if (direcciones == null || direcciones.isEmpty()) return null;
         return direcciones.stream()
                 .filter(d -> Boolean.TRUE.equals(d.getPrincipal()))
                 .findFirst()
                 .orElse(direcciones.get(0));
+    }
+
+    /** Comodidad: ¿es admin? Nunca null */
+    public boolean esAdmin() {
+        return Boolean.TRUE.equals(this.admin);
     }
 }
