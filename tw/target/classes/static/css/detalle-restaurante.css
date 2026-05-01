@@ -1,3 +1,12 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
 .main-header .container {
     display: flex;
     justify-content: space-between;
@@ -553,3 +562,254 @@
         font-size: 5rem;
     }
 }
+
+/* ============================================================
+   EDITOR DE ETIQUETAS DEL MENÚ
+   ============================================================ */
+
+/* Botón trigger */
+.etiquetas-trigger-wrap {
+    margin-bottom: 0.5rem;
+}
+.etiquetas-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    color: #069c6f;
+    font-size: 0.83rem;
+    font-weight: 600;
+    font-family: 'DM Sans', inherit;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem 0.3rem 0;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    opacity: 0.85;
+}
+.etiquetas-trigger-btn:hover {
+    opacity: 1;
+    background: rgba(6, 156, 111, 0.07);
+    padding-left: 0.4rem;
+}
+
+/* Panel principal */
+.etiquetas-panel {
+    margin: 0.5rem 0 1.5rem;
+    background: #ffffff;
+    border: 1.5px solid #DFE6E9;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.etiquetas-panel.open {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Header del panel */
+.etiquetas-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #02a674, #069c6f);
+    color: white;
+}
+.etiquetas-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+.etiquetas-close-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+}
+.etiquetas-close-btn:hover { background: rgba(255,255,255,0.35); }
+
+/* Cuerpo del panel */
+.etiquetas-panel form {
+    padding: 1.2rem 1.25rem;
+}
+
+.etiquetas-hint {
+    font-size: 0.82rem;
+    color: #636E72;
+    margin-bottom: 1rem;
+}
+
+/* Contenedor de pills */
+.etiquetas-pills-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 42px;
+    padding: 0.65rem 0.75rem;
+    background: #F8F9FA;
+    border: 1.5px solid #DFE6E9;
+    border-radius: 10px;
+    margin-bottom: 0.9rem;
+    align-items: center;
+}
+
+/* Cada pill */
+.etiqueta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: white;
+    border: 1.5px solid #DFE6E9;
+    border-radius: 9999px;
+    padding: 0.28rem 0.55rem 0.28rem 0.75rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #2D3436;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: border-color 0.15s;
+    user-select: none;
+}
+.etiqueta-pill:hover { border-color: #069c6f; }
+
+.pill-label { white-space: nowrap; }
+
+.pill-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #B2BEC3;
+    font-size: 0.75rem;
+    line-height: 1;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s, color 0.15s;
+}
+.pill-remove:hover {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.etiquetas-empty {
+    color: #B2BEC3;
+    font-size: 0.83rem;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Fila añadir */
+.etiquetas-add-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.1rem;
+}
+.etiquetas-add-input {
+    flex: 1;
+    padding: 0.6rem 0.9rem;
+    border: 1.5px solid #DFE6E9;
+    border-radius: 9999px;
+    font-family: 'DM Sans', inherit;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: white;
+    width: auto !important;
+}
+.etiquetas-add-input:focus {
+    border-color: #069c6f;
+    box-shadow: 0 0 0 3px rgba(6, 156, 111, 0.12);
+}
+.etiquetas-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: #069c6f;
+    color: white;
+    border: none;
+    padding: 0.55rem 1rem;
+    border-radius: 9999px;
+    font-family: 'DM Sans', inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.18s;
+    flex-shrink: 0;
+}
+.etiquetas-add-btn:hover { background: #038a63; }
+
+/* Footer del formulario */
+.etiquetas-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid #DFE6E9;
+}
+.etiquetas-note {
+    color: #B2BEC3;
+    font-size: 0.78rem;
+}
+.etiquetas-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+.etiquetas-btn-cancel {
+    background: white;
+    color: #636E72;
+    border: 1.5px solid #DFE6E9;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-family: 'DM Sans', inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+.etiquetas-btn-cancel:hover { border-color: #B2BEC3; }
+
+.etiquetas-btn-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #069c6f;
+    color: white;
+    border: none;
+    padding: 0.55rem 1.2rem;
+    border-radius: 9999px;
+    font-family: 'DM Sans', inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s;
+}
+.etiquetas-btn-save:hover { background: #038a63; }
+
+/* Animacion shake para duplicado */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25%       { transform: translateX(-5px); }
+    75%       { transform: translateX(5px); }
+}
+.shake { animation: shake 0.35s ease; border-color: #d32f2f !important; }

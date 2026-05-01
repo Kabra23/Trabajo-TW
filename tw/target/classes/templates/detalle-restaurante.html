@@ -136,42 +136,57 @@
                      TABS DEL MENÚ — editables por el propietario
                      ==================================================== -->
 
-                <!-- Panel edición de etiquetas (solo propietario, oculto por defecto) -->
-                <div th:if="${esPropietario}"
-                     id="editTabsPanel"
-                     style="margin:1rem 0;background:#f0fbf7;border:2px dashed #069c6f;border-radius:10px;padding:1.2rem;display:none;">
-                    <p style="margin:0 0 .7rem;font-weight:600;color:#069c6f;font-size:.9rem;">Editar etiquetas del menu</p>
-                    <form th:action="@{/restaurantes/{id}/etiquetas(id=${restaurante.id})}" method="post"
-                          style="display:flex;gap:.7rem;align-items:flex-start;flex-wrap:wrap;">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <div style="flex:1;min-width:240px;">
-                            <input type="text" name="etiquetasMenu"
-                                   th:value="${restaurante.etiquetasMenu}"
-                                   placeholder="Ej: Destacados,Desayunos,Bocadillos,Bebidas,Ensaladas"
-                                   style="width:100%;padding:.65rem .9rem;border:2px solid #069c6f;border-radius:8px;font-family:inherit;font-size:.9rem;box-sizing:border-box;">
-                            <small style="color:#888;font-size:.78rem;display:block;margin-top:.3rem;">
-                                Escribe las etiquetas separadas por comas. Deja vacio para usar las predeterminadas.
-                            </small>
-                        </div>
-                        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-                            <button type="submit"
-                                    style="background:#069c6f;color:white;border:none;padding:.65rem 1.4rem;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem;">
-                                Guardar
-                            </button>
-                            <button type="button" onclick="toggleEditTabs()"
-                                    style="background:white;color:#555;border:2px solid #e0e0e0;padding:.6rem 1rem;border-radius:8px;cursor:pointer;font-family:inherit;font-size:.9rem;">
-                                Cancelar
-                            </button>
-                        </div>
-                    </form>
+                <!-- ── Botón trigger (solo propietario) ── -->
+                <div th:if="${esPropietario}" class="etiquetas-trigger-wrap">
+                    <button type="button" onclick="toggleEditTabs()" class="etiquetas-trigger-btn">
+                        Editar secciones del menu
+                    </button>
                 </div>
 
-                <!-- Botón para abrir el editor de tabs (solo propietario) -->
-                <div th:if="${esPropietario}" style="margin-bottom:.5rem;">
-                    <button onclick="toggleEditTabs()"
-                            style="background:none;border:none;color:#069c6f;font-size:.83rem;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;">
-                        Editar etiquetas del menu
-                    </button>
+                <!-- ── Panel editor de etiquetas (solo propietario, oculto por defecto) ── -->
+                <div th:if="${esPropietario}"
+                     id="editTabsPanel"
+                     class="etiquetas-panel"
+                     style="display:none;">
+                    <div class="etiquetas-panel-header">
+                        <div class="etiquetas-panel-title">
+                            <span>Secciones del menu</span>
+                        </div>
+                        <button type="button" onclick="toggleEditTabs()" class="etiquetas-close-btn" title="Cerrar">Cerrar</button>
+                    </div>
+
+                    <form th:action="@{/restaurantes/{id}/etiquetas(id=${restaurante.id})}" method="post"
+                          onsubmit="serializeEtiquetas()">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <input type="hidden" name="etiquetasMenu" id="etiquetasMenuValue"
+                               th:value="${restaurante.etiquetasMenu}">
+
+                        <p class="etiquetas-hint">Cada seccion aparece como una pestana en la carta. Arrastralas para reordenar.</p>
+
+                        <!-- Pills actuales -->
+                        <div class="etiquetas-pills-wrap" id="etiquetasPills"></div>
+
+                        <!-- Añadir nueva -->
+                        <div class="etiquetas-add-row">
+                            <input type="text" id="nuevaEtiquetaInput"
+                                   placeholder="Nueva seccion... (ej: Postres)"
+                                   class="etiquetas-add-input"
+                                   autocomplete="off">
+                            <button type="button" onclick="addEtiqueta()" class="etiquetas-add-btn">
+                                Anadir
+                            </button>
+                        </div>
+
+                        <div class="etiquetas-footer">
+                            <small class="etiquetas-note">Si no configuras ninguna seccion se usan las predeterminadas.</small>
+                            <div class="etiquetas-actions">
+                                <button type="button" onclick="toggleEditTabs()" class="etiquetas-btn-cancel">Cancelar</button>
+                                <button type="submit" class="etiquetas-btn-save">
+                                    Guardar cambios
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Tabs del menú (dinámicas según las etiquetas configuradas) -->
@@ -475,12 +490,90 @@ function switchTab(btn) {
     btn.classList.add('active');
 }
 
-function toggleEditTabs() {
-    var panel = document.getElementById('editTabsPanel');
-    if (panel) {
-        panel.style.display = (panel.style.display === 'none' || panel.style.display === '') ? 'block' : 'none';
+/* ── Editor de etiquetas ── */
+var _etiquetas = [];
+
+function _getDefaultEtiquetas() {
+    return ['Destacados', 'Desayunos', 'Bocadillos y Montaditos', 'Bebidas', 'Ensaladas'];
+}
+
+function initEtiquetas() {
+    var hidden = document.getElementById('etiquetasMenuValue');
+    var raw = hidden ? hidden.value.trim() : '';
+    _etiquetas = raw
+        ? raw.split(',').map(function(s){ return s.trim(); }).filter(function(s){ return s; })
+        : _getDefaultEtiquetas();
+    renderPills();
+}
+
+function renderPills() {
+    var wrap = document.getElementById('etiquetasPills');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    _etiquetas.forEach(function(e, i) {
+        var pill = document.createElement('span');
+        pill.className = 'etiqueta-pill';
+        pill.innerHTML =
+            '<span class="pill-label">' + escHtml(e) + '</span>' +
+            '<button type="button" class="pill-remove" title="Eliminar" onclick="removeEtiqueta(' + i + ')">&#x2715;</button>';
+        wrap.appendChild(pill);
+    });
+    /* mensaje vacío */
+    if (_etiquetas.length === 0) {
+        var empty = document.createElement('p');
+        empty.className = 'etiquetas-empty';
+        empty.textContent = 'Sin secciones — se usaran las predeterminadas.';
+        wrap.appendChild(empty);
     }
 }
+
+function addEtiqueta() {
+    var input = document.getElementById('nuevaEtiquetaInput');
+    if (!input) return;
+    var val = input.value.trim();
+    if (!val) return;
+    var yaExiste = _etiquetas.some(function(e){ return e.toLowerCase() === val.toLowerCase(); });
+    if (yaExiste) { input.classList.add('shake'); setTimeout(function(){ input.classList.remove('shake'); }, 400); return; }
+    _etiquetas.push(val);
+    renderPills();
+    input.value = '';
+    input.focus();
+}
+
+function removeEtiqueta(i) {
+    _etiquetas.splice(i, 1);
+    renderPills();
+}
+
+function serializeEtiquetas() {
+    var hidden = document.getElementById('etiquetasMenuValue');
+    if (hidden) hidden.value = _etiquetas.join(',');
+}
+
+function toggleEditTabs() {
+    var panel = document.getElementById('editTabsPanel');
+    if (!panel) return;
+    var open = panel.style.display !== 'none' && panel.style.display !== '';
+    if (!open) {
+        initEtiquetas();
+        panel.style.display = 'block';
+        requestAnimationFrame(function() { panel.classList.add('open'); });
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+        panel.classList.remove('open');
+        setTimeout(function() { panel.style.display = 'none'; }, 250);
+    }
+}
+
+function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* Enter en el input añade etiqueta */
+document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('nuevaEtiquetaInput');
+    if (inp) inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); addEtiqueta(); } });
+});
 </script>
 </body>
 </html>

@@ -196,14 +196,9 @@
                 <div class="dishes-list">
                     <div th:each="plato : ${restaurante.platos}" class="dish-edit-card">
                         <div class="dish-edit-image">
-                            <img th:if="${plato.imagen != null}"
-                                 th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
-                            <div th:unless="${plato.imagen != null}"
-                                 style="width:60px;height:60px;border-radius:8px;background:#e8f5f1;display:flex;align-items:center;justify-content:center;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#069c6f" opacity=".5">
-                                    <path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05z"/>
-                                </svg>
-                            </div>
+                            <img th:src="@{${@vistaImagenService.plato(plato)}}"
+                                 th:alt="${plato.nombre}"
+                                 class="dish-edit-img">
                         </div>
                         <div class="dish-edit-info">
                             <h3 th:text="${plato.nombre}">Nombre</h3>

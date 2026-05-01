@@ -139,9 +139,6 @@
                 <!-- ── Botón trigger (solo propietario) ── -->
                 <div th:if="${esPropietario}" class="etiquetas-trigger-wrap">
                     <button type="button" onclick="toggleEditTabs()" class="etiquetas-trigger-btn">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
-                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                        </svg>
                         Editar secciones del menu
                     </button>
                 </div>
@@ -153,12 +150,9 @@
                      style="display:none;">
                     <div class="etiquetas-panel-header">
                         <div class="etiquetas-panel-title">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#069c6f">
-                                <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"/>
-                            </svg>
                             <span>Secciones del menu</span>
                         </div>
-                        <button type="button" onclick="toggleEditTabs()" class="etiquetas-close-btn" title="Cerrar">✕</button>
+                        <button type="button" onclick="toggleEditTabs()" class="etiquetas-close-btn" title="Cerrar">Cerrar</button>
                     </div>
 
                     <form th:action="@{/restaurantes/{id}/etiquetas(id=${restaurante.id})}" method="post"
@@ -179,7 +173,6 @@
                                    class="etiquetas-add-input"
                                    autocomplete="off">
                             <button type="button" onclick="addEtiqueta()" class="etiquetas-add-btn">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                                 Anadir
                             </button>
                         </div>
@@ -189,7 +182,6 @@
                             <div class="etiquetas-actions">
                                 <button type="button" onclick="toggleEditTabs()" class="etiquetas-btn-cancel">Cancelar</button>
                                 <button type="submit" class="etiquetas-btn-save">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
                                     Guardar cambios
                                 </button>
                             </div>
