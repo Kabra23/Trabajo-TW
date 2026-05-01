@@ -365,31 +365,38 @@ body {
 /* Menu Tabs */
 .menu-tabs {
     display: flex;
-    gap: 1rem;
-    margin: 2rem 0;
-    border-bottom: 2px solid #e0e0e0;
+    gap: 0.4rem;
+    margin: 1.5rem 0 1.2rem;
     flex-wrap: wrap;
+    padding: 0.3rem;
+    background: #F0F2F1;
+    border-radius: 12px;
+    border: none;
 }
 
 .tab-btn {
-    background: none;
+    background: transparent;
     border: none;
-    padding: 1rem 1.5rem;
+    padding: 0.55rem 1.1rem;
     cursor: pointer;
-    color: #666;
+    color: #636E72;
     font-weight: 600;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 9px;
+    transition: background 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
 }
 
 .tab-btn:hover {
+    background: rgba(6, 156, 111, 0.1);
     color: #069c6f;
 }
 
 .tab-btn.active {
+    background: rgba(6, 156, 111, 0.18);
     color: #069c6f;
-    border-bottom-color: #069c6f;
+    font-weight: 700;
 }
 
 /* Search Menu */

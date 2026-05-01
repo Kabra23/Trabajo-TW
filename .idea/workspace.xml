@@ -4,20 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade editor de etiquetas en el menú: implementa un panel para editar secciones del menú con funcionalidad para añadir, eliminar y reordenar etiquetas, mejorando la experiencia del propietario.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario.">
+      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +193,7 @@
       <workItem from="1777446580965" duration="2628000" />
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
-      <workItem from="1777626649774" duration="10086000" />
+      <workItem from="1777626649774" duration="10492000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -583,7 +571,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777659438360</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario.">
+      <option name="closed" value="true" />
+      <created>1777660816780</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1777660816780</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -601,7 +597,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda" />
     <MESSAGE value="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML" />
     <MESSAGE value="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación." />
     <MESSAGE value="Actualiza la configuración del espacio de trabajo y mejora la gestión de tareas locales" />
@@ -626,7 +621,8 @@
     <MESSAGE value="Refactoriza la navegación: reemplaza el menú de navegación en múltiples páginas con un fragmento reutilizable, mejora la consistencia y reduce la duplicación de código." />
     <MESSAGE value="Actualiza estilos y mejora la tipografía: reemplaza fuentes y ajusta colores en CSS, implementa variables CSS para una mejor gestión de estilos y añade nuevos estilos para botones y alertas." />
     <MESSAGE value="Añade editor de etiquetas en el menú: implementa un panel para editar secciones del menú con funcionalidad para añadir, eliminar y reordenar etiquetas, mejorando la experiencia del propietario." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade editor de etiquetas en el menú: implementa un panel para editar secciones del menú con funcionalidad para añadir, eliminar y reordenar etiquetas, mejorando la experiencia del propietario." />
+    <MESSAGE value="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
