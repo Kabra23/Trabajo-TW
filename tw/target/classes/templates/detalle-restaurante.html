@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${restaurante.nombre} + ' - CUMe y Calla'">Restaurante - CUMe y Calla</title>
-    <link rel="stylesheet" th:href="@{/css/detalle-restaurante.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" th:href="@{/css/detalle-restaurante.css}">
 </head>
 <body>
 <header th:replace="~{fragments/layout :: header}"></header>
@@ -22,8 +26,7 @@
 
     <div class="container">
         <!-- Mensajes flash -->
-        <div th:if="${exito}" style="background:#e8f5f1;color:#069c6f;padding:1rem;border-radius:8px;margin:1rem 0;border-left:4px solid #069c6f;" th:text="${exito}"></div>
-        <div th:if="${error}"  style="background:#ffebee;color:#d32f2f;padding:1rem;border-radius:8px;margin:1rem 0;border-left:4px solid #d32f2f;" th:text="${error}"></div>
+        <div th:replace="~{fragments/layout :: mensajes}"></div>
 
         <div class="detail-layout">
             <section class="restaurant-main">
@@ -31,14 +34,8 @@
                     <h1 th:text="${restaurante.nombre}">Nombre del restaurante</h1>
 
                     <!-- Estado -->
-                    <span th:if="${restaurante.aceptaPedidos}"
-                          style="display:inline-block;background:#e8f5f1;color:#069c6f;padding:.3rem .9rem;border-radius:20px;font-size:.85rem;font-weight:600;margin-bottom:.8rem;">
-                        Acepta pedidos
-                    </span>
-                    <span th:unless="${restaurante.aceptaPedidos}"
-                          style="display:inline-block;background:#ffebee;color:#d32f2f;padding:.3rem .9rem;border-radius:20px;font-size:.85rem;font-weight:600;margin-bottom:.8rem;">
-                        No acepta pedidos
-                    </span>
+                    <span th:if="${restaurante.aceptaPedidos}" class="badge-acepta">Acepta pedidos</span>
+                    <span th:unless="${restaurante.aceptaPedidos}" class="badge-no-acepta">No acepta pedidos</span>
 
                     <div class="restaurant-meta">
                         <span class="rating">
@@ -98,36 +95,32 @@
                     </div>
 
                     <!-- ACCIONES PROPIETARIO -->
-                    <div th:if="${esPropietario}"
-                         style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;padding:1rem;background:#f9f9f9;border-radius:10px;">
+                    <div th:if="${esPropietario}" class="owner-actions">
                         <a th:href="@{/restaurantes/{id}/editar(id=${restaurante.id})}"
-                           class="btn-primary" style="text-decoration:none;">Editar</a>
+                           class="btn-primary">Editar</a>
                         <form th:action="@{/restaurantes/{id}/estado(id=${restaurante.id})}" method="post" style="display:inline">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <input type="hidden" name="aceptaPedidos" th:value="${!restaurante.aceptaPedidos}">
-                            <button type="submit" class="btn-primary" style="background:#555;border:none;cursor:pointer;"
+                            <button type="submit" class="btn-primary btn-neutral"
                                     th:text="${restaurante.aceptaPedidos} ? 'Pausar pedidos' : 'Activar pedidos'">Estado</button>
                         </form>
                         <a th:href="@{/restaurantes/{id}/platos/nuevo(id=${restaurante.id})}"
-                           class="btn-primary" style="text-decoration:none;background:#EEF527;color:#333;">+ Anadir plato</a>
+                           class="btn-primary btn-highlight">+ Anadir plato</a>
                         <a th:href="@{/pedidos/restaurante/{id}(id=${restaurante.id})}"
-                           class="btn-primary" style="text-decoration:none;background:#1565c0;">Pedidos recibidos</a>
+                           class="btn-primary btn-info">Pedidos recibidos</a>
                         <form th:action="@{/restaurantes/{id}/eliminar(id=${restaurante.id})}" method="post"
                               style="display:inline" onsubmit="return confirm('Seguro que quieres eliminar este restaurante?')">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <input type="hidden" name="redirectTo" value="/mis-restaurantes">
-                            <button type="submit" style="background:#d32f2f;color:white;border:none;padding:.7rem 1.5rem;border-radius:25px;cursor:pointer;font-weight:700;">Eliminar restaurante</button>
+                            <button type="submit" class="btn-primary btn-danger">Eliminar restaurante</button>
                         </form>
                     </div>
 
-                    <!-- BOTÓN FAVORITO (usuarios logueados no propietarios) -->
+                    <!-- BOTON FAVORITO (usuarios logueados no propietarios) -->
                     <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}" style="margin-top:1rem;">
                         <form th:action="@{/restaurantes/{id}/favorito(id=${restaurante.id})}" method="post" style="display:inline">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                            <button type="submit" class="btn-primary"
-                                    style="background:none;color:#d32f2f;border:2px solid #d32f2f;cursor:pointer;">
-                                Guardar en favoritos
-                            </button>
+                            <button type="submit" class="btn-primary btn-outline-danger">Guardar en favoritos</button>
                         </form>
                     </div>
                 </div>
@@ -238,15 +231,12 @@
                                 <!-- Cesta (logueados no propietarios, restaurante abierto) -->
                                 <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}"
                                      th:if="${restaurante.aceptaPedidos}"
-                                     style="display:flex;align-items:center;gap:.5rem;margin-top:.8rem;">
-                                    <button type="button" onclick="cambiarCantidad(this,-1)"
-                                            style="width:32px;height:32px;border-radius:50%;border:2px solid #069c6f;background:white;color:#069c6f;font-size:1.2rem;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">−</button>
+                                     class="qty-controls">
+                                    <button type="button" onclick="cambiarCantidad(this,-1)" class="qty-btn">−</button>
                                     <input type="number" th:name="'plato_' + ${plato.id}" th:id="'plato_' + ${plato.id}"
                                            th:data-precio="${plato.precio}"
-                                           class="qty-input" value="0" min="0" max="99" readonly
-                                           style="width:45px;text-align:center;border:2px solid #e0e0e0;border-radius:8px;padding:.3rem;font-size:1rem;font-weight:700;">
-                                    <button type="button" onclick="cambiarCantidad(this,1)"
-                                            style="width:32px;height:32px;border-radius:50%;border:2px solid #069c6f;background:#069c6f;color:white;font-size:1.2rem;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">+</button>
+                                           class="qty-input" value="0" min="0" max="99" readonly>
+                                    <button type="button" onclick="cambiarCantidad(this,1)" class="qty-btn qty-btn-plus">+</button>
                                 </div>
                             </div>
                             <!-- Imagen del plato -->
@@ -255,28 +245,27 @@
                             </div>
                         </article>
                     </div>
-                    <p th:if="${#lists.isEmpty(restaurante.platos)}" style="color:#888;">Este restaurante aun no tiene platos.</p>
+                    <p th:if="${#lists.isEmpty(restaurante.platos)}" class="muted-text">Este restaurante aun no tiene platos.</p>
                 </section>
 
                 <!-- VALORACIONES -->
-                <section style="margin-top:2rem;">
-                    <h2 style="color:#333;margin-bottom:1rem;">Valoraciones</h2>
+                <section class="reviews-section">
+                    <h2>Valoraciones</h2>
 
                     <!-- Formulario (logueados no propietarios) -->
-                    <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}"
-                         style="background:#f9f9f9;padding:1.5rem;border-radius:12px;margin-bottom:1.5rem;">
-                        <h3 style="margin-bottom:1rem;color:#333;">Deja tu valoracion</h3>
+                    <div sec:authorize="isAuthenticated()" th:unless="${esPropietario}" class="review-form">
+                        <h3>Deja tu valoracion</h3>
                         <form th:action="@{/restaurantes/{id}/valorar(id=${restaurante.id})}" method="post">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                            <div style="margin-bottom:1rem;">
-                                <label style="font-weight:600;display:block;margin-bottom:.5rem;">Puntuacion (1-5):</label>
-                                <div class="star-rating-input" style="display:flex;gap:.3rem;">
+                            <div class="review-field">
+                                <label class="review-label">Puntuacion (1-5):</label>
+                                <div class="star-rating-input">
                                     <th:block th:each="n : ${#numbers.sequence(1,5)}">
-                                        <label th:for="'star_' + ${n}" style="cursor:pointer;">
+                                        <label th:for="'star_' + ${n}" class="star-label">
                                             <input type="radio" name="puntuacion" th:value="${n}" th:id="'star_' + ${n}" required style="display:none;">
                                             <svg th:id="'svg_' + ${n}" xmlns="http://www.w3.org/2000/svg"
                                                  fill="currentColor" viewBox="0 0 16 16" width="36" height="36"
-                                                 style="color:#d0d0d0;transition:color .15s;"
+                                                 class="star-icon"
                                                  onmouseover="hoverStars(this, true)"
                                                  onmouseout="hoverStars(this, false)">
                                                 <path d="m12.288 14.449-4.183-2.197a.219.219 0 0 0-.21 0L3.713 14.45 4.5 9.794a.254.254 0 0 0 0-.193L1.07 6.302l4.673-.682a.228.228 0 0 0 .166-.114L8 1.271l2.091 4.235a.227.227 0 0 0 .167.114l4.672.682-3.386 3.3a.254.254 0 0 0-.061.192l.805 4.655Zm-8.4-7.228 1.487 1.435a1.54 1.54 0 0 1 .438 1.356l-.35 2.04 1.828-.963a1.505 1.505 0 0 1 1.418 0l1.829.962-.35-2.039a1.539 1.539 0 0 1 .437-1.356l1.488-1.435-2.048-.297a1.531 1.531 0 0 1-1.19-.84L8 4.229l-.875 1.855a1.531 1.531 0 0 1-1.155.875l-2.082.262Z"></path>
@@ -285,59 +274,52 @@
                                     </th:block>
                                 </div>
                             </div>
-                            <div style="margin-bottom:1rem;">
-                                <label for="comentario" style="font-weight:600;display:block;margin-bottom:.5rem;">Comentario (opcional):</label>
+                            <div class="review-field">
+                                <label for="comentario" class="review-label">Comentario (opcional):</label>
                                 <textarea id="comentario" name="comentario" rows="3"
-                                          placeholder="Que te parecio?"
-                                          style="width:100%;padding:.8rem;border:2px solid #e0e0e0;border-radius:8px;resize:vertical;font-family:inherit;box-sizing:border-box;"></textarea>
+                                          placeholder="Que te parecio?" class="review-textarea"></textarea>
                             </div>
-                            <button type="submit" class="btn-primary" style="border:none;cursor:pointer;">Enviar valoracion</button>
+                            <button type="submit" class="btn-primary">Enviar valoracion</button>
                         </form>
                     </div>
 
                     <!-- Lista valoraciones -->
-                    <div th:each="val : ${restaurante.valoraciones}"
-                         style="padding:1rem;border-bottom:1px solid #eee;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;">
-                            <strong th:text="${val.usuario.nombre} + ' ' + ${val.usuario.apellidos}" style="color:#333;">Usuario</strong>
-                            <span th:text="'⭐ ' + ${val.puntuacion} + '/5'" style="color:#069c6f;font-weight:600;">⭐ 0/5</span>
+                    <div th:each="val : ${restaurante.valoraciones}" class="review-item">
+                        <div class="review-header">
+                            <strong th:text="${val.usuario.nombre} + ' ' + ${val.usuario.apellidos}">Usuario</strong>
+                            <span th:text="'⭐ ' + ${val.puntuacion} + '/5'" class="review-rating">⭐ 0/5</span>
                         </div>
-                        <p th:if="${val.comentario}" th:text="${val.comentario}" style="color:#555;margin:.4rem 0;"></p>
-                        <small th:text="${#temporals.format(val.fecha,'dd/MM/yyyy')}" style="color:#aaa;"></small>
+                        <p th:if="${val.comentario}" th:text="${val.comentario}" class="review-comment"></p>
+                        <small th:text="${#temporals.format(val.fecha,'dd/MM/yyyy')}" class="review-date"></small>
                     </div>
-                    <p th:if="${#lists.isEmpty(restaurante.valoraciones)}" style="color:#888;">Aun no hay valoraciones.</p>
+                    <p th:if="${#lists.isEmpty(restaurante.valoraciones)}" class="review-empty">Aun no hay valoraciones.</p>
                 </section>
 
                 <!-- RESTAURANTES RELACIONADOS -->
                 <section th:if="${relacionados != null and !#lists.isEmpty(relacionados)}"
-                         style="margin-top:2.5rem;padding-top:2rem;border-top:2px solid #f0f0f0;">
-                    <h2 style="color:#333;font-size:1.4rem;margin-bottom:1.2rem;font-weight:700;">
-                        Restaurantes similares
-                    </h2>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;">
+                         class="related-section">
+                    <h2 class="related-title">Restaurantes similares</h2>
+                    <div class="related-grid">
                         <a th:each="r : ${relacionados}"
                            th:href="@{/restaurantes/{id}(id=${r.id})}"
-                           style="background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07);text-decoration:none;color:inherit;border:2px solid transparent;transition:all .2s;display:block;">
-                            <div style="height:110px;overflow:hidden;background:#e8f5f1;display:flex;align-items:center;justify-content:center;">
-                                <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}"
-                                     style="width:100%;height:100%;object-fit:cover;">
+                           class="related-card">
+                            <div class="related-image">
+                                <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}">
                             </div>
-                            <div style="padding:.9rem;">
-                                <h3 style="margin:0 0 .3rem;font-size:.95rem;color:#333;font-weight:700;" th:text="${r.nombre}">Nombre</h3>
-                                <div style="display:flex;align-items:center;gap:.3rem;font-size:.82rem;color:#666;">
+                            <div class="related-info">
+                                <h3 class="related-name" th:text="${r.nombre}">Nombre</h3>
+                                <div class="related-meta">
                                     <svg th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
                                          width="12" height="12" viewBox="0 0 24 24" fill="gold">
                                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                     </svg>
                                     <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
                                           th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}"
-                                          style="font-weight:700;color:#333;">0.0</span>
-                                    <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}" style="color:#aaa;" th:text="'· ' + ${r.localidad}">loc</span>
+                                          class="related-score">0.0</span>
+                                    <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}"
+                                          th:text="'· ' + ${r.localidad}" class="related-location">loc</span>
                                 </div>
-                                <span th:unless="${r.aceptaPedidos}"
-                                      style="display:inline-block;margin-top:.4rem;background:#ffebee;color:#d32f2f;border-radius:8px;padding:.1rem .5rem;font-size:.72rem;font-weight:600;">
-                                    No acepta pedidos
-                                </span>
+                                <span th:unless="${r.aceptaPedidos}" class="related-status">No acepta pedidos</span>
                             </div>
                         </a>
                     </div>
@@ -376,11 +358,10 @@
                                         <p>Tu cesta esta vacia</p>
                                     </div>
                                 </div>
-                                <div id="total-section" style="display:none;margin-top:1rem;font-size:1.2rem;font-weight:700;color:#069c6f;border-top:2px solid #e0e0e0;padding-top:1rem;">
+                                <div id="total-section" class="cart-total is-hidden">
                                     Total: <span id="total-precio">0,00</span> €
                                 </div>
-                                <button type="submit" id="btn-pedir" class="btn-primary"
-                                        style="display:none;width:100%;margin-top:1rem;border:none;cursor:pointer;padding:1rem;font-size:1rem;border-radius:8px;">
+                                <button type="submit" id="btn-pedir" class="btn-primary cart-order-btn is-hidden">
                                     Realizar pedido
                                 </button>
                             </form>
@@ -389,11 +370,11 @@
                         <div sec:authorize="!isAuthenticated()" class="empty-cart">
                             <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
                             <h3>Llena tu cesta</h3>
-                            <p><a th:href="@{/login}" style="color:#069c6f;font-weight:600;">Inicia sesion</a> para pedir</p>
+                            <p><a th:href="@{/login}" class="login-link">Inicia sesion</a> para pedir</p>
                         </div>
                         <!-- Restaurante cerrado -->
                         <div th:if="${!restaurante.aceptaPedidos}" sec:authorize="isAuthenticated()" th:unless="${esPropietario}"
-                             style="text-align:center;padding:1rem;color:#d32f2f;">
+                             class="closed-note">
                             <p>Este restaurante no acepta pedidos ahora mismo.</p>
                         </div>
                     </div>
@@ -466,8 +447,9 @@ function actualizarResumen() {
             var card = input.closest('.dish-card');
             var nombre = card ? card.querySelector('h3').textContent : 'Plato';
             var div = document.createElement('div');
-            div.style.cssText = 'display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid #f0f0f0;font-size:.95rem;';
-            div.innerHTML = '<span>' + nombre + ' x' + cantidad + '</span><span style="font-weight:700;color:#069c6f;">' + subtotal.toFixed(2) + ' €</span>';
+            div.className = 'cart-item-row';
+            div.innerHTML = '<span>' + nombre + ' x' + cantidad + '</span>' +
+                '<span class="cart-item-total">' + subtotal.toFixed(2) + ' €</span>';
             resumen.appendChild(div);
         }
     });
@@ -477,8 +459,8 @@ function actualizarResumen() {
     var totalSection = document.getElementById('total-section');
     var btnPedir = document.getElementById('btn-pedir');
     var totalSpan = document.getElementById('total-precio');
-    if (totalSection) totalSection.style.display = tieneItems ? 'block' : 'none';
-    if (btnPedir) btnPedir.style.display = tieneItems ? 'block' : 'none';
+    if (totalSection) totalSection.classList.toggle('is-hidden', !tieneItems);
+    if (btnPedir) btnPedir.classList.toggle('is-hidden', !tieneItems);
     if (totalSpan) totalSpan.textContent = total.toFixed(2).replace('.', ',');
 }
 </script>

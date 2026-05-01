@@ -16,7 +16,7 @@
 <header th:fragment="header" class="main-header">
     <div class="container">
         <div class="logo">
-            <a th:href="@{/}" style="text-decoration:none">
+            <a th:href="@{/}">
                 <h1>
                     <span class="logo-main">CUMe</span>
                     <span class="logo-separator">y</span>
@@ -29,11 +29,11 @@
                 <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
                 <li class="nav-dropdown" sec:authorize="isAuthenticated()">
                     <button class="nav-dropdown-btn" type="button">
-                        Mi restaurante <span class="dropdown-arrow">&#9660;</span>
+                        Mi Restaurante <span class="dropdown-arrow">&#9660;</span>
                     </button>
                     <ul class="nav-dropdown-menu">
-                        <li><a th:href="@{/mis-restaurantes}">Ver mis restaurantes</a></li>
-                        <li><a th:href="@{/restaurantes/nuevo}">+ Crear nuevo</a></li>
+                        <li><a th:href="@{/mis-restaurantes}">&#127968; Ver mi restaurante</a></li>
+                        <li><a th:href="@{/restaurantes/nuevo}">&#10010; Crear nuevo restaurante</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()">
@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="post" style="display:inline">
+                    <form th:action="@{/logout}" method="post" class="inline-form">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                         <button type="submit" class="btn-logout">Cerrar sesion</button>
                     </form>

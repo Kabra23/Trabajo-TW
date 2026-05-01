@@ -112,7 +112,7 @@
 
                 <!-- IMAGEN ACTUAL (solo en modo edición) -->
                 <div th:if="${plato.imagen != null and !#strings.isEmpty(plato.imagen)}" class="img-current">
-                    <img th:src="@{'/uploads/' + ${plato.imagen}}" th:alt="${plato.nombre}">
+                    <img th:src="@{${@vistaImagenService.plato(plato)}}" th:alt="${plato.nombre}">
                     <div class="img-current-info">
                         <strong>Imagen actual</strong>
                         Sube una nueva imagen para reemplazar la actual.

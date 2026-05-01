@@ -378,21 +378,17 @@
     height: 100px;
     background: linear-gradient(135deg, #e8f5f1 0%, #d0ebe3 100%);
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-shrink: 0;
     overflow: hidden;
-    padding: 0.5rem;
 }
 
-.dish-edit-image img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+.dish-edit-image img,
+.dish-edit-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center;
+    display: block;
 }
 
 .dish-placeholder {
