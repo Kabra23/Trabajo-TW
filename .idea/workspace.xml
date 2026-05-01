@@ -4,40 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Refactoriza la navegación: reemplaza el menú de navegación en múltiples páginas con un fragmento reutilizable, mejora la consistencia y reduce la duplicación de código.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/ErrorPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/ErrorPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/nav.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/nav.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/registro.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/registro.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/fragments/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/registro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/editar-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/registro.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/registro.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/fragments/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-    </list>
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Actualiza estilos y mejora la tipografía: reemplaza fuentes y ajusta colores en CSS, implementa variables CSS para una mejor gestión de estilos y añade nuevos estilos para botones y alertas." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -224,7 +191,7 @@
       <workItem from="1777446580965" duration="2628000" />
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
-      <workItem from="1777626649774" duration="7463000" />
+      <workItem from="1777626649774" duration="7761000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -578,7 +545,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777633336420</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Actualiza estilos y mejora la tipografía: reemplaza fuentes y ajusta colores en CSS, implementa variables CSS para una mejor gestión de estilos y añade nuevos estilos para botones y alertas.">
+      <option name="closed" value="true" />
+      <created>1777658196281</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1777658196281</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -596,7 +571,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Añade sistema de filtros dinámicos para restaurantes en filters.js y actualiza textos en restaurantes.html" />
     <MESSAGE value="Añade mejoras en el diseño y funcionalidad de las páginas de detalle y lista de restaurantes" />
     <MESSAGE value="Añade autocompletado de direcciones y mejora la validación en el formulario de búsqueda" />
     <MESSAGE value="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML" />
@@ -621,7 +595,8 @@
     <MESSAGE value="Añade gestión de categorías: implementa API REST y controlador MVC para crear, editar y eliminar categorías, junto con la visualización en la interfaz de usuario." />
     <MESSAGE value="Añade gestión de administradores: implementa API REST para listar, conceder y revocar roles de administrador, asegurando que solo usuarios con el rol adecuado puedan acceder a estos endpoints." />
     <MESSAGE value="Refactoriza la navegación: reemplaza el menú de navegación en múltiples páginas con un fragmento reutilizable, mejora la consistencia y reduce la duplicación de código." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoriza la navegación: reemplaza el menú de navegación en múltiples páginas con un fragmento reutilizable, mejora la consistencia y reduce la duplicación de código." />
+    <MESSAGE value="Actualiza estilos y mejora la tipografía: reemplaza fuentes y ajusta colores en CSS, implementa variables CSS para una mejor gestión de estilos y añade nuevos estilos para botones y alertas." />
+    <option name="LAST_COMMIT_MESSAGE" value="Actualiza estilos y mejora la tipografía: reemplaza fuentes y ajusta colores en CSS, implementa variables CSS para una mejor gestión de estilos y añade nuevos estilos para botones y alertas." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

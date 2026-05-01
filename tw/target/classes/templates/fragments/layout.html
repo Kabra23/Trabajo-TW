@@ -29,7 +29,7 @@
                 <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
                 <li class="nav-dropdown" sec:authorize="isAuthenticated()">
                     <button class="nav-dropdown-btn" type="button">
-                        🍽 Mi restaurante <span class="dropdown-arrow">&#9660;</span>
+                        Mi restaurante <span class="dropdown-arrow">&#9660;</span>
                     </button>
                     <ul class="nav-dropdown-menu">
                         <li><a th:href="@{/mis-restaurantes}">Ver mis restaurantes</a></li>
@@ -41,7 +41,7 @@
                 </li>
                 <li class="nav-dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                     <button class="nav-dropdown-btn" type="button">
-                        &#9881; Admin <span class="dropdown-arrow">&#9660;</span>
+                        Admin <span class="dropdown-arrow">&#9660;</span>
                     </button>
                     <ul class="nav-dropdown-menu">
                         <li><a th:href="@{/categorias}">Categorias</a></li>
