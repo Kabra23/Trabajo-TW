@@ -29,6 +29,7 @@ com\tw\repository\UsuarioRepository.class
 com\tw\model\Categoria$CategoriaBuilder.class
 com\tw\service\PedidoService.class
 com\tw\api\dto\PedidoDTO.class
+com\tw\controller\ErrorPageController.class
 com\tw\config\WebMvcConfig.class
 com\tw\model\Valoracion.class
 com\tw\api\RestauranteApiController.class

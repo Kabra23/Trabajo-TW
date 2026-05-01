@@ -90,7 +90,7 @@ public class SecurityConfig {
             )
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-                .accessDeniedPage("/error")
+                .accessDeniedPage("/error-403")
             )
             .httpBasic(basic -> basic.disable())
             .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))

@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
     background: linear-gradient(135deg, #05b584 0%, #069c6f 100%);
     min-height: 100vh;
     display: flex;
@@ -121,7 +121,7 @@ body {
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: #fafafa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
 }
 
 .form-group input:focus,
@@ -234,7 +234,7 @@ body {
 }
 
 .main-footer {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: var(--gradient-footer);
     color: white;
     padding: 1.5rem 0;
     text-align: center;
