@@ -5,8 +5,10 @@ import com.tw.model.Usuario;
 import com.tw.repository.DireccionRepository;
 import com.tw.service.ImagenService;
 import com.tw.service.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +34,12 @@ public class AuthController {
         this.direccionRepo = direccionRepo;
     }
 
-    // ---- Login ----
     @GetMapping("/login")
     public String loginForm(@RequestParam(required = false) String error, Model model) {
         if (error != null) model.addAttribute("error", "Email o contrasena incorrectos");
         return "login";
     }
 
-    // ---- Registro ----
     @GetMapping("/registro")
     public String registroForm(Model model) {
         model.addAttribute("usuario", new Usuario());
@@ -64,8 +64,6 @@ public class AuthController {
 
         try {
             Usuario guardado = usuarioService.registrar(usuario, password, direccionPrincipal);
-
-            // Si proporcionó una dirección en el registro, guardarla como principal
             if (direccionPrincipal != null && !direccionPrincipal.isBlank()) {
                 Direccion dir = Direccion.builder()
                         .direccion(direccionPrincipal.trim())
@@ -75,7 +73,6 @@ public class AuthController {
                         .build();
                 direccionRepo.save(dir);
             }
-
             model.addAttribute("nombre", usuario.getNombre());
             model.addAttribute("apellidos", usuario.getApellidos());
             model.addAttribute("email", usuario.getEmail());
@@ -86,7 +83,6 @@ public class AuthController {
         }
     }
 
-    // ---- Perfil ----
     @GetMapping("/perfil")
     public String perfil(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         Usuario usuario = usuarioService.buscarPorEmailConFavoritos(userDetails.getUsername());
@@ -99,7 +95,9 @@ public class AuthController {
     public String editarPerfil(@AuthenticationPrincipal UserDetails userDetails,
                                 @RequestParam String nombre,
                                 @RequestParam String apellidos,
+                                @RequestParam(required = false) String email,
                                 @RequestParam(required = false) MultipartFile fotoFile,
+                                HttpServletRequest request,
                                 RedirectAttributes flash) {
         Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
 
@@ -112,8 +110,24 @@ public class AuthController {
                 return "redirect:/perfil";
             }
         }
-
         usuarioService.actualizarPerfil(usuario.getId(), nombre, apellidos, rutaFoto);
+
+        if (email != null && !email.isBlank() && !email.equalsIgnoreCase(usuario.getEmail())) {
+            try {
+                boolean cambio = usuarioService.actualizarEmail(usuario.getId(), email);
+                if (cambio) {
+                    SecurityContextHolder.clearContext();
+                    request.getSession().invalidate();
+                    flash.addFlashAttribute("exito",
+                            "Email actualizado. Inicia sesion de nuevo con tu nuevo email.");
+                    return "redirect:/login";
+                }
+            } catch (IllegalArgumentException e) {
+                flash.addFlashAttribute("error", e.getMessage());
+                return "redirect:/perfil";
+            }
+        }
+
         flash.addFlashAttribute("exito", "Perfil actualizado correctamente");
         return "redirect:/perfil";
     }
@@ -125,7 +139,6 @@ public class AuthController {
         return "redirect:/logout";
     }
 
-    // ---- Mis restaurantes (pantalla de listado) ----
     @GetMapping("/mis-restaurantes")
     public String misRestaurantes(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         Usuario usuario = usuarioService.buscarPorEmail(userDetails.getUsername());
@@ -133,7 +146,6 @@ public class AuthController {
         return "mis-restaurantes";
     }
 
-    // ---- Validacion password ----
     private boolean validarPassword(String pass) {
         if (pass == null || pass.length() < 8) return false;
         return pass.chars().anyMatch(Character::isUpperCase)

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.tw.controller")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SecurityException.class)

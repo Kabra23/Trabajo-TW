@@ -6,12 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CUMe y Calla - Pide comida a domicilio</title>
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
     <style>
         /* === HEADER VERDE === */
-        .main-header { background:#069c6f; }
-        .main-header .logo-main,.main-header .logo-secondary,.main-header .logo-separator { color:white; }
-        .main-header nav a { color:white; text-decoration:none; }
-        .btn-logout { background:transparent;color:#fff;border:2px solid rgba(255,255,255,.75);padding:.45rem 1.1rem;border-radius:25px;cursor:pointer;font-family:inherit;font-size:.95rem;font-weight:600; }
         .main-header .btn-secondary {
             background-color: #057a55;
             color: #ffffff;
@@ -31,33 +28,7 @@
     </style>
 </head>
 <body>
-<header class="main-header">
-    <div class="container">
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" class="btn-primary">Inicia sesion</a></li>
-                <li sec:authorize="!isAuthenticated()"><a th:href="@{/registro}" class="btn-primary">Registrate</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/mis-restaurantes}" class="btn-secondary">+ Mis restaurantes</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/pedidos/mis-pedidos}" class="btn-secondary">Mis pedidos</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/perfil}" class="btn-secondary"><span sec:authentication="name">Mi perfil</span></a></li>
-                <li sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="post" style="display:inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <button type="submit" class="btn-logout">Cerrar sesion</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
 <main>
     <section class="hero">

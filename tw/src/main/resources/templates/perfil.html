@@ -8,17 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
         body { background: #f5f5f5; margin: 0; font-family: 'Segoe UI', sans-serif; }
-        .main-header { background: #069c6f; }
-        .main-header .logo-main, .main-header nav a,
-        .main-header .logo-secondary, .main-header .logo-separator { color: white; }
         .main-header .main-nav a:hover { background: rgba(255,255,255,.15); border-radius: 20px; }
-        .btn-logout {
-            background: transparent; color: #fff;
-            border: 2px solid rgba(255,255,255,.75); padding: .45rem 1.1rem;
-            border-radius: 25px; cursor: pointer; font-family: inherit;
-            font-size: .95rem; font-weight: 600;
-        }
-
         /* Avatar */
         .avatar-circle { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #069c6f; }
         .avatar-placeholder {
@@ -120,30 +110,7 @@
 </head>
 <body>
 
-<header class="main-header">
-    <div class="container">
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li><a th:href="@{/restaurantes}">Restaurantes</a></li>
-                <li><a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a></li>
-                <li>
-                    <form th:action="@{/logout}" method="post" style="display:inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <button type="submit" class="btn-logout">Cerrar sesion</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
 <main style="min-height: 70vh; padding: 2rem 0;">
     <div class="container" style="max-width: 720px;">
@@ -176,9 +143,11 @@
                     <input type="text" id="apellidos" name="apellidos" th:value="${usuario.apellidos}" required>
                 </div>
                 <div class="form-field">
-                    <label>Correo electronico</label>
-                    <input type="email" th:value="${usuario.email}" disabled>
-                    <small style="color: #aaa; display: block; margin-top: .3rem;">El email no se puede cambiar</small>
+                    <label for="email">Correo electronico</label>
+                    <input type="email" id="email" name="email" th:value="${usuario.email}" required>
+                    <small style="color: #888; display: block; margin-top: .3rem;">
+                        Si cambias el email tendras que volver a iniciar sesion con el nuevo correo.
+                    </small>
                 </div>
                 <div class="form-field">
                     <label for="fotoFile">Foto de perfil (opcional)</label>

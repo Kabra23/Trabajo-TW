@@ -7,21 +7,10 @@
     <title th:text="${modo == 'crear'} ? 'Nuevo restaurante - CUMe y Calla' : 'Editar - ' + ${restaurante.nombre}">Editar Restaurante</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/editar-restaurante.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
 </head>
 <body>
-<header class="main-header">
-    <div class="logo">
-        <h1><span>CUMe</span><span class="logo-separator">y</span><span>Calla</span></h1>
-    </div>
-    <nav>
-        <ul>
-            <li>
-                <a th:href="${modo == 'crear'} ? @{/mis-restaurantes} : @{/restaurantes/{id}(id=${restaurante.id})}"
-                   class="btn-back">Volver</a>
-            </li>
-        </ul>
-    </nav>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
 <div class="edit-layout">
     <!-- Sidebar navegacion -->

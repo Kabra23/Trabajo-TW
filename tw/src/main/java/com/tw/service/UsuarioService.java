@@ -18,17 +18,14 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /** Registra un nuevo usuario. Lanza excepción si el email ya existe. */
     public Usuario registrar(Usuario usuario, String password, String direccion) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("Ya existe una cuenta con ese email");
         }
-        // Hash de la contraseña antes de guardar
         usuario.setPassword(passwordEncoder.encode(password));
         return usuarioRepository.save(usuario);
     }
 
-    /** Obtiene el usuario por email (usado en controladores tras autenticación). */
     @Transactional(readOnly = true)
     public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email)
@@ -47,7 +44,6 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
-    /** Actualiza los datos del perfil (nombre, apellidos, etc.). */
     public Usuario actualizarPerfil(Long id, String nombre, String apellidos, String fotoPerfil) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
@@ -57,19 +53,90 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    /** Cambia la contraseña del usuario después de verificar la actual. */
+    /**
+     * Actualiza el email. Lanza IllegalArgumentException si ya existe.
+     * Devuelve true si el email cambio (requiere re-login).
+     */
+    public boolean actualizarEmail(Long id, String nuevoEmail) {
+        if (nuevoEmail == null || nuevoEmail.isBlank()) {
+            throw new IllegalArgumentException("El email no puede estar vacio");
+        }
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        String emailNorm = nuevoEmail.trim().toLowerCase();
+        if (usuario.getEmail().equalsIgnoreCase(emailNorm)) {
+            return false;
+        }
+        if (usuarioRepository.existsByEmail(emailNorm)) {
+            throw new IllegalArgumentException("Ya existe una cuenta con ese email");
+        }
+        usuario.setEmail(emailNorm);
+        usuarioRepository.save(usuario);
+        return true;
+    }
+
     public void cambiarPassword(Long id, String passwordActual, String passwordNueva) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
         if (!passwordEncoder.matches(passwordActual, usuario.getPassword())) {
-            throw new IllegalArgumentException("La contraseña actual no es correcta");
+            throw new IllegalArgumentException("La contrasena actual no es correcta");
         }
         usuario.setPassword(passwordEncoder.encode(passwordNueva));
         usuarioRepository.save(usuario);
     }
 
-    /** Elimina la cuenta del usuario y todos sus datos asociados. */
     public void eliminarCuenta(Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    /** Concede privilegios de administrador al usuario indicado. */
+    public void concederAdmin(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        usuario.setAdmin(true);
+        usuarioRepository.save(usuario);
+    }
+
+    /** Revoca los privilegios de administrador del usuario indicado. */
+    public void revocarAdmin(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        usuario.setAdmin(false);
+        usuarioRepository.save(usuario);
+    }
+
+    /** Crea un nuevo usuario con todos sus datos (solo ADMIN). */
+    public Usuario crearUsuario(String nombre, String apellidos, String email,
+                                 String password, boolean esAdmin) {
+        if (usuarioRepository.existsByEmail(email.trim().toLowerCase())) {
+            throw new IllegalArgumentException("Ya existe una cuenta con ese email");
+        }
+        Usuario u = new Usuario();
+        u.setNombre(nombre.trim());
+        u.setApellidos(apellidos.trim());
+        u.setEmail(email.trim().toLowerCase());
+        u.setPassword(passwordEncoder.encode(password));
+        u.setAdmin(esAdmin);
+        return usuarioRepository.save(u);
+    }
+
+    /** Actualiza nombre, apellidos y rol admin de un usuario (solo ADMIN). */
+    public void actualizarUsuarioAdmin(Long id, String nombre, String apellidos,
+                                        String email, boolean esAdmin) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        usuario.setNombre(nombre.trim());
+        usuario.setApellidos(apellidos.trim());
+        usuario.setAdmin(esAdmin);
+        if (email != null && !email.isBlank()) {
+            String emailNorm = email.trim().toLowerCase();
+            if (!usuario.getEmail().equalsIgnoreCase(emailNorm)) {
+                if (usuarioRepository.existsByEmail(emailNorm)) {
+                    throw new IllegalArgumentException("Ya existe una cuenta con ese email");
+                }
+                usuario.setEmail(emailNorm);
+            }
+        }
+        usuarioRepository.save(usuario);
     }
 }

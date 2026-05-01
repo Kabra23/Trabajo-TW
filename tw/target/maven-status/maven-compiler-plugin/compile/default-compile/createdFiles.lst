@@ -42,6 +42,7 @@ com\tw\controller\DireccionController.class
 com\tw\api\dto\PedidoDTO$LineaResponse.class
 com\tw\api\dto\UsuarioDTO.class
 com\tw\repository\RestauranteRepository.class
+com\tw\controller\UsuariosController.class
 com\tw\model\Pedido$PedidoBuilder.class
 com\tw\model\Restaurante$RestauranteBuilder.class
 com\tw\service\PlatoService.class

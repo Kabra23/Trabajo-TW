@@ -6,38 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${restaurante.nombre} + ' - CUMe y Calla'">Restaurante - CUMe y Calla</title>
     <link rel="stylesheet" th:href="@{/css/detalle-restaurante.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
 </head>
 <body>
-<header class="main-header">
-    <div class="container">
-        <div class="logo">
-            <h1>
-                <span class="logo-main">CUMe</span>
-                <span class="logo-separator">y</span>
-                <span class="logo-secondary">Calla</span>
-            </h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li th:if="${esPropietario}">
-                    <a th:href="@{/restaurantes/{id}/editar(id=${restaurante.id})}" class="btn-primary">Editar restaurante</a>
-                </li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/pedidos/mis-pedidos}">Mis pedidos</a></li>
-                <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/perfil}"><span sec:authentication="name">Mi perfil</span></a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="post" style="display:inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <button type="submit" class="btn-logout">Cerrar sesion</button>
-                    </form>
-                </li>
-                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}" class="btn-primary">Inicia sesion</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<header th:replace="~{fragments/layout :: header}"></header>
 
 <main class="restaurant-detail">
     <!-- Hero imagen -->

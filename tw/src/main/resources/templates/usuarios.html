@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios - CUMe y Calla</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body { background: #f5f7fa; margin: 0; font-family: 'Segoe UI', sans-serif; }
+        .page-wrap { max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; }
+        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .page-title { color: #069c6f; font-size: 1.8rem; margin: 0; }
+        .page-sub   { color: #888; font-size: .95rem; margin: .3rem 0 0; }
+        .btn-crear-usuario { background: #069c6f; color: white; border: none; padding: .65rem 1.4rem;
+            border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit;
+            font-size: .93rem; text-decoration: none; display: inline-block; }
+        .btn-crear-usuario:hover { background: #038a63; }
+        .card { background: white; border-radius: 14px; padding: 1.8rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,.07); }
+        .msg-ok  { background: #e8f5f1; color: #069c6f; padding: 1rem; border-radius: 8px;
+                   border-left: 4px solid #069c6f; margin-bottom: 1.2rem; font-weight: 600; }
+        .msg-err { background: #ffebee; color: #d32f2f; padding: 1rem; border-radius: 8px;
+                   border-left: 4px solid #d32f2f; margin-bottom: 1.2rem; font-weight: 600; }
+        .search-bar { display: flex; gap: .7rem; margin-bottom: 1.2rem; }
+        .search-bar input { flex: 1; padding: .7rem 1rem; border: 2px solid #e0e0e0;
+            border-radius: 8px; font-size: .95rem; font-family: inherit; }
+        .search-bar input:focus { outline: none; border-color: #069c6f; }
+        .user-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 0;
+                    border-bottom: 1px solid #f0f0f0; flex-wrap: wrap; }
+        .user-row:last-child { border-bottom: none; }
+        .user-avatar { width: 48px; height: 48px; border-radius: 50%;
+            background: #e8f5f1; border: 2px solid #069c6f;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 700; color: #069c6f;
+            flex-shrink: 0; overflow: hidden; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .user-info { flex: 1; min-width: 0; }
+        .user-nombre { font-weight: 700; color: #333; font-size: .97rem; }
+        .user-nombre.yo { color: #069c6f; }
+        .user-meta { font-size: .82rem; color: #888; margin-top: .2rem; }
+        .user-email { font-size: .79rem; color: #aaa; font-style: italic; margin-top: .1rem; }
+        .badge-admin { background: #fff3e0; color: #e65100; font-size: .72rem;
+            padding: .15rem .5rem; border-radius: 10px; font-weight: 700; margin-left: .4rem; }
+        .badge-yo { background: #e8f5f1; color: #069c6f; font-size: .72rem;
+            padding: .15rem .5rem; border-radius: 10px; font-weight: 700; margin-left: .4rem; }
+        .user-stats { display: flex; gap: 1.2rem; font-size: .82rem; color: #888; flex-shrink: 0; }
+        .stat { text-align: center; }
+        .stat strong { display: block; color: #069c6f; font-size: 1.05rem; }
+        .user-actions { display: flex; gap: .4rem; flex-shrink: 0; flex-wrap: wrap; }
+        .btn-action { border: 2px solid; padding: .3rem .7rem; border-radius: 7px;
+            font-size: .78rem; font-weight: 600; cursor: pointer; font-family: inherit;
+            text-decoration: none; display: inline-block; background: white; }
+        .btn-edit    { border-color: #069c6f; color: #069c6f; }
+        .btn-edit:hover { background: #069c6f; color: white; }
+        .btn-admin   { border-color: #e65100; color: #e65100; }
+        .btn-admin:hover { background: #e65100; color: white; }
+        .btn-revoke  { border-color: #888; color: #888; }
+        .btn-revoke:hover { background: #888; color: white; }
+        .btn-del     { border-color: #d32f2f; color: #d32f2f; }
+        .btn-del:hover { background: #d32f2f; color: white; }
+        .empty { text-align: center; padding: 2.5rem; color: #888; }
+    </style>
+</head>
+<body>
+
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<div class="page-wrap">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Comunidad</h1>
+            <p class="page-sub" th:text="${#lists.size(usuarios)} + ' usuarios registrados'">0 usuarios</p>
+        </div>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/usuarios/nuevo}" class="btn-crear-usuario">+ Nuevo usuario</a>
+    </div>
+
+    <div th:if="${exito}" class="msg-ok" th:text="${exito}"></div>
+    <div th:if="${error}"  class="msg-err" th:text="${error}"></div>
+
+    <div class="card">
+        <div class="search-bar">
+            <input type="text" id="buscador" placeholder="Buscar por nombre..."
+                   oninput="filtrarUsuarios(this.value)">
+        </div>
+
+        <div id="lista-usuarios">
+            <div th:if="${#lists.isEmpty(usuarios)}" class="empty">
+                <p>No hay usuarios registrados aun.</p>
+            </div>
+
+            <div th:each="u : ${usuarios}" class="user-row"
+                 th:data-nombre="${u.nombre + ' ' + u.apellidos}">
+
+                <!-- Avatar -->
+                <div class="user-avatar">
+                    <img th:if="${u.fotoPerfil != null}"
+                         th:src="@{'/uploads/' + ${u.fotoPerfil}}"
+                         th:alt="${u.nombre}">
+                    <span th:unless="${u.fotoPerfil != null}"
+                          th:text="${#strings.substring(u.nombre,0,1).toUpperCase()}">U</span>
+                </div>
+
+                <!-- Info -->
+                <div class="user-info">
+                    <div class="user-nombre"
+                         th:classappend="${u.email == emailActual} ? ' yo' : ''">
+                        <span th:text="${u.nombre + ' ' + u.apellidos}">Nombre</span>
+                        <span th:if="${u.esAdmin()}" class="badge-admin">Admin</span>
+                        <span th:if="${u.email == emailActual}" class="badge-yo">Tu</span>
+                    </div>
+                    <div class="user-meta">
+                        <span th:if="${u.restaurantes != null and !#lists.isEmpty(u.restaurantes)}"
+                              th:text="${#lists.size(u.restaurantes)} + ' restaurante(s)'">0</span>
+                        <span th:if="${u.restaurantes == null or #lists.isEmpty(u.restaurantes)}"
+                              style="font-style:italic;">Sin restaurantes</span>
+                    </div>
+                    <div class="user-email" sec:authorize="hasRole('ROLE_ADMIN')"
+                         th:text="${u.email}">email</div>
+                </div>
+
+                <!-- Estadísticas -->
+                <div class="user-stats">
+                    <div class="stat">
+                        <strong th:text="${u.restaurantes != null ? #lists.size(u.restaurantes) : 0}">0</strong>
+                        <span>Locales</span>
+                    </div>
+                    <div class="stat">
+                        <strong th:text="${u.valoraciones != null ? #lists.size(u.valoraciones) : 0}">0</strong>
+                        <span>Valoraciones</span>
+                    </div>
+                </div>
+
+                <!-- Acciones ADMIN -->
+                <div class="user-actions" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/usuarios/{id}/editar(id=${u.id})}" class="btn-action btn-edit">Editar</a>
+
+                    <!-- Conceder admin (si no lo es ya y no es el usuario actual) -->
+                    <form th:if="${!u.esAdmin() and u.email != emailActual}"
+                          th:action="@{/usuarios/{id}/admin(id=${u.id})}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-action btn-admin">Hacer admin</button>
+                    </form>
+
+                    <!-- Revocar admin (si lo es y no es el usuario actual) -->
+                    <form th:if="${u.esAdmin() and u.email != emailActual}"
+                          th:action="@{/usuarios/{id}/admin/revocar(id=${u.id})}" method="post" style="display:inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-action btn-revoke">Quitar admin</button>
+                    </form>
+
+                    <!-- Eliminar (no permite eliminarse a sí mismo) -->
+                    <form th:if="${u.email != emailActual}"
+                          th:action="@{/usuarios/{id}/eliminar(id=${u.id})}" method="post" style="display:inline"
+                          onsubmit="return confirm('Eliminar usuario ' + this.dataset.nombre + '?')"
+                          th:data-nombre="${u.nombre}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn-action btn-del">Eliminar</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filtrarUsuarios(texto) {
+        const filas = document.querySelectorAll('#lista-usuarios .user-row');
+        const q = texto.toLowerCase().trim();
+        filas.forEach(fila => {
+            const nombre = (fila.dataset.nombre || '').toLowerCase();
+            fila.style.display = (!q || nombre.includes(q)) ? '' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>

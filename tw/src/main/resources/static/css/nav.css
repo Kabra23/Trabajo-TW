@@ -1,0 +1,232 @@
+/* ============================================================
+   NAV.CSS – Navbar y dropdown admin (cargado en todos los templates)
+   ============================================================ */
+
+/* ----- Header principal ----- */
+.main-header {
+    background: linear-gradient(135deg, #02a674 0%, #069c6f 100%);
+    color: white;
+    padding: 0.85rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    gap: 1rem;
+}
+
+/* Logo */
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0;
+}
+.logo-main      { color: #fff; font-weight: 900; }
+.logo-separator { color: rgba(255,255,255,0.78); font-style: italic; font-weight: 400; }
+.logo-secondary { color: #ffd700; font-weight: 700; }
+
+/* Nav: solo el UL directo tiene flex */
+.main-nav > ul {
+    display: flex;
+    list-style: none;
+    gap: 0.3rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: rgba(255,255,255,0.92);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.92rem;
+    padding: 0.38rem 0.72rem;
+    border-radius: 7px;
+    transition: background 0.18s, color 0.18s;
+    display: inline-block;
+}
+.main-nav a:hover {
+    background: rgba(255,255,255,0.18);
+    color: white;
+}
+
+.main-nav .btn-secondary {
+    border: 2px solid rgba(255,255,255,0.7);
+    color: white !important;
+    padding: 0.32rem 0.85rem;
+    border-radius: 20px;
+    font-weight: 600;
+    background: transparent;
+}
+.main-nav .btn-secondary:hover {
+    background: rgba(255,255,255,0.2) !important;
+    border-color: white;
+}
+
+.main-nav .btn-primary {
+    background: white;
+    color: #069c6f !important;
+    padding: 0.32rem 0.85rem;
+    border-radius: 20px;
+    font-weight: 700;
+}
+.main-nav .btn-primary:hover {
+    background: rgba(255,255,255,0.9) !important;
+}
+
+.btn-logout {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.7);
+    padding: 0.34rem 0.88rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.18s;
+}
+.btn-logout:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: white;
+}
+
+/* ----- Dropdown Admin ----- */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-btn {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.65);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.34rem 0.88rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: background 0.18s, border-color 0.18s;
+    white-space: nowrap;
+}
+.nav-dropdown-btn:hover,
+.nav-dropdown-btn.open {
+    background: rgba(255,255,255,0.25);
+    border-color: white;
+}
+
+.dropdown-arrow {
+    font-size: 0.65rem;
+    transition: transform 0.2s;
+    display: inline-block;
+    margin-left: 1px;
+}
+.nav-dropdown-btn.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* OCULTAR el menú desplegable – !important para ganar a cualquier flex */
+.nav-dropdown-menu {
+    display: none !important;
+    position: absolute;
+    top: calc(100% + 9px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.16);
+    min-width: 175px;
+    z-index: 2000;
+    overflow: hidden;
+    /* anular cualquier flex heredado */
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0.35rem 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+/* Triángulo decorativo */
+.nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top: 0;
+    border-bottom-color: white;
+}
+
+/* MOSTRAR cuando tiene clase .open */
+.nav-dropdown-menu.open {
+    display: block !important;
+    animation: ddFade 0.14s ease;
+}
+
+@keyframes ddFade {
+    from { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Items del menú */
+.nav-dropdown-menu > li {
+    display: block !important;
+    list-style: none !important;
+}
+
+.nav-dropdown-menu > li > a {
+    display: block !important;
+    padding: 0.7rem 1.25rem;
+    color: #2d3436 !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.12s;
+    white-space: nowrap;
+    background: transparent;
+    border-radius: 0;
+}
+.nav-dropdown-menu > li > a:hover {
+    background: #e8f5f1 !important;
+    color: #069c6f !important;
+}
+
+/* ----- Header simple login/registro ----- */
+.simple-header {
+    background: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 1rem 0;
+}
+.simple-header .container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+.back-link {
+    color: #636e72;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.18s;
+}
+.back-link:hover { color: #069c6f; }

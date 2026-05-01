@@ -6,7 +6,6 @@ import com.tw.service.ImagenService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 
 /**
- * Las categorías se gestionan desde el formulario de restaurante.
- * Este controlador redirige /categorias a /restaurantes para evitar
- * páginas de error no controladas.
+ * Rutas auxiliares de categorías accesibles desde el formulario de restaurante.
+ * El CRUD completo de categorías se gestiona en CategoriaAdminController (/categorias).
  */
 @Controller
 public class CategoriaController {
@@ -31,18 +29,9 @@ public class CategoriaController {
         this.imagenService = imagenService;
     }
 
-    /**
-     * /categorias redirige al listado de restaurantes.
-     * Las categorías se gestionan desde el formulario de edición del restaurante.
-     */
-    @GetMapping("/categorias")
-    public String categorias() {
-        return "redirect:/restaurantes";
-    }
-
     // -------------------------------------------------------
-    // API interna: CRUD de categorías (solo ADMIN)
-    // Accesibles desde el formulario de restaurante vía AJAX
+    // Rutas auxiliares: crear/eliminar categoría desde el
+    // formulario de restaurante (solo ADMIN)
     // -------------------------------------------------------
 
     @PostMapping("/restaurantes/categorias/nueva")
