@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade mensaje para propietarios en la sección de detalles del restaurante: informa que no pueden hacer pedidos en su propio restaurante, mejorando la claridad de la interfaz.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/detalle-restaurante.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/js/detalle-restaurante.js" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/js/detalle-restaurante.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +25,7 @@
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedChatMode">
-    <option name="chatModeId" value="Agent" />
+    <option name="chatModeId" value="Ask" />
   </component>
   <component name="CopilotUserSelectedModel">
     <selectedModels>
@@ -195,15 +199,7 @@
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
       <workItem from="1777626649774" duration="10622000" />
-      <workItem from="1777712435277" duration="5645000" />
-    </task>
-    <task id="LOCAL-00005" summary="Comienza el proyecto">
-      <option name="closed" value="true" />
-      <created>1772181870083</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1772181870083</updated>
+      <workItem from="1777712435277" duration="7156000" />
     </task>
     <task id="LOCAL-00006" summary="Comienza el proyecto">
       <option name="closed" value="true" />
@@ -589,7 +585,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777716055624</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Añade mensaje para propietarios en la sección de detalles del restaurante: informa que no pueden hacer pedidos en su propio restaurante, mejorando la claridad de la interfaz.">
+      <option name="closed" value="true" />
+      <created>1777733754367</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1777733754368</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,7 +611,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Actualiza las páginas de registro y login para utilizar Thymeleaf, mejora la estructura y el estilo de la página de registro exitoso." />
     <MESSAGE value="Añade nuevas páginas y funcionalidades: registro exitoso, categorías, y valoraciones; mejora la interactividad del filtro de estrellas y actualiza estilos." />
     <MESSAGE value="Añade gestión de direcciones: crea el repositorio y modelo de Direccion, implementa controlador para añadir, marcar como principal y eliminar direcciones; actualiza el perfil de usuario para incluir direcciones." />
     <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para botones de logout, ajusta la disposición de formularios y mejora la responsividad de las páginas." />
@@ -632,7 +635,8 @@
     <MESSAGE value="Mejora la interfaz de usuario en la sección de detalles del restaurante: actualiza estilos de pestañas, optimiza la presentación de botones y ajusta la gestión de tareas locales." />
     <MESSAGE value="Añade campo de gasto medio estimado en el formulario de restaurantes: incluye validación y visualización en la tarjeta de restaurante, mejorando la experiencia del usuario al filtrar y ordenar." />
     <MESSAGE value="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva." />
-    <option name="LAST_COMMIT_MESSAGE" value="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva." />
+    <MESSAGE value="Añade mensaje para propietarios en la sección de detalles del restaurante: informa que no pueden hacer pedidos en su propio restaurante, mejorando la claridad de la interfaz." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade mensaje para propietarios en la sección de detalles del restaurante: informa que no pueden hacer pedidos en su propio restaurante, mejorando la claridad de la interfaz." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

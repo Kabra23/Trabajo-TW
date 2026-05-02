@@ -151,9 +151,35 @@ body {
 /* Detail Layout */
 .detail-layout {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: minmax(0, 1fr) 340px;
     gap: 2rem;
     padding: 2rem 0;
+}
+
+/* ── Pantalla mediana: reducir sidebar ── */
+@media (max-width: 1100px) {
+    .detail-layout {
+        grid-template-columns: minmax(0, 1fr) 290px;
+        gap: 1.25rem;
+    }
+}
+
+/* ── Pantalla pequeña: apilar columnas ── */
+@media (max-width: 800px) {
+    .detail-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    /* La cesta sube encima del contenido principal en móvil */
+    .cart-sidebar {
+        order: -1;
+    }
+
+    /* El sticky no tiene sentido en columna única */
+    .cart-sticky {
+        position: static;
+    }
 }
 
 /* Restaurant Main */
@@ -1145,4 +1171,76 @@ body {
     border-color: #069c6f;
     background: #e8f5f1;
     color: #069c6f;
+}
+
+/* ============================================================
+   RESPONSIVE — ajustes adicionales para pantallas pequeñas
+   ============================================================ */
+
+@media (max-width: 800px) {
+    /* Hero más bajo en móvil */
+    .hero-image-large {
+        height: 180px;
+    }
+
+    /* Título más compacto */
+    .restaurant-header h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Cards de platos en columna única */
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Card de plato: reducir imagen */
+    .dish-card {
+        grid-template-columns: 1fr 90px;
+    }
+
+    .dish-image {
+        width: 90px;
+        height: 90px;
+    }
+
+    /* Acciones del propietario en columna */
+    .owner-actions {
+        flex-direction: column;
+    }
+
+    /* Tabs: scroll horizontal si hay muchas */
+    .menu-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Carrusel de restaurantes similares */
+    .related-section {
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Padding más ajustado en móvil pequeño */
+    .restaurant-main {
+        padding: 1.25rem;
+    }
+
+    .cart-sticky {
+        padding: 1.1rem;
+    }
+
+    /* Info de entrega en fila */
+    .cart-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+        align-items: start;
+    }
+
+    .cart-header h2 {
+        grid-column: 1 / -1;
+        margin-bottom: 0.5rem;
+    }
 }
