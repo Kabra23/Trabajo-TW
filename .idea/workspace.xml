@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario.">
-      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" />
-    </list>
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la interfaz de usuario en la sección de detalles del restaurante: ajusta estilos de pestañas, optimiza la presentación de botones y mejora la experiencia de navegación." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -193,7 +191,7 @@
       <workItem from="1777446580965" duration="2628000" />
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
-      <workItem from="1777626649774" duration="10492000" />
+      <workItem from="1777626649774" duration="10622000" />
     </task>
     <task id="LOCAL-00001" summary="Inicio del proyecto">
       <option name="closed" value="true" />
@@ -579,7 +577,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777660816780</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Mejora la interfaz de usuario en la sección de detalles del restaurante: ajusta estilos de pestañas, optimiza la presentación de botones y mejora la experiencia de navegación.">
+      <option name="closed" value="true" />
+      <created>1777661078550</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1777661078552</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -597,7 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Actualiza rutas de archivos estáticos y mejora la estructura de enlaces en las páginas HTML" />
     <MESSAGE value="Añade repositorios para las entidades Usuario, Plato, Categoria, LineaPedido, Pedido y Valoracion; implementa la lógica de carga y eliminación de imágenes; y actualiza la configuración de seguridad y propiedades de la aplicación." />
     <MESSAGE value="Actualiza la configuración del espacio de trabajo y mejora la gestión de tareas locales" />
     <MESSAGE value="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil" />
@@ -622,7 +627,8 @@
     <MESSAGE value="Actualiza estilos y mejora la tipografía: reemplaza fuentes y ajusta colores en CSS, implementa variables CSS para una mejor gestión de estilos y añade nuevos estilos para botones y alertas." />
     <MESSAGE value="Añade editor de etiquetas en el menú: implementa un panel para editar secciones del menú con funcionalidad para añadir, eliminar y reordenar etiquetas, mejorando la experiencia del propietario." />
     <MESSAGE value="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario." />
-    <option name="LAST_COMMIT_MESSAGE" value="Mejora la gestión de imágenes y estilos en la edición de restaurantes: actualiza la forma de mostrar imágenes, ajusta estilos de botones y etiquetas, y optimiza la estructura del menú para una mejor experiencia de usuario." />
+    <MESSAGE value="Mejora la interfaz de usuario en la sección de detalles del restaurante: ajusta estilos de pestañas, optimiza la presentación de botones y mejora la experiencia de navegación." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mejora la interfaz de usuario en la sección de detalles del restaurante: ajusta estilos de pestañas, optimiza la presentación de botones y mejora la experiencia de navegación." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

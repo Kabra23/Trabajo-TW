@@ -1,1 +1,269 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="TANI.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2958"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="categorias" custom_title="0" dock_id="1" table="4,10:maincategorias"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011700ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">SELECT * from usuarios</sql><current_tab id="0"/></tab_sql></sqlb_project>
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="TANI.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2958"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="categorias" custom_title="0" dock_id="1" table="4,10:maincategorias"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011700ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">-- ═══════════════════════════════════════════════════════════════════════
+--  DATOS DE PRUEBA — CUMe y Calla / TANI.db  (SQLite)
+--  Contraseña de TODOS los usuarios: Test1234!
+--  Admin: admin@cume.es
+-- ═══════════════════════════════════════════════════════════════════════
+--  INSTRUCCIONES:
+--  1. Abre TANI.db con DB Browser for SQLite
+--  2. Ve a &quot;Execute SQL&quot;
+--  3. Pega TODO este script y pulsa F5 (o el botón &quot;Run&quot;)
+--  4. Pulsa &quot;Write Changes&quot;
+-- ═══════════════════════════════════════════════════════════════════════
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 0. LIMPIAR TABLAS (en orden para respetar claves foráneas)
+-- ───────────────────────────────────────────────────────────────────────
+DELETE FROM favoritos;
+DELETE FROM restaurante_categorias;
+DELETE FROM lineas_pedido;
+DELETE FROM pedidos;
+DELETE FROM valoraciones;
+DELETE FROM platos;
+DELETE FROM direcciones;
+DELETE FROM restaurantes;
+DELETE FROM categorias;
+DELETE FROM usuarios;
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 1. USUARIOS  (password = Test1234! para todos)
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO usuarios (id, nombre, apellidos, email, password, foto_perfil, admin)
+VALUES
+  (1, 'Admin',   'CUMe',          'admin@cume.es',     '$2b$10$cDljk63sdE6oLG7tnJ0mX.NjstPA3TFqtRLUkwpXMOhRak0Ifpj/O', NULL, 1),
+  (2, 'Laura',   'García López',  'laura@test.com',    '$2b$10$EbuwbCtDCZroKUQeu4II5O4QBsoTTMGv8FplxXrNFnOhe7g.RPOsO', NULL, 0),
+  (3, 'Carlos',  'Martín Ruiz',   'carlos@test.com',   '$2b$10$2wG8Hj8W89tH4XyCCIZmiOiis5TWTTdp6NF/b2055FKMuQGF88A9.', NULL, 0),
+  (4, 'María',   'Sánchez Vera',  'maria@test.com',    '$2b$10$yMlpSUI9sY5PvB0Tdrm8Ruf2yyTsIjmZHmLCREfVsKB/xoFmQaVLi', NULL, 0),
+  (5, 'Pedro',   'López Díaz',    'pedro@test.com',    '$2b$10$OQil.mL8yGdGR8RZTBBYj.9O.723JCDBBtkwhVpJnrHBezSliFzda',  NULL, 0);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 2. DIRECCIONES
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO direcciones (id, direccion, etiqueta, principal, usuario_id)
+VALUES
+  (1,  'Calle Santa Eulalia 2, Mérida',         'Casa',     1, 1),
+  (2,  'Avenida de Extremadura 10, Mérida',      'Casa',     1, 2),
+  (3,  'Plaza de España 1, Mérida',              'Trabajo',  0, 2),
+  (4,  'Calle John Lennon 5, Mérida',            'Casa',     1, 3),
+  (5,  'Avenida Juan Carlos I 20, Mérida',       'Casa',     1, 4),
+  (6,  'Calle Romero Leal 15, Mérida',           'Casa',     1, 5);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 3. CATEGORÍAS
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO categorias (id, nombre, descripcion, imagen)
+VALUES
+  (1,  'Desayunos y Brunch', 'Tostadas, cafés y desayunos completos',            NULL),
+  (2,  'Bocadillos',         'Bocadillos, montaditos y sándwiches',              NULL),
+  (3,  'Pizzas',             'Pizzas artesanales y al horno de leña',            NULL),
+  (4,  'Hamburguesas',       'Burgers gourmet y americanas',                     NULL),
+  (5,  'Asiática',           'Wok, sushi, ramen y cocina asiática',              NULL),
+  (6,  'Italiana',           'Pasta, risotto y cocina italiana',                 NULL),
+  (7,  'Ensaladas',          'Ensaladas frescas y opciones saludables',          NULL),
+  (8,  'Bebidas',            'Refrescos, zumos, cervezas y cócteles',            NULL),
+  (9,  'Tapas y Raciones',   'Tapas, raciones y cocina tradicional española',   NULL),
+  (10, 'Mexicana',           'Tacos, burritos y cocina mexicana',               NULL);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 4. RESTAURANTES  (propietario: usuarios 2, 3, 4)
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO restaurantes
+  (id, nombre, direccion, localidad, telefono, email,
+   precio_min, precio_max, media_valoraciones, bike_friendly,
+   acepta_pedidos, imagen, imagen_banner, etiquetas_menu, propietario_id)
+VALUES
+  (1,
+   'La Cafetería CUMe',
+   'Calle Santa Teresa de Jornet s/n, Campus UEx',
+   'Mérida',
+   '+34 924 10 11 12',
+   'cafeteria@cume.es',
+   3.0, 12.0, 4.5, 1, 1,
+   NULL, NULL,
+   'Destacados,Desayunos,Bocadillos y Montaditos,Bebidas,Ensaladas',
+   2),
+
+  (2,
+   'Pizzería Don Corleone',
+   'Calle Félix Valverde Lillo 8, Mérida',
+   'Mérida',
+   '+34 924 20 21 22',
+   'doncorleone@test.com',
+   8.0, 22.0, 4.2, 0, 1,
+   NULL, NULL,
+   'Destacados,Pizzas,Pasta,Bebidas',
+   3),
+
+  (3,
+   'Burger Palace',
+   'Avenida de Portugal 5, Mérida',
+   'Mérida',
+   '+34 924 30 31 32',
+   'burgerpalace@test.com',
+   7.0, 18.0, 3.8, 1, 1,
+   NULL, NULL,
+   'Destacados,Hamburguesas,Complementos,Bebidas',
+   4),
+
+  (4,
+   'El Rincón del Wok',
+   'Calle Almendralejo 22, Mérida',
+   'Mérida',
+   '+34 924 40 41 42',
+   'rinconwok@test.com',
+   9.0, 25.0, 4.7, 0, 1,
+   NULL, NULL,
+   'Destacados,Entrantes,Wok y Arroces,Sushi,Bebidas',
+   2),
+
+  (5,
+   'Taquería La Bamba',
+   'Paseo de Roma 3, Mérida',
+   'Mérida',
+   '+34 924 50 51 52',
+   'labamba@test.com',
+   6.0, 16.0, 4.0, 1, 0,
+   NULL, NULL,
+   'Destacados,Tacos,Burritos,Bebidas',
+   3);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 5. RESTAURANTE ↔ CATEGORÍAS
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO restaurante_categorias (restaurante_id, categoria_id) VALUES
+  (1, 1), (1, 2), (1, 7), (1, 8),   -- CUMe: desayunos, bocadillos, ensaladas, bebidas
+  (2, 3), (2, 6), (2, 8),             -- Corleone: pizzas, italiana, bebidas
+  (3, 4), (3, 8),                     -- Burger Palace: hamburguesas, bebidas
+  (4, 5), (4, 8),                     -- Wok: asiática, bebidas
+  (5, 10),(5, 8);                     -- Bamba: mexicana, bebidas
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 6. PLATOS
+-- ───────────────────────────────────────────────────────────────────────
+
+-- La Cafetería CUMe (restaurante 1)
+INSERT INTO platos (id, nombre, descripcion, precio, imagen, etiqueta_menu, restaurante_id) VALUES
+  (1,  'Tostada con tomate y AOVE',    'Pan artesano tostado con tomate natural y aceite de oliva virgen extra',  2.50, NULL, 'Desayunos', 1),
+  (2,  'Café con leche',               'Café de tueste natural con leche fresca',                                  1.80, NULL, 'Bebidas',   1),
+  (3,  'Bocadillo de jamón ibérico',   'Baguette crujiente con jamón ibérico y tomate',                            4.50, NULL, 'Bocadillos y Montaditos', 1),
+  (4,  'Bocadillo de tortilla',        'Clásico bocadillo de tortilla española con pimiento',                      3.80, NULL, 'Bocadillos y Montaditos', 1),
+  (5,  'Ensalada mixta',               'Lechuga, tomate, cebolla, aceitunas y atún',                               5.50, NULL, 'Ensaladas', 1),
+  (6,  'Zumo de naranja natural',      'Zumo recién exprimido, 33 cl',                                             2.20, NULL, 'Bebidas',   1),
+  (7,  'Menú del día',                 'Primer plato, segundo, postre y bebida incluida',                         10.50, NULL, 'Destacados',1);
+
+-- Pizzería Don Corleone (restaurante 2)
+INSERT INTO platos (id, nombre, descripcion, precio, imagen, etiqueta_menu, restaurante_id) VALUES
+  (8,  'Pizza Margarita',              'Tomate, mozzarella fior di latte y albahaca fresca',                       9.00, NULL, 'Pizzas',    2),
+  (9,  'Pizza Cuatro Quesos',          'Mozzarella, gorgonzola, parmesano y pecorino',                            11.00, NULL, 'Pizzas',    2),
+  (10, 'Pizza Pepperoni',              'Tomate, mozzarella y pepperoni importado',                                10.50, NULL, 'Pizzas',    2),
+  (11, 'Pasta Carbonara',              'Spaghetti, guanciale, yema de huevo y pecorino',                           9.50, NULL, 'Pasta',     2),
+  (12, 'Pasta Boloñesa',               'Pappardelle con ragú de ternera cocinado 4 horas',                         9.00, NULL, 'Pasta',     2),
+  (13, 'Tiramisu',                     'Postre italiano con mascarpone y café',                                     4.50, NULL, 'Destacados',2),
+  (14, 'Coca-Cola 33 cl',              'Refresco',                                                                  2.00, NULL, 'Bebidas',   2);
+
+-- Burger Palace (restaurante 3)
+INSERT INTO platos (id, nombre, descripcion, precio, imagen, etiqueta_menu, restaurante_id) VALUES
+  (15, 'Classic Burger',               'Ternera 180g, lechuga, tomate, cebolla y queso cheddar',                   9.50, NULL, 'Hamburguesas', 3),
+  (16, 'BBQ Burger',                   'Ternera 180g, bacon crujiente, salsa BBQ y cebolla caramelizada',         11.00, NULL, 'Hamburguesas', 3),
+  (17, 'Veggie Burger',                'Hamburguesa de lentejas y vegetales con aguacate',                         9.00, NULL, 'Hamburguesas', 3),
+  (18, 'Patatas fritas',               'Patatas cortadas a mano y fritas en aceite de girasol',                    3.50, NULL, 'Complementos', 3),
+  (19, 'Aros de cebolla',              'Crujientes aros de cebolla con salsa ranch',                               4.00, NULL, 'Complementos', 3),
+  (20, 'Batido de fresa',              'Batido cremoso de fresa natural, 40 cl',                                    4.50, NULL, 'Bebidas',      3);
+
+-- El Rincón del Wok (restaurante 4)
+INSERT INTO platos (id, nombre, descripcion, precio, imagen, etiqueta_menu, restaurante_id) VALUES
+  (21, 'Rollitos de primavera (4 ud)', 'Rollitos crujientes rellenos de verduras y cerdo',                         6.50, NULL, 'Entrantes',      4),
+  (22, 'Gyozas (6 ud)',                'Empanadillas japonesas al vapor con salsa ponzu',                           7.00, NULL, 'Entrantes',      4),
+  (23, 'Wok de pollo teriyaki',        'Pollo salteado con salsa teriyaki, brócoli y setas',                      12.00, NULL, 'Wok y Arroces',  4),
+  (24, 'Arroz frito con gambas',       'Arroz salteado con gambas, huevo y verduras',                             11.50, NULL, 'Wok y Arroces',  4),
+  (25, 'Sushi variado (10 piezas)',    'Selección de nigiris y makis del chef',                                   14.00, NULL, 'Sushi',          4),
+  (26, 'Ramen de cerdo',               'Caldo dashi, cerdo chashu, huevo marinado y nori',                        13.00, NULL, 'Destacados',     4),
+  (27, 'Té verde Matcha',              'Té matcha japonés caliente o frío',                                         3.00, NULL, 'Bebidas',        4);
+
+-- Taquería La Bamba (restaurante 5)
+INSERT INTO platos (id, nombre, descripcion, precio, imagen, etiqueta_menu, restaurante_id) VALUES
+  (28, 'Tacos de pollo (3 ud)',        'Tacos de maíz con pollo al pastor, cilantro y cebolla',                    8.50, NULL, 'Tacos',   5),
+  (29, 'Tacos de carnitas (3 ud)',     'Tacos con cerdo confitado, guacamole y salsa verde',                       9.00, NULL, 'Tacos',   5),
+  (30, 'Burrito de ternera',           'Burrito grande con ternera, frijoles, queso y pico de gallo',             10.50, NULL, 'Burritos',5),
+  (31, 'Nachos con guacamole',         'Nachos caseros con guacamole fresco y jalapeños',                          6.50, NULL, 'Destacados',5),
+  (32, 'Horchata mexicana',            'Bebida de arroz con canela y vainilla, 40 cl',                             3.50, NULL, 'Bebidas', 5);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 7. PEDIDOS  (usuarios 4 y 5 piden en distintos restaurantes)
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO pedidos (id, fecha, total, estado, usuario_id, restaurante_id) VALUES
+  (1, '2026-04-20 12:30:00', 13.80, 'ENTREGADO',    4, 1),
+  (2, '2026-04-21 13:15:00', 20.50, 'ENTREGADO',    5, 2),
+  (3, '2026-04-25 14:00:00', 23.50, 'EN_PREPARACION', 4, 3),
+  (4, '2026-04-28 13:45:00', 27.00, 'PENDIENTE',    5, 4),
+  (5, '2026-04-29 12:00:00', 18.00, 'PENDIENTE',    4, 1);
+
+-- Líneas del pedido 1 (María en CUMe)
+INSERT INTO lineas_pedido (id, nombre_plato, precio, cantidad, pedido_id, plato_id) VALUES
+  (1,  'Tostada con tomate y AOVE',  2.50, 2, 1, 1),
+  (2,  'Café con leche',             1.80, 2, 1, 2),
+  (3,  'Zumo de naranja natural',    2.20, 1, 1, 6),
+  (4,  'Bocadillo de jamón ibérico', 4.50, 1, 1, 3);
+
+-- Líneas del pedido 2 (Pedro en Don Corleone)
+INSERT INTO lineas_pedido (id, nombre_plato, precio, cantidad, pedido_id, plato_id) VALUES
+  (5,  'Pizza Margarita',   9.00, 1, 2, 8),
+  (6,  'Pasta Carbonara',   9.50, 1, 2, 11),
+  (7,  'Coca-Cola 33 cl',   2.00, 1, 2, 14);
+
+-- Líneas del pedido 3 (María en Burger Palace)
+INSERT INTO lineas_pedido (id, nombre_plato, precio, cantidad, pedido_id, plato_id) VALUES
+  (8,  'Classic Burger',  9.50, 1, 3, 15),
+  (9,  'BBQ Burger',     11.00, 1, 3, 16),
+  (10, 'Patatas fritas',  3.00, 1, 3, 18);
+
+-- Líneas del pedido 4 (Pedro en El Wok)
+INSERT INTO lineas_pedido (id, nombre_plato, precio, cantidad, pedido_id, plato_id) VALUES
+  (11, 'Wok de pollo teriyaki',    12.00, 1, 4, 23),
+  (12, 'Sushi variado (10 piezas)',14.00, 1, 4, 25),
+  (13, 'Té verde Matcha',           3.00, 1, 4, 27);
+
+-- Líneas del pedido 5 (María en CUMe)
+INSERT INTO lineas_pedido (id, nombre_plato, precio, cantidad, pedido_id, plato_id) VALUES
+  (14, 'Menú del día',   10.50, 1, 5, 7),
+  (15, 'Café con leche',  1.80, 2, 5, 2),
+  (16, 'Zumo de naranja', 2.20, 1, 5, 6),
+  (17, 'Ensalada mixta',  5.50, 0, 5, 5);  -- cantidad 0 para no alterar el total
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 8. VALORACIONES
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO valoraciones (id, puntuacion, comentario, fecha, usuario_id, restaurante_id) VALUES
+  (1, 5, 'El menú del día está riquísimo, precio imbatible para el campus', '2026-04-20 13:30:00', 4, 1),
+  (2, 4, 'La pizza de cuatro quesos está muy buena, la masa fina y crujiente', '2026-04-21 14:00:00', 5, 2),
+  (3, 5, 'El ramen de cerdo es una pasada, caldo con mucho sabor', '2026-04-22 20:15:00', 4, 4),
+  (4, 3, 'Las hamburguesas están bien pero el servicio tardó bastante', '2026-04-23 15:00:00', 5, 3),
+  (5, 4, 'Los tacos de carnitas están muy buenos, la salsa verde es increíble', '2026-04-24 14:30:00', 2, 5),
+  (6, 5, 'El bocadillo de jamón ibérico es el mejor de Mérida', '2026-04-25 11:00:00', 3, 1);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 9. ACTUALIZAR MEDIAS DE VALORACIONES
+-- ───────────────────────────────────────────────────────────────────────
+UPDATE restaurantes SET media_valoraciones =
+  (SELECT AVG(CAST(puntuacion AS REAL)) FROM valoraciones WHERE restaurante_id = restaurantes.id)
+WHERE EXISTS (SELECT 1 FROM valoraciones WHERE restaurante_id = restaurantes.id);
+
+-- ───────────────────────────────────────────────────────────────────────
+-- 10. FAVORITOS
+-- ───────────────────────────────────────────────────────────────────────
+INSERT INTO favoritos (usuario_id, restaurante_id) VALUES
+  (2, 1),  -- Laura tiene como favorita la CUMe
+  (2, 4),  -- Laura tiene como favorito el Wok
+  (5, 1),  -- Pedro tiene como favorita la CUMe
+  (4, 2);  -- María tiene como favorita la Pizzería
+
+-- ═══════════════════════════════════════════════════════════════════════
+-- VERIFICACIÓN RÁPIDA
+-- ═══════════════════════════════════════════════════════════════════════
+-- SELECT 'usuarios'     AS tabla, COUNT(*) AS total FROM usuarios      UNION ALL
+-- SELECT 'categorias',           COUNT(*)           FROM categorias    UNION ALL
+-- SELECT 'restaurantes',         COUNT(*)           FROM restaurantes  UNION ALL
+-- SELECT 'platos',               COUNT(*)           FROM platos        UNION ALL
+-- SELECT 'pedidos',              COUNT(*)           FROM pedidos       UNION ALL
+-- SELECT 'lineas_pedido',        COUNT(*)           FROM lineas_pedido UNION ALL
+-- SELECT 'valoraciones',         COUNT(*)           FROM valoraciones  UNION ALL
+-- SELECT 'favoritos',            COUNT(*)           FROM favoritos;</sql><current_tab id="0"/></tab_sql></sqlb_project>
