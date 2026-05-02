@@ -51,6 +51,28 @@ public class Restaurante {
     private String localidad;
 
     /**
+     * Gasto medio estimado del restaurante (texto libre, ej: "20€", "15€").
+     * Usado para ordenar y destacar restaurantes económicos (< 25€).
+     */
+    private String gastoMedioEstimado;
+
+    /**
+     * Devuelve el valor numérico de gastoMedioEstimado para comparaciones/ordenación.
+     * Extrae el primer número de la cadena (p.ej. "20€" → 20.0, "15,50€" → 15.5).
+     * Devuelve null si no hay valor o no se puede parsear.
+     */
+    public Double getGastoMedioNumerico() {
+        if (gastoMedioEstimado == null || gastoMedioEstimado.isBlank()) return null;
+        try {
+            String limpio = gastoMedioEstimado.replaceAll("[^0-9,.]", "").replace(",", ".");
+            if (limpio.isEmpty()) return null;
+            return Double.parseDouble(limpio);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    /**
      * Etiquetas del menú personalizadas por el propietario.
      * Se almacenan como texto separado por comas, ej: "Destacados,Desayunos,Bocadillos,Bebidas"
      * Si es null o vacío, se usan las etiquetas por defecto.

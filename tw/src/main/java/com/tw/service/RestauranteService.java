@@ -73,12 +73,16 @@ public class RestauranteService {
 
     /**
      * Búsqueda principal con todos los filtros (req. mínimo 6 y 7).
+     * El filtro de precio y el orden por gasto medio se aplican en Java
+     * porque gastoMedioEstimado es un campo de texto (no numérico en BD).
      */
     @Transactional(readOnly = true)
     public List<Restaurante> buscar(String q, Long categoriaId, String filtro,
                                     Integer valoracion, Integer precio,
                                     Boolean bikeFriendly, String orden) {
-        return restauranteRepo.findAll((root, query, cb) -> {
+
+        // 1) Recuperar con filtros soportados por JPA
+        List<Restaurante> resultado = restauranteRepo.findAll((root, query, cb) -> {
             var predicates = new java.util.ArrayList<jakarta.persistence.criteria.Predicate>();
 
             if (q != null && !q.isBlank()) {
@@ -108,18 +112,55 @@ public class RestauranteService {
                 predicates.add(cb.isTrue(root.get("bikeFriendly")));
             }
 
+            // Ordenación en BD para los campos numéricos
             if (orden != null) {
                 switch (orden) {
-                    case "nombre_asc" -> query.orderBy(cb.asc(root.get("nombre")));
-                    case "nombre_desc" -> query.orderBy(cb.desc(root.get("nombre")));
-                    case "precio_asc" -> query.orderBy(cb.asc(root.get("precioMin")));
-                    case "precio_desc" -> query.orderBy(cb.desc(root.get("precioMin")));
+                    case "nombre_asc"      -> query.orderBy(cb.asc(root.get("nombre")));
+                    case "nombre_desc"     -> query.orderBy(cb.desc(root.get("nombre")));
+                    case "precio_asc"      -> query.orderBy(cb.asc(root.get("precioMin")));
+                    case "precio_desc"     -> query.orderBy(cb.desc(root.get("precioMin")));
                     case "valoracion_desc" -> query.orderBy(cb.desc(root.get("mediaValoraciones")));
                 }
             }
 
             return cb.and(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
         });
+
+        // 2) Filtro de precio por rango (usa gastoMedioNumerico o precioMin)
+        if (precio != null) {
+            resultado = resultado.stream().filter(r -> matchesPrecio(r, precio)).collect(Collectors.toList());
+        }
+
+        // 3) Ordenación en Java para gastoMedioEstimado (campo texto)
+        if (orden == null || "gasto_desc".equals(orden)) {
+            resultado = resultado.stream()
+                    .sorted(Comparator.comparingDouble((Restaurante r) -> {
+                        Double g = r.getGastoMedioNumerico();
+                        return g != null ? g : -1.0;
+                    }).reversed())
+                    .collect(Collectors.toList());
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Determina si un restaurante encaja en el rango de precio seleccionado.
+     * Usa gastoMedioNumerico si está disponible, si no precioMin.
+     * Rango 1: 0-10€ | Rango 2: 10-20€ | Rango 3: >20€
+     */
+    private boolean matchesPrecio(Restaurante r, int rango) {
+        Double valor = r.getGastoMedioNumerico();
+        if (valor == null && r.getPrecioMin() != null) {
+            valor = r.getPrecioMin();
+        }
+        if (valor == null) return true; // sin datos → no filtrar
+        return switch (rango) {
+            case 1 -> valor <= 10.0;
+            case 2 -> valor > 10.0 && valor <= 20.0;
+            case 3 -> valor > 20.0;
+            default -> true;
+        };
     }
 
     /**
@@ -248,6 +289,7 @@ public class RestauranteService {
         existente.setPrecioMax(datos.getPrecioMax());
         existente.setBikeFriendly(datos.getBikeFriendly());
         existente.setAceptaPedidos(datos.getAceptaPedidos() != null ? datos.getAceptaPedidos() : existente.getAceptaPedidos());
+        existente.setGastoMedioEstimado(datos.getGastoMedioEstimado());
 
         // Solo actualizar imagen si se proporcionó una nueva (no null y no vacía)
         if (datos.getImagen() != null && !datos.getImagen().isBlank()) {

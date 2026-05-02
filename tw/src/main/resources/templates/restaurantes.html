@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurantes - CUMe y Calla</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Syne:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" th:href="@{/css/restaurantes.css}">
     <link rel="stylesheet" th:href="@{/css/nav.css}">
     <style>
-        /* ===== HEADER VERDE ===== */
         /* ===== PILLS ===== */
         .category-filters { display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem; }
         .category-pill { display:inline-block;padding:.4rem 1rem;border-radius:20px;border:2px solid #e0e0e0;color:#555;text-decoration:none;font-size:.9rem;font-weight:600;transition:all .2s; }
         .category-pill:hover,.category-pill.active { background:#069c6f;border-color:#069c6f;color:white; }
-        /* ===== ESTADO FILTROS ===== */
-        .filter-radio a { text-decoration:none;color:inherit;display:flex;align-items:center;gap:.5rem; }
-        .filter-radio a.filter-active { color:#069c6f;font-weight:700; }
         /* ===== DIRECCIÓN USUARIO ===== */
         .location-block { display:flex;align-items:center;gap:.6rem; }
         .location-block svg { flex-shrink:0;color:#069c6f; }
@@ -24,16 +23,47 @@
         .location-empty { font-size:.9rem;color:#888;font-style:italic;margin:0; }
         .location-link { color:#069c6f;font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap; }
         .location-link:hover { text-decoration:underline; }
+        /* ===== FULL WIDTH LAYOUT ===== */
+        .restaurants-page .wide-container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        /* ===== SEARCH HEADER ===== */
+        .search-header-inner {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        /* ===== CARD GASTO BAJO (< 25€) ===== */
+        .restaurant-card.card-budget {
+            background: #f3e5f5;
+            border: 4px double #111 !important;
+        }
+        .restaurant-card.card-budget:hover {
+            box-shadow: 0 8px 24px rgba(156,39,176,0.18);
+        }
+        .gasto-badge {
+            display:inline-flex;align-items:center;gap:.3rem;
+            font-size:.82rem;font-weight:700;color:#555;
+            background:#f5f5f5;border:1.5px solid #e0e0e0;
+            border-radius:20px;padding:.2rem .65rem;margin-top:.35rem;
+        }
+        .card-budget .gasto-badge {
+            background:#ede7f6;border-color:#ce93d8;color:#7b1fa2;
+        }
     </style>
 </head>
 <body>
 <header th:replace="~{fragments/layout :: header}"></header>
 
 <main class="restaurants-page">
+    <!-- ====== BARRA SUPERIOR: DIRECCIÓN + BÚSQUEDA ====== -->
     <div class="search-header">
-        <div class="container">
-            <div class="search-info">
-                <!-- Dirección dinámica: solo se muestra si el usuario está logueado -->
+        <div class="wide-container">
+            <div class="search-header-inner">
+                <!-- Dirección primero -->
                 <div class="location-block">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -52,7 +82,7 @@
                     </div>
                 </div>
 
-                <!-- Busqueda (req. minimo 6) -->
+                <!-- Búsqueda después -->
                 <form th:action="@{/restaurantes}" method="get" class="inline-search">
                     <label for="searchRestaurants" class="sr-only">Buscar restaurantes</label>
                     <input type="search" id="searchRestaurants" name="q" th:value="${q}" placeholder="Busca restaurantes...">
@@ -61,11 +91,13 @@
         </div>
     </div>
 
-    <div class="container">
+    <!-- ====== LAYOUT PRINCIPAL ====== -->
+    <div class="wide-container">
         <div class="restaurants-layout">
+
+            <!-- SIDEBAR DE FILTROS -->
             <aside class="filters-sidebar">
                 <h2>Filtros</h2>
-
 
                 <div class="filter-section">
                     <h3>Valoracion</h3>
@@ -88,9 +120,9 @@
 
                 <div class="filter-section">
                     <h3>Precio</h3>
-                    <a th:href="@{/restaurantes(precio='1')}" class="filter-link" th:classappend="${precio == 1} ? ' active' : ''">Economico</a>
-                    <a th:href="@{/restaurantes(precio='2')}" class="filter-link" th:classappend="${precio == 2} ? ' active' : ''">Moderado</a>
-                    <a th:href="@{/restaurantes(precio='3')}" class="filter-link" th:classappend="${precio == 3} ? ' active' : ''">Premium</a>
+                    <a th:href="@{/restaurantes(precio='1')}" class="filter-link" th:classappend="${precio == 1} ? ' active' : ''">0 – 10 €</a>
+                    <a th:href="@{/restaurantes(precio='2')}" class="filter-link" th:classappend="${precio == 2} ? ' active' : ''">10 – 20 €</a>
+                    <a th:href="@{/restaurantes(precio='3')}" class="filter-link" th:classappend="${precio == 3} ? ' active' : ''">20 € +</a>
                 </div>
 
                 <div class="filter-section">
@@ -110,16 +142,18 @@
                         <input type="hidden" name="precio" th:value="${precio}">
                         <input type="hidden" name="bikeFriendly" th:value="${bikeFriendly}">
                         <select name="orden" onchange="this.form.submit()" aria-label="Ordenar resultados">
-                            <option value="nombre_asc" th:selected="${orden == 'nombre_asc'}">Nombre (A-Z)</option>
-                            <option value="nombre_desc" th:selected="${orden == 'nombre_desc'}">Nombre (Z-A)</option>
-                            <option value="precio_asc" th:selected="${orden == 'precio_asc'}">Precio (ascendente)</option>
-                            <option value="precio_desc" th:selected="${orden == 'precio_desc'}">Precio (descendente)</option>
+                            <option value="gasto_desc"    th:selected="${orden == 'gasto_desc' or orden == null}">Gasto medio (mayor primero)</option>
+                            <option value="nombre_asc"    th:selected="${orden == 'nombre_asc'}">Nombre (A-Z)</option>
+                            <option value="nombre_desc"   th:selected="${orden == 'nombre_desc'}">Nombre (Z-A)</option>
+                            <option value="precio_asc"    th:selected="${orden == 'precio_asc'}">Precio (ascendente)</option>
+                            <option value="precio_desc"   th:selected="${orden == 'precio_desc'}">Precio (descendente)</option>
                             <option value="valoracion_desc" th:selected="${orden == 'valoracion_desc'}">Valoracion (descendente)</option>
                         </select>
                     </form>
                 </div>
             </aside>
 
+            <!-- CONTENIDO: LISTA DE RESTAURANTES -->
             <section class="restaurants-content">
                 <div class="results-header">
                     <h2>
@@ -132,7 +166,7 @@
                        style="color:#069c6f;font-weight:600;text-decoration:none;">Quitar filtros</a>
                 </div>
 
-                <!-- Pills de categorias (acceso rapido, extra) -->
+                <!-- Pills de categorias -->
                 <div class="category-filters">
                     <a th:href="@{/restaurantes}" class="category-pill"
                        th:classappend="${categoria == null and (filtro == 'todos' or filtro == null) and q == null} ? ' active' : ''">Todos</a>
@@ -148,7 +182,9 @@
 
                 <!-- GRID DE RESTAURANTES -->
                 <div class="restaurants-grid">
-                    <article th:each="r : ${restaurantes}" class="restaurant-card">
+                    <article th:each="r : ${restaurantes}"
+                             class="restaurant-card"
+                             th:classappend="${r.gastoMedioNumerico != null and r.gastoMedioNumerico < 25} ? ' card-budget' : ''">
                         <a th:href="@{/restaurantes/{id}(id=${r.id})}" class="restaurant-link">
                             <div class="restaurant-image" style="position:relative;">
                                 <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}"
@@ -174,7 +210,15 @@
                                     <span class="delivery-time">15-25 min</span>
                                     <span class="min-order"
                                           th:if="${r.precioMin != null}"
-                                          th:text="${#numbers.formatDecimal(r.precioMin,1,2)} + ' euro min.'"></span>
+                                          th:text="${#numbers.formatDecimal(r.precioMin,1,2)} + ' € min.'"></span>
+                                </div>
+                                <!-- Gasto medio estimado -->
+                                <div th:if="${r.gastoMedioEstimado != null and !#strings.isEmpty(r.gastoMedioEstimado)}"
+                                     class="gasto-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                    </svg>
+                                    Gasto medio: <strong th:text="${r.gastoMedioEstimado}">–</strong>
                                 </div>
                             </div>
                         </a>

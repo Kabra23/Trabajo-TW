@@ -283,6 +283,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="gastoMedioEstimado">Gasto medio estimado</label>
+                    <input type="text" id="gastoMedioEstimado" th:field="*{gastoMedioEstimado}"
+                           placeholder="Ej: 20€" maxlength="20">
+                    <small>Gasto medio por persona. Los restaurantes con gasto medio inferior a 25€ se destacan en el listado.</small>
+                </div>
+
                 <!-- Categorías (req. mínimo 2) -->
                 <div class="form-group">
                     <label>Categorias <small style="font-weight:400;">(selecciona una o varias)</small></label>
