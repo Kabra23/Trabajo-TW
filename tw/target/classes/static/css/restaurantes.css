@@ -500,3 +500,40 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ===================================================
+   GASTO MEDIO ESTIMADO — Badge en tarjeta
+   =================================================== */
+.gasto-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #555;
+    background: #f5f5f5;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 0.2rem 0.65rem;
+    margin-top: 0.4rem;
+}
+
+/* ===================================================
+   TARJETA ECONÓMICA (gasto < 25€)
+   Fondo morado suave + borde doble negro
+   =================================================== */
+.restaurant-card.card-budget {
+    background: #f3e5f5;
+    border: 4px double #111 !important;
+}
+
+.restaurant-card.card-budget:hover {
+    box-shadow: 0 8px 24px rgba(156, 39, 176, 0.2);
+    border-color: #7b1fa2 !important;
+}
+
+.restaurant-card.card-budget .gasto-badge {
+    background: #ede7f6;
+    border-color: #ce93d8;
+    color: #7b1fa2;
+}

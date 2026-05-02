@@ -249,14 +249,17 @@ public class RestauranteService {
                 }
             }
 
-            if (score > 0) {
+            // Solo incluir si comparte AL MENOS UNA categoría (score de categoría >= 3)
+            boolean tieneCategoria = r.getCategorias() != null &&
+                    r.getCategorias().stream().anyMatch(c -> categoriaIds.contains(c.getId()));
+            if (tieneCategoria) {
                 puntos.put(r, score);
             }
         }
 
         return puntos.entrySet().stream()
                 .sorted(Map.Entry.<Restaurante, Integer>comparingByValue().reversed())
-                .limit(4)
+                .limit(8)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }

@@ -686,20 +686,69 @@ body {
     border-top: 2px solid #f0f0f0;
 }
 
+/* Header con título y botones de navegación */
+.related-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
 .related-title {
     color: #333;
     font-size: 1.4rem;
-    margin-bottom: 1.2rem;
     font-weight: 700;
+    margin: 0;
 }
 
-.related-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.2rem;
+.related-nav-btns {
+    display: flex;
+    gap: 0.5rem;
 }
 
+.related-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #e0e0e0;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.related-btn:hover:not(:disabled) {
+    border-color: #069c6f;
+    color: #069c6f;
+    box-shadow: 0 2px 8px rgba(6, 156, 111, 0.15);
+}
+
+.related-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+/* Contenedor con overflow oculto */
+.related-carousel-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Track deslizante */
+.related-carousel {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+/* Cada tarjeta tiene ancho fijo */
 .related-card {
+    flex: 0 0 220px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -707,17 +756,17 @@ body {
     text-decoration: none;
     color: inherit;
     border: 2px solid transparent;
-    transition: all 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     display: block;
 }
 
 .related-card:hover {
     border-color: #069c6f;
-    box-shadow: 0 4px 12px rgba(6, 156, 111, 0.15);
+    box-shadow: 0 4px 14px rgba(6, 156, 111, 0.18);
 }
 
 .related-image {
-    height: 110px;
+    height: 120px;
     overflow: hidden;
     background: #e8f5f1;
     display: flex;
@@ -765,7 +814,7 @@ body {
     background: #ffebee;
     color: #d32f2f;
     border-radius: 8px;
-    padding: 0.1rem 0.5rem;
+    padding: 0.15rem 0.55rem;
     font-size: 0.72rem;
     font-weight: 600;
 }

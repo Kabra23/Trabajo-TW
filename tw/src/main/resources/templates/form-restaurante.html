@@ -78,21 +78,68 @@
     .form-group small { color:#888;font-size:.82rem;display:block;margin-top:.3rem; }
     .error-message { color:#d32f2f;font-size:.83rem;display:block;margin-top:.3rem; }
 
-    /* Categorías pill-style */
-    .cat-grid {
-        display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-        gap:.6rem;padding:1rem;border:2px solid #e0e0e0;border-radius:10px;background:#fdfefe;
-        max-height:220px;overflow:auto;
+    /* ===== SELECTOR DE CATEGORÍAS MEJORADO ===== */
+
+    /* Chips de seleccionadas (encima del buscador) */
+    .cat-selected-wrap {
+        display:flex;flex-wrap:wrap;gap:.4rem;min-height:0;margin-bottom:.5rem;
     }
-    .cat-item {
-        display:flex;align-items:center;gap:.5rem;background:white;padding:.6rem .9rem;
-        border-radius:999px;border:2px solid #eef1f1;cursor:pointer;transition:all .2s;
+    .cat-selected-chip {
+        display:inline-flex;align-items:center;gap:.3rem;
+        background:#069c6f;color:white;
+        border-radius:999px;padding:.25rem .7rem;
+        font-size:.82rem;font-weight:700;
     }
-    .cat-item:hover { border-color:#069c6f;color:#069c6f; }
-    .cat-item input { margin:0;width:16px;height:16px;accent-color:#069c6f;cursor:pointer; }
-    .cat-item span { font-size:.88rem;font-weight:600;color:#333; }
-    .cat-item:has(input:checked) { background:#e8f5f1;border-color:#069c6f; }
-    .cat-item:has(input:checked) span { color:#069c6f; }
+    .cat-selected-chip button {
+        background:transparent;border:none;color:rgba(255,255,255,.85);
+        cursor:pointer;font-size:.95rem;line-height:1;padding:0;margin-left:.15rem;
+    }
+    .cat-selected-chip button:hover { color:white; }
+
+    /* Barra de búsqueda */
+    .cat-search-wrap {
+        display:flex;align-items:center;gap:.5rem;
+        border:2px solid #e0e0e0;border-radius:10px;
+        padding:.5rem .8rem;background:white;margin-bottom:.6rem;
+        transition:border-color .2s;
+    }
+    .cat-search-wrap:focus-within { border-color:#069c6f; }
+    .cat-search-wrap input {
+        border:none;outline:none;background:transparent;
+        font-size:.92rem;width:100%;padding:0;
+    }
+
+    /* Grid de pills seleccionables */
+    .cat-pill-grid {
+        display:flex;flex-wrap:wrap;gap:.45rem;
+        padding:.75rem;border:2px solid #e0e0e0;border-radius:10px;
+        background:#fafcfb;max-height:200px;overflow-y:auto;
+    }
+    .cat-pill-item {
+        display:inline-flex;align-items:center;gap:.4rem;
+        background:white;border:2px solid #e8e8e8;
+        border-radius:999px;padding:.45rem .85rem;
+        cursor:pointer;transition:all .18s;user-select:none;
+    }
+    .cat-pill-item:hover { border-color:#069c6f;background:#f0faf6; }
+    .cat-pill-item input[type="checkbox"] { display:none; }
+    .cat-pill-inicial {
+        width:22px;height:22px;border-radius:50%;
+        background:#e8f5f1;color:#069c6f;
+        display:inline-flex;align-items:center;justify-content:center;
+        font-size:.75rem;font-weight:800;flex-shrink:0;
+        transition:background .18s;
+    }
+    .cat-pill-name { font-size:.86rem;font-weight:600;color:#444; }
+    .cat-pill-check { display:none;color:#069c6f;flex-shrink:0; }
+
+    /* Estado: seleccionado */
+    .cat-pill-item:has(input:checked) {
+        background:#e8f5f1;border-color:#069c6f;
+    }
+    .cat-pill-item:has(input:checked) .cat-pill-name { color:#069c6f; }
+    .cat-pill-item:has(input:checked) .cat-pill-inicial { background:#069c6f;color:white; }
+    .cat-pill-item:has(input:checked) .cat-pill-check { display:inline-block; }
 
     /* Radio buttons inline */
     .radio-row { display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.4rem; }
@@ -290,20 +337,43 @@
                     <small>Gasto medio por persona. Los restaurantes con gasto medio inferior a 25€ se destacan en el listado.</small>
                 </div>
 
-                <!-- Categorías (req. mínimo 2) -->
+                <!-- Categorías: selector mejorado con buscador + pills clicables -->
                 <div class="form-group">
                     <label>Categorias <small style="font-weight:400;">(selecciona una o varias)</small></label>
-                    <div class="cat-grid">
-                        <label th:each="cat : ${categorias}" class="cat-item">
-                            <input type="checkbox" name="categoriaIds" th:value="${cat.id}"
-                                   th:checked="${restaurante.categorias != null and #lists.contains(restaurante.categorias, cat)}">
-                            <span th:text="${cat.nombre}">Categoria</span>
-                        </label>
-                        <p th:if="${categorias == null or #lists.isEmpty(categorias)}"
-                           style="color:#888;font-size:.85rem;grid-column:1/-1;text-align:center;padding:.5rem;">
-                            No hay categorias disponibles.
-                        </p>
+
+                    <!-- Chips de seleccionadas -->
+                    <div id="catSelected" class="cat-selected-wrap"></div>
+
+                    <!-- Buscador -->
+                    <div class="cat-search-wrap">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#aaa" style="flex-shrink:0;">
+                            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <input type="text" id="catSearch" placeholder="Buscar categoria..." autocomplete="off"
+                               oninput="filtrarCats(this.value)">
                     </div>
+
+                    <!-- Grid de pills clicables -->
+                    <div class="cat-pill-grid" id="catPillGrid">
+                        <label th:each="cat : ${categorias}" class="cat-pill-item"
+                               th:attr="data-name=${cat.nombre}">
+                            <input type="checkbox" name="categoriaIds" th:value="${cat.id}"
+                                   th:checked="${restaurante.categorias != null and #lists.contains(restaurante.categorias, cat)}"
+                                   onchange="actualizarSelected()">
+                            <span class="cat-pill-inicial" th:text="${#strings.substring(cat.nombre,0,1)}">A</span>
+                            <span class="cat-pill-name" th:text="${cat.nombre}">Categoria</span>
+                            <svg class="cat-pill-check" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                        </label>
+                    </div>
+                    <p id="catEmpty" style="display:none;color:#888;font-size:.85rem;text-align:center;padding:.5rem 0;">
+                        No hay categorias que coincidan.
+                    </p>
+                    <p th:if="${categorias == null or #lists.isEmpty(categorias)}"
+                       style="color:#888;font-size:.85rem;text-align:center;padding:.5rem;">
+                        No hay categorias disponibles.
+                    </p>
                 </div>
 
                 <!-- Bike Friendly (req. mínimo 2) -->
@@ -638,6 +708,58 @@
     }
 
     inicializarEtiquetas();
+</script>
+
+<script>
+/* ============================================================
+   SELECTOR DE CATEGORÍAS — buscador + chips de seleccionadas
+   ============================================================ */
+(function () {
+
+    function actualizarSelected() {
+        var wrap = document.getElementById('catSelected');
+        if (!wrap) return;
+        wrap.innerHTML = '';
+        document.querySelectorAll('.cat-pill-item input[type="checkbox"]:checked').forEach(function (cb) {
+            var label = cb.closest('.cat-pill-item');
+            var nombre = label ? label.getAttribute('data-name') : cb.value;
+            var chip = document.createElement('span');
+            chip.className = 'cat-selected-chip';
+            chip.innerHTML = nombre +
+                '<button type="button" title="Quitar" onclick="quitarCat('' + nombre + '')">&#x2715;</button>';
+            wrap.appendChild(chip);
+        });
+    }
+
+    window.actualizarSelected = actualizarSelected;
+
+    window.quitarCat = function (nombre) {
+        document.querySelectorAll('.cat-pill-item').forEach(function (label) {
+            if (label.getAttribute('data-name') === nombre) {
+                var cb = label.querySelector('input[type="checkbox"]');
+                if (cb) { cb.checked = false; }
+            }
+        });
+        actualizarSelected();
+    };
+
+    window.filtrarCats = function (q) {
+        var qLow = q.toLowerCase().trim();
+        var pills = document.querySelectorAll('.cat-pill-item');
+        var visible = 0;
+        pills.forEach(function (pill) {
+            var name = (pill.getAttribute('data-name') || '').toLowerCase();
+            var show = !qLow || name.includes(qLow);
+            pill.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        var empty = document.getElementById('catEmpty');
+        if (empty) empty.style.display = visible === 0 ? '' : 'none';
+    };
+
+    // Inicializar chips al cargar
+    actualizarSelected();
+})();
 </script>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>

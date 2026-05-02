@@ -295,33 +295,49 @@
                     <p th:if="${#lists.isEmpty(restaurante.valoraciones)}" class="review-empty">Aun no hay valoraciones.</p>
                 </section>
 
-                <!-- RESTAURANTES RELACIONADOS -->
+                <!-- RESTAURANTES SIMILARES — CAROUSEL -->
                 <section th:if="${relacionados != null and !#lists.isEmpty(relacionados)}"
                          class="related-section">
-                    <h2 class="related-title">Restaurantes similares</h2>
-                    <div class="related-grid">
-                        <a th:each="r : ${relacionados}"
-                           th:href="@{/restaurantes/{id}(id=${r.id})}"
-                           class="related-card">
-                            <div class="related-image">
-                                <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}">
-                            </div>
-                            <div class="related-info">
-                                <h3 class="related-name" th:text="${r.nombre}">Nombre</h3>
-                                <div class="related-meta">
-                                    <svg th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
-                                         width="12" height="12" viewBox="0 0 24 24" fill="gold">
-                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                    </svg>
-                                    <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
-                                          th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}"
-                                          class="related-score">0.0</span>
-                                    <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}"
-                                          th:text="'· ' + ${r.localidad}" class="related-location">loc</span>
+                    <div class="related-header">
+                        <h2 class="related-title">Restaurantes similares</h2>
+                        <div class="related-nav-btns">
+                            <button class="related-btn" id="relPrev" aria-label="Anterior">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                                </svg>
+                            </button>
+                            <button class="related-btn" id="relNext" aria-label="Siguiente">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="related-carousel-wrap">
+                        <div class="related-carousel" id="relCarousel">
+                            <a th:each="r : ${relacionados}"
+                               th:href="@{/restaurantes/{id}(id=${r.id})}"
+                               class="related-card">
+                                <div class="related-image">
+                                    <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}">
                                 </div>
-                                <span th:unless="${r.aceptaPedidos}" class="related-status">No acepta pedidos</span>
-                            </div>
-                        </a>
+                                <div class="related-info">
+                                    <h3 class="related-name" th:text="${r.nombre}">Nombre</h3>
+                                    <div class="related-meta">
+                                        <svg th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
+                                             width="12" height="12" viewBox="0 0 24 24" fill="gold">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                        <span th:if="${r.mediaValoraciones != null and r.mediaValoraciones > 0}"
+                                              th:text="${#numbers.formatDecimal(r.mediaValoraciones,1,1)}"
+                                              class="related-score">0.0</span>
+                                        <span th:if="${r.localidad != null and !#strings.isEmpty(r.localidad)}"
+                                              th:text="'· ' + ${r.localidad}" class="related-location">loc</span>
+                                    </div>
+                                    <span th:unless="${r.aceptaPedidos}" class="related-status">No acepta pedidos</span>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -528,34 +544,57 @@ function removeEtiqueta(i) {
 }
 
 function serializeEtiquetas() {
-    var hidden = document.getElementById('etiquetasMenuValue');
-    if (hidden) hidden.value = _etiquetas.join(',');
+    document.getElementById('etiquetasMenuValue').value = _etiquetas.join(',');
 }
 
 function toggleEditTabs() {
     var panel = document.getElementById('editTabsPanel');
     if (!panel) return;
-    var open = panel.style.display !== 'none' && panel.style.display !== '';
-    if (!open) {
-        initEtiquetas();
+    if (panel.style.display === 'none' || panel.style.display === '') {
         panel.style.display = 'block';
-        requestAnimationFrame(function() { panel.classList.add('open'); });
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setTimeout(function() { panel.classList.add('open'); }, 10);
     } else {
         panel.classList.remove('open');
-        setTimeout(function() { panel.style.display = 'none'; }, 250);
+        setTimeout(function() { panel.style.display = 'none'; }, 300);
     }
 }
+</script>
 
-function escHtml(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+<script>
+/* ======================================================
+   CAROUSEL — Restaurantes similares
+   ====================================================== */
+(function () {
+    var carousel = document.getElementById('relCarousel');
+    if (!carousel) return;
 
-/* Enter en el input añade etiqueta */
-document.addEventListener('DOMContentLoaded', function() {
-    var inp = document.getElementById('nuevaEtiquetaInput');
-    if (inp) inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); addEtiqueta(); } });
-});
+    var cards    = carousel.querySelectorAll('.related-card');
+    var GAP      = 16;           // gap entre tarjetas (px)
+    var CARD_W   = 220 + GAP;    // ancho tarjeta + gap
+    var index    = 0;
+
+    function maxIndex() {
+        var wrap    = carousel.parentElement;
+        var visible = Math.max(1, Math.floor(wrap.offsetWidth / CARD_W));
+        return Math.max(0, cards.length - visible);
+    }
+
+    function move() {
+        carousel.style.transform = 'translateX(-' + (index * CARD_W) + 'px)';
+        var mi = maxIndex();
+        document.getElementById('relPrev').disabled = index <= 0;
+        document.getElementById('relNext').disabled = index >= mi;
+    }
+
+    document.getElementById('relPrev').addEventListener('click', function () {
+        if (index > 0) { index--; move(); }
+    });
+    document.getElementById('relNext').addEventListener('click', function () {
+        if (index < maxIndex()) { index++; move(); }
+    });
+
+    move(); // estado inicial
+})();
 </script>
 </body>
 </html>
