@@ -5,21 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade campo de gasto medio estimado en el formulario de restaurantes: incluye validación y visualización en la tarjeta de restaurante, mejorando la experiencia del usuario al filtrar y ordenar.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/categorias.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/categorias.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-valoraciones.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-valoraciones.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/static/css/restaurantes.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/registro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/usuarios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/categorias.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/categorias.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/usuarios.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +106,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="Security Analysis" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -208,15 +208,7 @@
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
       <workItem from="1777626649774" duration="10622000" />
-      <workItem from="1777712435277" duration="1836000" />
-    </task>
-    <task id="LOCAL-00003" summary="Inicio del proyecto">
-      <option name="closed" value="true" />
-      <created>1770825450261</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1770825450261</updated>
+      <workItem from="1777712435277" duration="2755000" />
     </task>
     <task id="LOCAL-00004" summary="Comienza el proyecto">
       <option name="closed" value="true" />
@@ -602,7 +594,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777714064454</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Añade campo de gasto medio estimado en el formulario de restaurantes: incluye validación y visualización en la tarjeta de restaurante, mejorando la experiencia del usuario al filtrar y ordenar.">
+      <option name="closed" value="true" />
+      <created>1777714937878</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1777714937878</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

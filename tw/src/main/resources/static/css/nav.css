@@ -21,6 +21,7 @@
     margin: 0 auto;
     padding: 0 1.5rem;
     gap: 1rem;
+    flex-wrap: nowrap;
 }
 
 /* Logo */
@@ -53,7 +54,8 @@
     align-items: center;
     margin: 0;
     padding: 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
 }
 
 .main-nav a {

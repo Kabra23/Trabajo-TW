@@ -11,6 +11,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    gap: 1rem;
 }
 
 .logo h1 {
@@ -46,8 +50,11 @@ body {
 .main-nav > ul {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 0.3rem;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-wrap: nowrap;
 }
 
 .main-nav a {
@@ -872,28 +879,37 @@ body {
 
 /* Botón trigger */
 .etiquetas-trigger-wrap {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
+
+/* Botón "Editar secciones del menú" — estilo pill outline */
 .etiquetas-trigger-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    background: none;
-    border: none;
+    gap: 0.45rem;
+    background: white;
+    border: 2px solid #069c6f;
     color: #069c6f;
-    font-size: 0.83rem;
-    font-weight: 600;
+    font-size: 0.84rem;
+    font-weight: 700;
     font-family: 'DM Sans', inherit;
     cursor: pointer;
-    padding: 0.3rem 0.6rem 0.3rem 0;
-    border-radius: 6px;
-    transition: color 0.15s, background 0.15s;
-    opacity: 0.85;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    box-shadow: 0 1px 4px rgba(6,156,111,0.10);
+}
+.etiquetas-trigger-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.2s;
 }
 .etiquetas-trigger-btn:hover {
-    opacity: 1;
-    background: rgba(6, 156, 111, 0.07);
-    padding-left: 0.4rem;
+    background: #069c6f;
+    color: white;
+    box-shadow: 0 3px 10px rgba(6,156,111,0.25);
+}
+.etiquetas-trigger-btn:hover svg {
+    transform: rotate(-10deg);
 }
 
 /* Panel principal */
@@ -1116,3 +1132,17 @@ body {
     75%       { transform: translateX(5px); }
 }
 .shake { animation: shake 0.35s ease; border-color: #d32f2f !important; }
+
+
+/* Animación de entrada para nueva pill recién añadida */
+@keyframes pillPop {
+    0%   { transform: scale(0.7); opacity: 0; }
+    60%  { transform: scale(1.12); }
+    100% { transform: scale(1);   opacity: 1; }
+}
+.etiqueta-pill.pill-new {
+    animation: pillPop 0.35s ease forwards;
+    border-color: #069c6f;
+    background: #e8f5f1;
+    color: #069c6f;
+}
