@@ -4,22 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade campo de gasto medio estimado en el formulario de restaurantes: incluye validación y visualización en la tarjeta de restaurante, mejorando la experiencia del usuario al filtrar y ordenar.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/static/css/detalle-restaurante.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/categorias.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/categorias.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/usuarios.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/categorias.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/categorias.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-plato.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/mis-pedidos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/usuarios.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,15 +195,7 @@
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
       <workItem from="1777626649774" duration="10622000" />
-      <workItem from="1777712435277" duration="2755000" />
-    </task>
-    <task id="LOCAL-00004" summary="Comienza el proyecto">
-      <option name="closed" value="true" />
-      <created>1772181643845</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1772181643846</updated>
+      <workItem from="1777712435277" duration="5645000" />
     </task>
     <task id="LOCAL-00005" summary="Comienza el proyecto">
       <option name="closed" value="true" />
@@ -602,7 +581,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777714937878</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva.">
+      <option name="closed" value="true" />
+      <created>1777716055623</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1777716055624</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -620,7 +607,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Añade manejo global de excepciones y mejora la estructura de las páginas de registro y perfil" />
     <MESSAGE value="Actualiza las páginas de registro y login para utilizar Thymeleaf, mejora la estructura y el estilo de la página de registro exitoso." />
     <MESSAGE value="Añade nuevas páginas y funcionalidades: registro exitoso, categorías, y valoraciones; mejora la interactividad del filtro de estrellas y actualiza estilos." />
     <MESSAGE value="Añade gestión de direcciones: crea el repositorio y modelo de Direccion, implementa controlador para añadir, marcar como principal y eliminar direcciones; actualiza el perfil de usuario para incluir direcciones." />
@@ -645,7 +631,8 @@
     <MESSAGE value="Mejora la interfaz de usuario en la sección de detalles del restaurante: ajusta estilos de pestañas, optimiza la presentación de botones y mejora la experiencia de navegación." />
     <MESSAGE value="Mejora la interfaz de usuario en la sección de detalles del restaurante: actualiza estilos de pestañas, optimiza la presentación de botones y ajusta la gestión de tareas locales." />
     <MESSAGE value="Añade campo de gasto medio estimado en el formulario de restaurantes: incluye validación y visualización en la tarjeta de restaurante, mejorando la experiencia del usuario al filtrar y ordenar." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade campo de gasto medio estimado en el formulario de restaurantes: incluye validación y visualización en la tarjeta de restaurante, mejorando la experiencia del usuario al filtrar y ordenar." />
+    <MESSAGE value="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
