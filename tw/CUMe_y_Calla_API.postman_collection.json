@@ -1,0 +1,1469 @@
+{
+  "info": {
+    "_postman_id": "cume-y-calla-api-v1",
+    "name": "CUMe y Calla API",
+    "description": "Colección completa de pruebas para la API REST del proyecto CUMe y Calla.\n\nCredenciales de prueba (todas con contraseña Test1234!):\n- laura@test.com   → propietaria de restaurantes 1 y 4\n- carlos@test.com  → propietario de restaurantes 2 y 5\n- maria@test.com   → propietaria de restaurante 3\n- pedro@test.com   → cliente\n- andi@andi.com     → cliente\n- admin@cume.es     → administrador",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "GET /api/usuarios - Mis datos (autenticado)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234!"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios"]
+            },
+            "description": "Obtiene los datos del usuario autenticado. Requiere autenticación Basic."
+          },
+          "response": [
+            {
+              "name": "200 OK - Datos del usuario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/usuarios","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":2,\"nombre\":\"Laura\",\"apellidos\":\"García López\",\"email\":\"laura@test.com\",\"fotoPerfil\":null}"
+            },
+            {
+              "name": "401 Unauthorized - Sin credenciales",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/usuarios","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Debes autenticarte\",\"path\":\"/api/usuarios\"}"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/usuarios - Registrar nuevo usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Nuevo\",\n  \"apellidos\": \"Usuario Test\",\n  \"email\": \"nuevo@test.com\",\n  \"password\": \"Test1234!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios"]
+            },
+            "description": "Registra un nuevo usuario. No requiere autenticación."
+          },
+          "response": [
+            {
+              "name": "201 Created - Usuario registrado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Nuevo\",\"apellidos\":\"Usuario Test\",\"email\":\"nuevo@test.com\",\"password\":\"Test1234!\"}"},
+                "url": {"raw": "http://localhost:8080/api/usuarios","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios"]}
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":7,\"nombre\":\"Nuevo\",\"apellidos\":\"Usuario Test\",\"email\":\"nuevo@test.com\"}"
+            },
+            {
+              "name": "409 Conflict - Email ya registrado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Laura\",\"apellidos\":\"García\",\"email\":\"laura@test.com\",\"password\":\"Test1234!\"}"},
+                "url": {"raw": "http://localhost:8080/api/usuarios","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios"]}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":409,\"error\":\"Conflict\",\"message\":\"El email ya está registrado\",\"path\":\"/api/usuarios\"}"
+            },
+            {
+              "name": "400 Bad Request - Datos inválidos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"\",\"apellidos\":\"\",\"email\":\"\",\"password\":\"\"}"},
+                "url": {"raw": "http://localhost:8080/api/usuarios","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios"]}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":400,\"error\":\"Bad Request\",\"message\":\"El campo email no puede estar vacío\",\"path\":\"/api/usuarios\"}"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/usuarios/{id} - Editar mi perfil",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234!"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laura Editada\",\n  \"apellidos\": \"García López\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "2"]
+            },
+            "description": "Actualiza nombre y apellidos del usuario. Solo puede editar su propio perfil."
+          },
+          "response": [
+            {
+              "name": "200 OK - Perfil actualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Laura Editada\",\"apellidos\":\"García López\"}"},
+                "url": {"raw": "http://localhost:8080/api/usuarios/2","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","2"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":2,\"nombre\":\"Laura Editada\",\"apellidos\":\"García López\",\"email\":\"laura@test.com\"}"
+            },
+            {
+              "name": "403 Forbidden - Intentando editar otro usuario",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Hack\",\"apellidos\":\"Hack\"}"},
+                "url": {"raw": "http://localhost:8080/api/usuarios/3","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","3"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo puedes editar tu propio perfil\",\"path\":\"/api/usuarios/3\"}"
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/usuarios/{id} - Eliminar mi cuenta",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "pedro@test.com:Test1234!"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "5"]
+            },
+            "description": "Elimina la cuenta del usuario autenticado. Solo puede eliminar su propia cuenta."
+          },
+          "response": [
+            {
+              "name": "204 No Content - Cuenta eliminada",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/usuarios/5","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","5"]}
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "403 Forbidden - Intentando eliminar otra cuenta",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/usuarios/2","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","2"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo puedes eliminar tu propia cuenta\",\"path\":\"/api/usuarios/2\"}"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/sesiones - Login (extra +0.5)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"carlos@test.com\",\n  \"password\": \"Test1234!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/sesiones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "sesiones"]
+            },
+            "description": "Endpoint adicional (+0.5): recibe email y password en JSON, devuelve los datos del usuario y el token Base64 para usar en el header Authorization."
+          },
+          "response": [
+            {
+              "name": "200 OK - Login correcto",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"email\":\"carlos@test.com\",\"password\":\"Test1234!\"}"},
+                "url": {"raw": "http://localhost:8080/api/sesiones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","sesiones"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"token\":\"Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ==\",\"id\":3,\"email\":\"carlos@test.com\",\"nombre\":\"Carlos\"}"
+            },
+            {
+              "name": "401 Unauthorized - Credenciales incorrectas",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"email\":\"noexiste@test.com\",\"password\":\"malpaso\"}"},
+                "url": {"raw": "http://localhost:8080/api/sesiones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","sesiones"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Email o contrasena incorrectos\",\"path\":\"/api/sesiones\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Restaurantes",
+      "item": [
+        {
+          "name": "GET /api/restaurantes/all - Todos (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/all",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "all"]
+            },
+            "description": "Lista todos los restaurantes sin autenticación."
+          },
+          "response": [
+            {
+              "name": "200 OK - Lista completa",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/all","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","all"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"nombre\":\"La Cafetería CUMe\",\"localidad\":\"Mérida\",\"aceptaPedidos\":true,\"mediaValoraciones\":4.5},{\"id\":2,\"nombre\":\"Pizzería Don Corleone\",\"localidad\":\"Mérida\",\"aceptaPedidos\":true,\"mediaValoraciones\":4.0},{\"id\":3,\"nombre\":\"Burger Palace\",\"localidad\":\"Mérida\",\"aceptaPedidos\":true,\"mediaValoraciones\":3.0}]"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/restaurantes/all?q=pizza - Búsqueda texto (req. 6)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/all?q=pizza",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "all"],
+              "query": [{"key": "q","value": "pizza"}]
+            },
+            "description": "Búsqueda de restaurantes por nombre o localidad (req. mínimo 6)."
+          },
+          "response": [
+            {
+              "name": "200 OK - Coincidencia por nombre",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/all?q=pizza","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","all"],"query": [{"key": "q","value": "pizza"}]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":2,\"nombre\":\"Pizzería Don Corleone\",\"localidad\":\"Mérida\",\"aceptaPedidos\":true}]"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/restaurantes/all?estado=acepta - Filtrar abiertos (req. 7)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/all?estado=acepta",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "all"],
+              "query": [{"key": "estado","value": "acepta"}]
+            },
+            "description": "Filtra restaurantes que aceptan pedidos (req. mínimo 7)."
+          },
+          "response": [
+            {
+              "name": "200 OK - Solo restaurantes abiertos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/all?estado=acepta","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","all"],"query": [{"key": "estado","value": "acepta"}]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"nombre\":\"La Cafetería CUMe\",\"aceptaPedidos\":true},{\"id\":2,\"nombre\":\"Pizzería Don Corleone\",\"aceptaPedidos\":true},{\"id\":3,\"nombre\":\"Burger Palace\",\"aceptaPedidos\":true}]"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/restaurantes/all?estado=no-acepta - Filtrar cerrados (req. 7)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/all?estado=no-acepta",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "all"],
+              "query": [{"key": "estado","value": "no-acepta"}]
+            },
+            "description": "Filtra restaurantes que NO aceptan pedidos."
+          },
+          "response": [
+            {
+              "name": "200 OK - Restaurantes cerrados",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/all?estado=no-acepta","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","all"],"query": [{"key": "estado","value": "no-acepta"}]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[]"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/restaurantes/all?sort=valoracionMedia - Ordenar (req. 5)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/all?sort=valoracionMedia",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "all"],
+              "query": [{"key": "sort","value": "valoracionMedia"}]
+            },
+            "description": "Ordena restaurantes por media de valoraciones descendente (req. mínimo 5)."
+          },
+          "response": [
+            {
+              "name": "200 OK - Ordenados por valoración desc",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/all?sort=valoracionMedia","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","all"],"query": [{"key": "sort","value": "valoracionMedia"}]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":4,\"nombre\":\"El Rincón del Wok\",\"mediaValoraciones\":5.0},{\"id\":1,\"nombre\":\"La Cafetería CUMe\",\"mediaValoraciones\":4.5},{\"id\":2,\"nombre\":\"Pizzería Don Corleone\",\"mediaValoraciones\":4.0}]"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/restaurantes - Mis restaurantes (autenticado)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234!"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes"]
+            },
+            "description": "Devuelve los restaurantes del usuario autenticado."
+          },
+          "response": [
+            {
+              "name": "200 OK - Restaurantes de Laura (ids 1 y 4)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/restaurantes","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"nombre\":\"La Cafetería CUMe\",\"localidad\":\"Mérida\"},{\"id\":4,\"nombre\":\"El Rincón del Wok\",\"localidad\":\"Mérida\"}]"
+            },
+            {
+              "name": "401 Unauthorized - Sin autenticación",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Debes autenticarte para ver tus restaurantes\",\"path\":\"/api/restaurantes\"}"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/restaurantes/{id} - Detalle (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1"]
+            },
+            "description": "Detalle de un restaurante por ID. Público."
+          },
+          "response": [
+            {
+              "name": "200 OK - Detalle restaurante 1",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":1,\"nombre\":\"La Cafetería CUMe\",\"direccion\":\"Campus Universitario s/n\",\"localidad\":\"Mérida\",\"telefono\":\"+34 924 10 00 00\",\"email\":\"cafeteria@cume.es\",\"precioMin\":1.8,\"precioMax\":10.5,\"mediaValoraciones\":4.5,\"bikeFriendly\":true,\"aceptaPedidos\":true,\"categorias\":[],\"propietario\":{\"id\":2,\"nombre\":\"Laura\",\"apellidos\":\"García López\"}}"
+            },
+            {
+              "name": "404 Not Found - ID inexistente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/999","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","999"]}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":404,\"error\":\"Not Found\",\"message\":\"Restaurante no encontrado\",\"path\":\"/api/restaurantes/999\"}"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/restaurantes - Crear restaurante",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "pedro@test.com:Test1234!"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Restaurante de Pedro\",\n  \"direccion\": \"Calle Mayor 10, Mérida\",\n  \"localidad\": \"Mérida\",\n  \"telefono\": \"+34 924 55 55 55\",\n  \"email\": \"pedro.rest@test.com\",\n  \"precioMin\": 8.0,\n  \"precioMax\": 25.0,\n  \"bikeFriendly\": true,\n  \"aceptaPedidos\": true,\n  \"categoriaIds\": []\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes"]
+            },
+            "description": "Crea un nuevo restaurante. El propietario será el usuario autenticado."
+          },
+          "response": [
+            {
+              "name": "201 Created - Restaurante creado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Restaurante de Pedro\",\"direccion\":\"Calle Mayor 10, Mérida\",\"localidad\":\"Mérida\",\"telefono\":\"+34 924 55 55 55\",\"email\":\"pedro.rest@test.com\",\"precioMin\":8.0,\"precioMax\":25.0,\"bikeFriendly\":true,\"aceptaPedidos\":true,\"categoriaIds\":[]}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes"]}
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":7,\"nombre\":\"Restaurante de Pedro\",\"direccion\":\"Calle Mayor 10, Mérida\",\"localidad\":\"Mérida\",\"aceptaPedidos\":true,\"propietario\":{\"id\":5,\"nombre\":\"Pedro\",\"apellidos\":\"López Díaz\"}}"
+            },
+            {
+              "name": "401 Unauthorized - Sin autenticación",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Test\",\"direccion\":\"Test\",\"localidad\":\"Test\",\"telefono\":\"000\",\"email\":\"t@t.com\",\"precioMin\":1.0,\"precioMax\":10.0,\"categoriaIds\":[]}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Debes autenticarte para crear un restaurante\",\"path\":\"/api/restaurantes\"}"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/restaurantes/{id} - Editar restaurante (propietario)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234! — propietaria del restaurante 1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"La Cafetería CUMe (renovada)\",\n  \"direccion\": \"Campus Universitario s/n\",\n  \"localidad\": \"Mérida\",\n  \"telefono\": \"+34 924 10 00 00\",\n  \"email\": \"cafeteria@cume.es\",\n  \"precioMin\": 2.0,\n  \"precioMax\": 12.0,\n  \"bikeFriendly\": true,\n  \"aceptaPedidos\": true,\n  \"categoriaIds\": []\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1"]
+            },
+            "description": "Edita un restaurante. Solo el propietario puede editarlo."
+          },
+          "response": [
+            {
+              "name": "200 OK - Restaurante actualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"La Cafetería CUMe (renovada)\",\"direccion\":\"Campus Universitario s/n\",\"localidad\":\"Mérida\",\"telefono\":\"+34 924 10 00 00\",\"email\":\"cafeteria@cume.es\",\"precioMin\":2.0,\"precioMax\":12.0,\"bikeFriendly\":true,\"aceptaPedidos\":true,\"categoriaIds\":[]}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":1,\"nombre\":\"La Cafetería CUMe (renovada)\",\"precioMin\":2.0,\"precioMax\":12.0,\"aceptaPedidos\":true}"
+            },
+            {
+              "name": "403 Forbidden - No es el propietario",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Hack\",\"direccion\":\"x\",\"localidad\":\"x\",\"telefono\":\"x\",\"email\":\"x@x.com\",\"precioMin\":1.0,\"precioMax\":2.0,\"categoriaIds\":[]}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo el propietario puede editar este restaurante\",\"path\":\"/api/restaurantes/1\"}"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/restaurantes/{id}/estado - Cambiar estado (req. 7)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234! — propietaria del restaurante 1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aceptaPedidos\": false\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1/estado",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1", "estado"]
+            },
+            "description": "Abre o cierra el restaurante para pedidos (req. mínimo 7)."
+          },
+          "response": [
+            {
+              "name": "200 OK - Restaurante cerrado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"aceptaPedidos\":false}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/estado","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","estado"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":1,\"nombre\":\"La Cafetería CUMe\",\"aceptaPedidos\":false}"
+            },
+            {
+              "name": "403 Forbidden - No es el propietario",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"aceptaPedidos\":false}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/estado","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","estado"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo el propietario puede cambiar el estado\",\"path\":\"/api/restaurantes/1/estado\"}"
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/restaurantes/{id} - Eliminar restaurante (propietario)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234! — propietaria del restaurante 6"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/6",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "6"]
+            },
+            "description": "Elimina un restaurante. Solo el propietario. Responde 204 sin cuerpo."
+          },
+          "response": [
+            {
+              "name": "204 No Content - Eliminado",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/6","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","6"]}
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "403 Forbidden - No es el propietario",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="}],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo el propietario puede eliminar este restaurante\",\"path\":\"/api/restaurantes/1\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Platos",
+      "item": [
+        {
+          "name": "GET /api/restaurantes/{id}/platos - Platos del restaurante (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1/platos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1", "platos"]
+            },
+            "description": "Lista todos los platos de un restaurante. Público."
+          },
+          "response": [
+            {
+              "name": "200 OK - Platos del restaurante 1",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/platos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","platos"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"nombre\":\"Tostada con tomate y AOVE\",\"precio\":2.5},{\"id\":2,\"nombre\":\"Café con leche\",\"precio\":1.8},{\"id\":3,\"nombre\":\"Bocadillo de jamón ibérico\",\"precio\":4.5}]"
+            },
+            {
+              "name": "404 Not Found - Restaurante inexistente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/999/platos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","999","platos"]}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":404,\"error\":\"Not Found\",\"message\":\"Restaurante no encontrado\",\"path\":\"/api/restaurantes/999/platos\"}"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/restaurantes/{id}/platos - Crear plato (propietario)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234! — propietaria del restaurante 1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tarta de queso\",\n  \"descripcion\": \"Tarta de queso casera con mermelada de fresa\",\n  \"precio\": 3.5,\n  \"etiquetaMenu\": \"Postres\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1/platos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1", "platos"]
+            },
+            "description": "Crea un nuevo plato. Solo el propietario del restaurante."
+          },
+          "response": [
+            {
+              "name": "201 Created - Plato añadido",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Tarta de queso\",\"descripcion\":\"Tarta de queso casera con mermelada de fresa\",\"precio\":3.5,\"etiquetaMenu\":\"Postres\"}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/platos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","platos"]}
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":20,\"nombre\":\"Tarta de queso\",\"descripcion\":\"Tarta de queso casera con mermelada de fresa\",\"precio\":3.5,\"etiquetaMenu\":\"Postres\"}"
+            },
+            {
+              "name": "403 Forbidden - No es el propietario",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Intruso\",\"precio\":1.0}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/platos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","platos"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo el propietario puede añadir platos\",\"path\":\"/api/restaurantes/1/platos\"}"
+            }
+          ]
+        },
+        {
+          "name": "PUT /api/platos/{id} - Editar plato (propietario)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234!"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tostada con tomate y AOVE premium\",\n  \"descripcion\": \"Tostada artesana con tomate ecológico y AOVE de primera prensada\",\n  \"precio\": 2.8,\n  \"etiquetaMenu\": \"Desayunos\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/platos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "platos", "1"]
+            },
+            "description": "Edita un plato. Solo el propietario del restaurante."
+          },
+          "response": [
+            {
+              "name": "200 OK - Plato actualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Tostada con tomate y AOVE premium\",\"descripcion\":\"Tostada artesana\",\"precio\":2.8,\"etiquetaMenu\":\"Desayunos\"}"},
+                "url": {"raw": "http://localhost:8080/api/platos/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","platos","1"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":1,\"nombre\":\"Tostada con tomate y AOVE premium\",\"precio\":2.8,\"etiquetaMenu\":\"Desayunos\"}"
+            },
+            {
+              "name": "404 Not Found - Plato inexistente",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"X\",\"precio\":1.0}"},
+                "url": {"raw": "http://localhost:8080/api/platos/999","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","platos","999"]}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":404,\"error\":\"Not Found\",\"message\":\"Plato no encontrado\",\"path\":\"/api/platos/999\"}"
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/platos/{id} - Eliminar plato (propietario)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "laura@test.com:Test1234!"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/platos/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "platos", "7"]
+            },
+            "description": "Elimina un plato. Solo el propietario del restaurante. Responde 204."
+          },
+          "response": [
+            {
+              "name": "204 No Content - Plato eliminado",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/platos/7","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","platos","7"]}
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "403 Forbidden - No es el propietario",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="}],
+                "url": {"raw": "http://localhost:8080/api/platos/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","platos","1"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo el propietario puede eliminar este plato\",\"path\":\"/api/platos/1\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pedidos",
+      "item": [
+        {
+          "name": "POST /api/pedidos - Crear pedido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=",
+                "description": "andi@andi.com:Test1234!"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restauranteId\": 2,\n  \"lineas\": [\n    { \"platoId\": 8, \"cantidad\": 2 },\n    { \"platoId\": 9, \"cantidad\": 1 }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/pedidos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pedidos"]
+            },
+            "description": "Crea un pedido. El cliente es el usuario autenticado. Platos 8 y 9 pertenecen a Pizzería Don Corleone (restaurante 2)."
+          },
+          "response": [
+            {
+              "name": "201 Created - Pedido realizado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"restauranteId\":2,\"lineas\":[{\"platoId\":8,\"cantidad\":2},{\"platoId\":9,\"cantidad\":1}]}"},
+                "url": {"raw": "http://localhost:8080/api/pedidos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","pedidos"]}
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":8,\"estado\":\"PENDIENTE\",\"total\":29.0,\"restauranteId\":2,\"lineas\":[{\"platoId\":8,\"nombre\":\"Pizza Margarita\",\"cantidad\":2,\"precio\":9.0},{\"platoId\":9,\"nombre\":\"Pizza Cuatro Quesos\",\"cantidad\":1,\"precio\":11.0}]}"
+            },
+            {
+              "name": "401 Unauthorized - Sin autenticación",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"restauranteId\":2,\"lineas\":[{\"platoId\":8,\"cantidad\":1}]}"},
+                "url": {"raw": "http://localhost:8080/api/pedidos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","pedidos"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Debes autenticarte para realizar un pedido\",\"path\":\"/api/pedidos\"}"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/usuarios/{id}/pedidos - Historial de pedidos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "maria@test.com:Test1234! — tiene pedidos 1 y 3 (usuario id=4)"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/usuarios/4/pedidos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "usuarios", "4", "pedidos"]
+            },
+            "description": "Devuelve el historial de pedidos del usuario con id=4 (maria@test.com). Solo puede verse el historial propio."
+          },
+          "response": [
+            {
+              "name": "200 OK - Historial de Maria (usuario 4)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{"key": "Authorization","value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/usuarios/4/pedidos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","4","pedidos"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"estado\":\"ENTREGADO\",\"total\":13.8,\"restauranteId\":1,\"restauranteNombre\":\"La Cafetería CUMe\"},{\"id\":3,\"estado\":\"EN_PREPARACION\",\"total\":23.5,\"restauranteId\":3,\"restauranteNombre\":\"Burger Palace\"}]"
+            },
+            {
+              "name": "403 Forbidden - Historial de otro usuario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="}],
+                "url": {"raw": "http://localhost:8080/api/usuarios/4/pedidos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","4","pedidos"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"No puedes ver los pedidos de otro usuario\",\"path\":\"/api/usuarios/4/pedidos\"}"
+            },
+            {
+              "name": "401 Unauthorized - Sin autenticación",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/usuarios/4/pedidos","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","usuarios","4","pedidos"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Debes autenticarte\",\"path\":\"/api/usuarios/4/pedidos\"}"
+            }
+          ]
+        },
+        {
+          "name": "GET /api/pedidos/{id} - Detalle de pedido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "maria@test.com:Test1234! — autora del pedido 1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/pedidos/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "pedidos", "1"]
+            },
+            "description": "Devuelve el detalle completo de un pedido con sus líneas."
+          },
+          "response": [
+            {
+              "name": "200 OK - Detalle pedido 1",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{"key": "Authorization","value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/pedidos/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","pedidos","1"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":1,\"estado\":\"ENTREGADO\",\"total\":13.8,\"restaurante\":{\"id\":1,\"nombre\":\"La Cafetería CUMe\"},\"lineas\":[{\"platoId\":3,\"nombre\":\"Bocadillo de jamón ibérico\",\"cantidad\":2,\"precio\":4.5},{\"platoId\":5,\"nombre\":\"Ensalada mixta\",\"cantidad\":1,\"precio\":5.5}]}"
+            },
+            {
+              "name": "403 Forbidden - No es tu pedido",
+              "originalRequest": {
+                "method": "GET",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="}],
+                "url": {"raw": "http://localhost:8080/api/pedidos/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","pedidos","1"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"No tienes permiso para ver este pedido\",\"path\":\"/api/pedidos/1\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Valoraciones",
+      "item": [
+        {
+          "name": "GET /api/restaurantes/{id}/valoraciones - Listar (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1/valoraciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1", "valoraciones"]
+            },
+            "description": "Lista todas las valoraciones del restaurante 1. Público."
+          },
+          "response": [
+            {
+              "name": "200 OK - Valoraciones restaurante 1",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/valoraciones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","valoraciones"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"puntuacion\":5,\"comentario\":\"El menú del día está riquísimo, precio imbatible para el campus\",\"usuario\":{\"nombre\":\"María\",\"apellidos\":\"Sánchez Vera\"}},{\"id\":6,\"puntuacion\":5,\"comentario\":\"El bocadillo de jamón ibérico es el mejor de Mérida\",\"usuario\":{\"nombre\":\"Carlos\",\"apellidos\":\"Martín Ruiz\"}}]"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/restaurantes/{id}/valoraciones - Valorar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=",
+                "description": "andi@andi.com:Test1234! — aún no ha valorado el restaurante 1"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"puntuacion\": 4,\n  \"comentario\": \"Muy buen ambiente, la tostada con AOVE es increíble\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/restaurantes/1/valoraciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "restaurantes", "1", "valoraciones"]
+            },
+            "description": "Crea una valoración. Un usuario solo puede valorar una vez cada restaurante."
+          },
+          "response": [
+            {
+              "name": "201 Created - Valoración registrada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"puntuacion\":4,\"comentario\":\"Muy buen ambiente, la tostada con AOVE es increíble\"}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/valoraciones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","valoraciones"]}
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":7,\"puntuacion\":4,\"comentario\":\"Muy buen ambiente, la tostada con AOVE es increíble\",\"restauranteId\":1}"
+            },
+            {
+              "name": "409 Conflict - Ya valoró este restaurante",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"puntuacion\":3,\"comentario\":\"Segunda valoración no permitida\"}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/valoraciones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","valoraciones"]}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":409,\"error\":\"Conflict\",\"message\":\"Ya has valorado este restaurante\",\"path\":\"/api/restaurantes/1/valoraciones\"}"
+            },
+            {
+              "name": "400 Bad Request - Puntuación fuera de rango",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"puntuacion\":10,\"comentario\":\"Demasiado alta\"}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/valoraciones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","valoraciones"]}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":400,\"error\":\"Bad Request\",\"message\":\"La puntuación debe estar entre 1 y 5\",\"path\":\"/api/restaurantes/1/valoraciones\"}"
+            },
+            {
+              "name": "401 Unauthorized - Sin autenticación",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"puntuacion\":4,\"comentario\":\"Test\"}"},
+                "url": {"raw": "http://localhost:8080/api/restaurantes/1/valoraciones","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","restaurantes","1","valoraciones"]}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":401,\"error\":\"Unauthorized\",\"message\":\"Debes autenticarte para valorar\",\"path\":\"/api/restaurantes/1/valoraciones\"}"
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/valoraciones/{id} - Eliminar valoración",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh",
+                "description": "maria@test.com:Test1234! — autora de la valoración 1"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/valoraciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "valoraciones", "1"]
+            },
+            "description": "Elimina una valoración. Solo el autor puede eliminarla."
+          },
+          "response": [
+            {
+              "name": "204 No Content - Valoración eliminada",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh"}],
+                "url": {"raw": "http://localhost:8080/api/valoraciones/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","valoraciones","1"]}
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "403 Forbidden - No es el autor",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [{"key": "Authorization","value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ=="}],
+                "url": {"raw": "http://localhost:8080/api/valoraciones/1","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","valoraciones","1"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo puedes eliminar tus propias valoraciones\",\"path\":\"/api/valoraciones/1\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Categorías (Extra)",
+      "item": [
+        {
+          "name": "GET /api/categorias - Listar categorías (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/categorias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categorias"]
+            },
+            "description": "Lista todas las categorías disponibles. Público."
+          },
+          "response": [
+            {
+              "name": "200 OK - Lista de categorías",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {"raw": "http://localhost:8080/api/categorias","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","categorias"]}
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "[{\"id\":1,\"nombre\":\"Italiana\"},{\"id\":2,\"nombre\":\"Española\"},{\"id\":3,\"nombre\":\"Asiática\"},{\"id\":4,\"nombre\":\"Americana\"},{\"id\":5,\"nombre\":\"Mexicana\"}]"
+            }
+          ]
+        },
+        {
+          "name": "POST /api/categorias - Crear categoría (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic YWRtaW5AY3VtZS5lczpUZXN0MTIzNCE=",
+                "description": "admin@cume.es:Test1234!"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Mediterránea\",\n  \"descripcion\": \"Cocina típica del Mediterráneo\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/categorias",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "categorias"]
+            },
+            "description": "Crea una nueva categoría. Solo administradores."
+          },
+          "response": [
+            {
+              "name": "201 Created - Categoría creada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic YWRtaW5AY3VtZS5lczpUZXN0MTIzNCE="},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Mediterránea\",\"descripcion\":\"Cocina típica del Mediterráneo\"}"},
+                "url": {"raw": "http://localhost:8080/api/categorias","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","categorias"]}
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"id\":6,\"nombre\":\"Mediterránea\",\"descripcion\":\"Cocina típica del Mediterráneo\"}"
+            },
+            {
+              "name": "403 Forbidden - No es administrador",
+              "originalRequest": {
+                "method": "POST",
+                "header": [{"key": "Authorization","value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh"},{"key": "Content-Type","value": "application/json"}],
+                "body": {"mode": "raw","raw": "{\"nombre\":\"Intrusa\",\"descripcion\":\"No debería poder\"}"},
+                "url": {"raw": "http://localhost:8080/api/categorias","protocol": "http","host": ["localhost"],"port": "8080","path": ["api","categorias"]}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [{"key": "Content-Type","value": "application/json"}],
+              "body": "{\"status\":403,\"error\":\"Forbidden\",\"message\":\"Solo los administradores pueden crear categorías\",\"path\":\"/api/categorias\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "auth_laura",
+      "value": "Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh",
+      "type": "string",
+      "description": "laura@test.com:Test1234! — propietaria restaurantes 1 y 4"
+    },
+    {
+      "key": "auth_carlos",
+      "value": "Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ==",
+      "type": "string",
+      "description": "carlos@test.com:Test1234! — propietario restaurantes 2 y 5"
+    },
+    {
+      "key": "auth_maria",
+      "value": "Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh",
+      "type": "string",
+      "description": "maria@test.com:Test1234! — propietaria restaurante 3, hizo pedidos 1 y 3"
+    },
+    {
+      "key": "auth_pedro",
+      "value": "Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh",
+      "type": "string",
+      "description": "pedro@test.com:Test1234! — cliente, hizo pedidos 2 y 4"
+    },
+    {
+      "key": "auth_andi",
+      "value": "Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=",
+      "type": "string",
+      "description": "andi@andi.com:Test1234! — cliente"
+    },
+    {
+      "key": "auth_admin",
+      "value": "Basic YWRtaW5AY3VtZS5lczpUZXN0MTIzNCE=",
+      "type": "string",
+      "description": "admin@cume.es:Test1234! — administrador"
+    }
+  ]
+}

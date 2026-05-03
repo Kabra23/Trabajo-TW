@@ -1,0 +1,1458 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Evidencias API REST — CUMe y Calla</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 13px;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.5;
+  }
+
+  /* PORTADA */
+  .cover {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: #fff;
+    text-align: center;
+    padding: 4rem 3rem;
+  }
+  .cover .logo-area {
+    background: rgba(255,255,255,0.07);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 2rem 3rem;
+    margin-bottom: 3rem;
+  }
+  .cover .logo-area h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #e94560;
+  }
+  .cover .logo-area h1 span { color: #fff; }
+  .cover .subtitle { font-size: 1.25rem; color: #a0aec0; margin-top: 0.5rem; }
+  .cover h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 2rem 0 1rem;
+  }
+  .cover .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 560px;
+  }
+  .cover .meta-item {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: left;
+  }
+  .cover .meta-item .label { font-size: 0.75rem; color: #718096; text-transform: uppercase; letter-spacing: 1px; }
+  .cover .meta-item .value { font-size: 0.95rem; color: #e2e8f0; font-weight: 600; margin-top: 0.25rem; }
+  .cover .badge {
+    display: inline-block;
+    background: #e94560;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* ÍNDICE */
+  .toc {
+    page-break-after: always;
+    padding: 3rem 4rem;
+  }
+  .toc h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    border-bottom: 3px solid #e94560;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .toc-section { margin-bottom: 1.5rem; }
+  .toc-section h3 { font-size: 1rem; color: #2d3748; margin-bottom: 0.5rem; font-weight: 700; }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
+    padding-left: 1rem;
+    color: #4a5568;
+    font-size: 0.9rem;
+  }
+  .toc-item .method-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    min-width: 52px;
+    text-align: center;
+    color: #fff;
+  }
+  .GET    { background: #38a169; }
+  .POST   { background: #3182ce; }
+  .PUT    { background: #d69e2e; }
+  .DELETE { background: #e53e3e; }
+
+  /* SECCIONES */
+  .section-header {
+    background: linear-gradient(90deg, #1a1a2e, #0f3460);
+    color: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 12px 12px 0 0;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-icon {
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .section-header h2 { font-size: 1.25rem; font-weight: 700; }
+  .section-header p { font-size: 0.85rem; color: #a0aec0; }
+
+  /* TARJETAS DE ENDPOINT */
+  .endpoint {
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    padding: 1.5rem 2rem;
+    background: #fff;
+    page-break-inside: avoid;
+  }
+  .endpoint:last-child { border-radius: 0 0 12px 12px; margin-bottom: 2rem; }
+
+  .endpoint-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .method {
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .path {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: #2d3748;
+    font-weight: 600;
+  }
+  .desc-tag {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: #718096;
+    font-style: italic;
+  }
+  .req-badge {
+    font-size: 0.7rem;
+    background: #ebf4ff;
+    color: #2b6cb0;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid #bee3f8;
+  }
+
+  /* REQUEST/RESPONSE BOXES */
+  .req-resp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.75rem;
+  }
+  @media print {
+    .req-resp-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .box { border-radius: 8px; overflow: hidden; }
+  .box-header {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .req-header  { background: #2d3748; color: #e2e8f0; }
+  .resp-header { background: #276749; color: #c6f6d5; }
+  .resp-header.err { background: #742a2a; color: #fed7d7; }
+  .resp-header.warn { background: #744210; color: #fefcbf; }
+  pre {
+    margin: 0;
+    padding: 0.85rem;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .req-body  { background: #1a202c; color: #e2e8f0; }
+  .resp-body { background: #f0fff4; color: #1a3c2a; }
+  .resp-body.err  { background: #fff5f5; color: #742a2a; }
+  .resp-body.warn { background: #fffff0; color: #744210; }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.25rem;
+  }
+  .s200 { background: #c6f6d5; color: #276749; }
+  .s201 { background: #bee3f8; color: #2a4365; }
+  .s204 { background: #e9d8fd; color: #44337a; }
+  .s400 { background: #fefcbf; color: #744210; }
+  .s401 { background: #fed7d7; color: #742a2a; }
+  .s403 { background: #fbd5d5; color: #742a2a; }
+  .s404 { background: #fed7d7; color: #742a2a; }
+  .s409 { background: #fcd5aa; color: #744210; }
+
+  .auth-note {
+    background: #ebf8ff;
+    border-left: 4px solid #4299e1;
+    padding: 0.6rem 1rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.8rem;
+    color: #2b6cb0;
+    margin-bottom: 0.75rem;
+  }
+  .auth-note code {
+    font-family: 'Consolas', monospace;
+    background: rgba(66,153,225,0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed #e2e8f0;
+    margin: 1.25rem 0;
+  }
+
+  /* RESUMEN FINAL */
+  .summary {
+    page-break-before: always;
+    padding: 3rem 4rem;
+  }
+  .summary h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    border-bottom: 3px solid #e94560;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .req-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .req-table th {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 700;
+  }
+  .req-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  .req-table tr:nth-child(even) td { background: #f7fafc; }
+  .check { color: #38a169; font-weight: 700; font-size: 1rem; }
+  .extra { color: #3182ce; font-weight: 600; font-size: 0.8rem; }
+
+  /* PAGE BREAKS */
+  .page-break { page-break-before: always; }
+
+  /* PRINT */
+  @media print {
+    body { font-size: 12px; }
+    .cover { page-break-after: always; }
+    .toc   { page-break-after: always; }
+    .summary { page-break-before: always; }
+    pre { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════ PORTADA ════════════ -->
+<div class="cover">
+  <div class="logo-area">
+    <h1><span>CUMe</span> y Calla</h1>
+    <p class="subtitle">Plataforma de restaurantes universitaria</p>
+  </div>
+  <h2>Evidencias de la API REST</h2>
+  <p style="color:#a0aec0;max-width:480px">Documento que recoge las peticiones y respuestas representativas de cada endpoint de la API REST, incluyendo casos de éxito y de error.</p>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="label">Asignatura</div>
+      <div class="value">Tecnologías Web</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Actividad</div>
+      <div class="value">Actividad 3 — API REST</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Alumno</div>
+      <div class="value">Andi Negrota</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Fecha</div>
+      <div class="value">Mayo 2026</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Base URL</div>
+      <div class="value" style="font-family:monospace">http://localhost:8080</div>
+    </div>
+    <div class="meta-item">
+      <div class="label">Autenticación</div>
+      <div class="value">HTTP Basic (Base64)</div>
+    </div>
+  </div>
+  <div class="badge">Requisitos mínimos 1–7 cubiertos + extras</div>
+</div>
+
+<!-- ════════════ ÍNDICE ════════════ -->
+<div class="toc">
+  <h2>Índice de Endpoints</h2>
+
+  <div class="toc-section">
+    <h3>Usuarios</h3>
+    <div class="toc-item"><span class="method-badge POST">POST</span> /api/usuarios — Registro <span class="req-badge">Req.1</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/usuarios/{id} — Ver perfil <span class="req-badge">Req.1</span></div>
+    <div class="toc-item"><span class="method-badge PUT">PUT</span> /api/usuarios/{id} — Editar perfil <span class="req-badge">Req.1</span></div>
+    <div class="toc-item"><span class="method-badge DELETE">DELETE</span> /api/usuarios/{id} — Eliminar cuenta <span class="req-badge">Req.1</span></div>
+    <div class="toc-item"><span class="method-badge POST">POST</span> /api/sesiones — Login <span class="req-badge" style="background:#e9d8fd;color:#44337a;border-color:#d6bcfa">Extra +0.5</span></div>
+  </div>
+
+  <div class="toc-section">
+    <h3>Restaurantes</h3>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/all — Todos los restaurantes</div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/all?q=texto — Búsqueda <span class="req-badge">Req.6</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/all?estado=acepta — Filtrar por estado <span class="req-badge">Req.7</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/all?sort=valoracionMedia — Ordenar <span class="req-badge">Req.5</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes — Mis restaurantes <span class="req-badge">Req.3</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/{id} — Detalle</div>
+    <div class="toc-item"><span class="method-badge POST">POST</span> /api/restaurantes — Crear <span class="req-badge">Req.3</span></div>
+    <div class="toc-item"><span class="method-badge PUT">PUT</span> /api/restaurantes/{id} — Editar <span class="req-badge">Req.3</span></div>
+    <div class="toc-item"><span class="method-badge PUT">PUT</span> /api/restaurantes/{id}/estado — Cambiar estado <span class="req-badge">Req.7</span></div>
+    <div class="toc-item"><span class="method-badge DELETE">DELETE</span> /api/restaurantes/{id} — Eliminar <span class="req-badge">Req.3</span></div>
+  </div>
+
+  <div class="toc-section">
+    <h3>Platos</h3>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/{id}/platos — Listar <span class="req-badge">Req.2</span></div>
+    <div class="toc-item"><span class="method-badge POST">POST</span> /api/restaurantes/{id}/platos — Crear <span class="req-badge">Req.2</span></div>
+    <div class="toc-item"><span class="method-badge PUT">PUT</span> /api/platos/{id} — Editar <span class="req-badge">Req.2</span></div>
+    <div class="toc-item"><span class="method-badge DELETE">DELETE</span> /api/platos/{id} — Eliminar <span class="req-badge">Req.2</span></div>
+  </div>
+
+  <div class="toc-section">
+    <h3>Pedidos</h3>
+    <div class="toc-item"><span class="method-badge POST">POST</span> /api/pedidos — Crear pedido <span class="req-badge">Req.4</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/usuarios/{id}/pedidos — Historial <span class="req-badge">Req.4</span></div>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/pedidos/{id} — Detalle <span class="req-badge">Req.4</span></div>
+  </div>
+
+  <div class="toc-section">
+    <h3>Valoraciones</h3>
+    <div class="toc-item"><span class="method-badge GET">GET</span> /api/restaurantes/{id}/valoraciones — Listar <span class="req-badge">Req.5</span></div>
+    <div class="toc-item"><span class="method-badge POST">POST</span> /api/restaurantes/{id}/valoraciones — Valorar <span class="req-badge">Req.5</span></div>
+  </div>
+</div>
+
+<!-- ════════════ SECCIÓN 1: USUARIOS ════════════ -->
+<div class="section-header">
+  <div>
+    <h2>Usuarios</h2>
+    <p>Registro, autenticación y gestión de perfil — Req. mínimo 1 + Extra sesiones</p>
+  </div>
+</div>
+
+<!-- POST /api/usuarios -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method POST">POST</span>
+    <span class="path">/api/usuarios</span>
+    <span class="req-badge">Req. 1 — Registro</span>
+    <span class="desc-tag">No requiere autenticación</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">POST /api/usuarios HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Nuevo",
+  "apellidos": "Usuario Test",
+  "email": "nuevo@test.com",
+  "password": "Test1234!"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s201">201 Created</span></div>
+      <pre class="resp-body">{
+  "id": 7,
+  "nombre": "Nuevo",
+  "apellidos": "Usuario Test",
+  "email": "nuevo@test.com",
+  "fotoPerfil": null
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición — Email duplicado</div>
+      <pre class="req-body">POST /api/usuarios HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Laura2",
+  "email": "laura@test.com",
+  "password": "Test1234!"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s409">409 Conflict</span></div>
+      <pre class="resp-body err">{
+  "status": 409,
+  "error": "Conflict",
+  "message": "Ya existe una cuenta con ese email",
+  "path": "/api/usuarios"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET /api/usuarios/{id} -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/usuarios/{id}</span>
+    <span class="req-badge">Req. 1 — Ver perfil</span>
+  </div>
+  <div class="auth-note">Requiere <code>Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh</code> (laura@test.com:Test1234!)</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/usuarios/2 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "id": 2,
+  "nombre": "Laura",
+  "apellidos": "García López",
+  "email": "laura@test.com",
+  "fotoPerfil": null
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Sin autenticación</div>
+      <pre class="req-body">GET /api/usuarios/2 HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s401">401 Unauthorized</span></div>
+      <pre class="resp-body err">{
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Debes autenticarte",
+  "path": "/api/usuarios/2"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- PUT /api/usuarios/{id} -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method PUT">PUT</span>
+    <span class="path">/api/usuarios/{id}</span>
+    <span class="req-badge">Req. 1 — Editar perfil</span>
+  </div>
+  <div class="auth-note">Requiere autenticación. Solo puede editar su propio perfil.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">PUT /api/usuarios/2 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{
+  "nombre": "Laura Editada",
+  "apellidos": "García López"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "id": 2,
+  "nombre": "Laura Editada",
+  "apellidos": "García López",
+  "email": "laura@test.com"
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Intentando editar otro usuario</div>
+      <pre class="req-body">PUT /api/usuarios/3 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{ "nombre": "Hack" }</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s403">403 Forbidden</span></div>
+      <pre class="resp-body err">{
+  "status": 403,
+  "error": "Forbidden",
+  "message": "No puedes modificar el perfil de otro usuario",
+  "path": "/api/usuarios/3"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE /api/usuarios/{id} -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method DELETE">DELETE</span>
+    <span class="path">/api/usuarios/{id}</span>
+    <span class="req-badge">Req. 1 — Eliminar cuenta</span>
+  </div>
+  <div class="auth-note">Requiere autenticación. Solo puede eliminar su propia cuenta.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">DELETE /api/usuarios/5 HTTP/1.1
+Authorization: Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh
+(pedro@test.com:Test1234!)</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s204">204 No Content</span></div>
+      <pre class="resp-body">(Sin cuerpo de respuesta)</pre>
+    </div>
+  </div>
+</div>
+
+<!-- POST /api/sesiones -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method POST">POST</span>
+    <span class="path">/api/sesiones</span>
+    <span class="req-badge" style="background:#e9d8fd;color:#44337a;border-color:#d6bcfa">Extra +0.5</span>
+    <span class="desc-tag">Login — devuelve token Base64</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">POST /api/sesiones HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "carlos@test.com",
+  "password": "Test1234!"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "token": "Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ==",
+  "id": 3,
+  "email": "carlos@test.com",
+  "nombre": "Carlos"
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Credenciales incorrectas</div>
+      <pre class="req-body">POST /api/sesiones HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "noexiste@test.com",
+  "password": "malpaso"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s401">401 Unauthorized</span></div>
+      <pre class="resp-body err">{
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Email o contrasena incorrectos",
+  "path": "/api/sesiones"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ SECCIÓN 2: RESTAURANTES ════════════ -->
+<div class="page-break"></div>
+<div class="section-header">
+  <div>
+    <h2>Restaurantes</h2>
+    <p>CRUD completo + búsqueda, filtros y ordenación — Req. 3, 5, 6, 7</p>
+  </div>
+</div>
+
+<!-- GET /all -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes/all</span>
+    <span class="desc-tag">Público — sin autenticación</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/restaurantes/all HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  {
+    "id": 1,
+    "nombre": "La Cafetería CUMe",
+    "localidad": "Mérida",
+    "mediaValoraciones": 4.5,
+    "aceptaPedidos": true
+  },
+  {
+    "id": 2,
+    "nombre": "Pizzería Don Corleone",
+    "localidad": "Mérida",
+    "mediaValoraciones": 4.0,
+    "aceptaPedidos": true
+  },
+  ...
+]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET /all?q= -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes/all?q=pizza</span>
+    <span class="req-badge">Req. 6 — Búsqueda por texto</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/restaurantes/all?q=pizza HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  {
+    "id": 2,
+    "nombre": "Pizzería Don Corleone",
+    "localidad": "Mérida",
+    "aceptaPedidos": true
+  }
+]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET /all?estado=acepta -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes/all?estado=acepta</span>
+    <span class="req-badge">Req. 7 — Filtrar por estado</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición — abiertos</div>
+      <pre class="req-body">GET /api/restaurantes/all?estado=acepta HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  { "id": 1, "nombre": "La Cafetería CUMe", "aceptaPedidos": true },
+  { "id": 2, "nombre": "Pizzería Don Corleone", "aceptaPedidos": true },
+  { "id": 3, "nombre": "Burger Palace", "aceptaPedidos": true }
+]</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición — cerrados</div>
+      <pre class="req-body">GET /api/restaurantes/all?estado=no-acepta HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET /all?sort=valoracionMedia -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes/all?sort=valoracionMedia</span>
+    <span class="req-badge">Req. 5 — Ordenar por valoración</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/restaurantes/all?sort=valoracionMedia HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span> (desc)</div>
+      <pre class="resp-body">[
+  { "id": 4, "nombre": "El Rincón del Wok",    "mediaValoraciones": 5.0 },
+  { "id": 1, "nombre": "La Cafetería CUMe",     "mediaValoraciones": 4.5 },
+  { "id": 2, "nombre": "Pizzería Don Corleone", "mediaValoraciones": 4.0 },
+  { "id": 5, "nombre": "Taquería La Bamba",     "mediaValoraciones": 4.0 },
+  { "id": 3, "nombre": "Burger Palace",         "mediaValoraciones": 3.0 }
+]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET mis restaurantes -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes</span>
+    <span class="req-badge">Req. 3 — Mis restaurantes</span>
+  </div>
+  <div class="auth-note">Requiere <code>Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh</code> (laura@test.com)</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/restaurantes HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  { "id": 1, "nombre": "La Cafetería CUMe", "localidad": "Mérida" },
+  { "id": 4, "nombre": "El Rincón del Wok", "localidad": "Mérida" }
+]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- POST crear restaurante -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method POST">POST</span>
+    <span class="path">/api/restaurantes</span>
+    <span class="req-badge">Req. 3 — Crear restaurante</span>
+  </div>
+  <div class="auth-note">Requiere autenticación. El propietario será el usuario autenticado.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">POST /api/restaurantes HTTP/1.1
+Authorization: Basic cGVkcm9AdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{
+  "nombre": "Restaurante de Pedro",
+  "direccion": "Calle Mayor 10, Mérida",
+  "localidad": "Mérida",
+  "telefono": "+34 924 55 55 55",
+  "email": "pedro.rest@test.com",
+  "precioMin": 8.0,
+  "precioMax": 25.0,
+  "bikeFriendly": true,
+  "aceptaPedidos": true,
+  "categoriaIds": []
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s201">201 Created</span></div>
+      <pre class="resp-body">{
+  "id": 7,
+  "nombre": "Restaurante de Pedro",
+  "localidad": "Mérida",
+  "aceptaPedidos": true,
+  "propietario": {
+    "id": 5,
+    "nombre": "Pedro",
+    "apellidos": "López Díaz"
+  }
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- PUT editar restaurante -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method PUT">PUT</span>
+    <span class="path">/api/restaurantes/{id}</span>
+    <span class="req-badge">Req. 3 — Editar restaurante</span>
+  </div>
+  <div class="auth-note">Solo el propietario puede editar su restaurante.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición (propietario)</div>
+      <pre class="req-body">PUT /api/restaurantes/1 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{
+  "nombre": "La Cafetería CUMe (renovada)",
+  "direccion": "Campus Universitario s/n",
+  "localidad": "Mérida",
+  "telefono": "+34 924 10 00 00",
+  "email": "cafeteria@cume.es",
+  "precioMin": 2.0,
+  "precioMax": 12.0,
+  "bikeFriendly": true,
+  "aceptaPedidos": true,
+  "categoriaIds": []
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "id": 1,
+  "nombre": "La Cafetería CUMe (renovada)",
+  "precioMin": 2.0,
+  "precioMax": 12.0,
+  "aceptaPedidos": true
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">No es el propietario (carlos edita rest.1)</div>
+      <pre class="req-body">PUT /api/restaurantes/1 HTTP/1.1
+Authorization: Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ==
+Content-Type: application/json
+
+{ "nombre": "Hack", ... }</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s403">403 Forbidden</span></div>
+      <pre class="resp-body err">{
+  "status": 403,
+  "error": "Forbidden",
+  "message": "Solo el propietario puede editar este restaurante",
+  "path": "/api/restaurantes/1"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- PUT estado -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method PUT">PUT</span>
+    <span class="path">/api/restaurantes/{id}/estado</span>
+    <span class="req-badge">Req. 7 — Cambiar estado</span>
+  </div>
+  <div class="auth-note">Solo el propietario puede abrir/cerrar su restaurante.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Cerrar restaurante</div>
+      <pre class="req-body">PUT /api/restaurantes/1/estado HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{ "aceptaPedidos": false }</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "id": 1,
+  "nombre": "La Cafetería CUMe",
+  "aceptaPedidos": false
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE restaurante -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method DELETE">DELETE</span>
+    <span class="path">/api/restaurantes/{id}</span>
+    <span class="req-badge">Req. 3 — Eliminar restaurante</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">DELETE /api/restaurantes/6 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s204">204 No Content</span></div>
+      <pre class="resp-body">(Sin cuerpo de respuesta)</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ SECCIÓN 3: PLATOS ════════════ -->
+<div class="page-break"></div>
+<div class="section-header">
+  <div>
+    <h2>Platos</h2>
+    <p>CRUD completo de platos por restaurante — Req. mínimo 2</p>
+  </div>
+</div>
+
+<!-- GET platos -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes/{id}/platos</span>
+    <span class="req-badge">Req. 2 — Listar platos</span>
+    <span class="desc-tag">Público</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/restaurantes/1/platos HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  { "id": 1, "nombre": "Tostada con tomate y AOVE", "precio": 2.5 },
+  { "id": 2, "nombre": "Café con leche",             "precio": 1.8 },
+  { "id": 3, "nombre": "Bocadillo de jamón ibérico", "precio": 4.5 },
+  { "id": 4, "nombre": "Bocadillo de tortilla",      "precio": 3.8 },
+  { "id": 5, "nombre": "Ensalada mixta",             "precio": 5.5 }
+]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- POST plato -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method POST">POST</span>
+    <span class="path">/api/restaurantes/{id}/platos</span>
+    <span class="req-badge">Req. 2 — Crear plato</span>
+  </div>
+  <div class="auth-note">Solo el propietario del restaurante puede añadir platos.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">POST /api/restaurantes/1/platos HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{
+  "nombre": "Tarta de queso",
+  "descripcion": "Tarta casera con mermelada de fresa",
+  "precio": 3.5,
+  "etiquetaMenu": "Postres"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s201">201 Created</span></div>
+      <pre class="resp-body">{
+  "id": 20,
+  "nombre": "Tarta de queso",
+  "descripcion": "Tarta casera con mermelada de fresa",
+  "precio": 3.5,
+  "etiquetaMenu": "Postres",
+  "restauranteId": 1
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">No es el propietario</div>
+      <pre class="req-body">POST /api/restaurantes/1/platos HTTP/1.1
+Authorization: Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ==
+Content-Type: application/json
+
+{ "nombre": "Intruso", "precio": 1.0 }</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s403">403 Forbidden</span></div>
+      <pre class="resp-body err">{
+  "status": 403,
+  "error": "Forbidden",
+  "message": "Solo el propietario puede añadir platos",
+  "path": "/api/restaurantes/1/platos"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- PUT plato -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method PUT">PUT</span>
+    <span class="path">/api/platos/{id}</span>
+    <span class="req-badge">Req. 2 — Editar plato</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">PUT /api/platos/1 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{
+  "nombre": "Tostada con tomate y AOVE premium",
+  "descripcion": "Tostada artesana con tomate ecológico",
+  "precio": 2.8,
+  "etiquetaMenu": "Desayunos"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "id": 1,
+  "nombre": "Tostada con tomate y AOVE premium",
+  "precio": 2.8,
+  "etiquetaMenu": "Desayunos"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE plato -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method DELETE">DELETE</span>
+    <span class="path">/api/platos/{id}</span>
+    <span class="req-badge">Req. 2 — Eliminar plato</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">DELETE /api/platos/7 HTTP/1.1
+Authorization: Basic bGF1cmFAdGVzdC5jb206VGVzdDEyMzQh</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s204">204 No Content</span></div>
+      <pre class="resp-body">(Sin cuerpo de respuesta)</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ SECCIÓN 4: PEDIDOS ════════════ -->
+<div class="page-break"></div>
+<div class="section-header">
+  <div>
+    <h2>Pedidos</h2>
+    <p>Crear pedido, historial y detalle con líneas — Req. mínimo 4</p>
+  </div>
+</div>
+
+<!-- POST pedido -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method POST">POST</span>
+    <span class="path">/api/pedidos</span>
+    <span class="req-badge">Req. 4 — Crear pedido</span>
+  </div>
+  <div class="auth-note">Requiere autenticación. El cliente es el usuario autenticado.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">POST /api/pedidos HTTP/1.1
+Authorization: Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=
+Content-Type: application/json
+
+{
+  "restauranteId": 2,
+  "lineas": [
+    { "platoId": 8, "cantidad": 2 },
+    { "platoId": 9, "cantidad": 1 }
+  ]
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s201">201 Created</span></div>
+      <pre class="resp-body">{
+  "id": 8,
+  "estado": "PENDIENTE",
+  "total": 29.0,
+  "restauranteId": 2,
+  "restauranteNombre": "Pizzería Don Corleone",
+  "lineas": [
+    { "nombrePlato": "Pizza Margarita",    "cantidad": 2, "precio": 9.0,  "subtotal": 18.0 },
+    { "nombrePlato": "Pizza Cuatro Quesos","cantidad": 1, "precio": 11.0, "subtotal": 11.0 }
+  ]
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Restaurante no acepta pedidos</div>
+      <pre class="req-body">POST /api/pedidos HTTP/1.1
+Authorization: Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=
+Content-Type: application/json
+
+{
+  "restauranteId": 6,
+  "lineas": [{ "platoId": 1, "cantidad": 1 }]
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s409">409 Conflict</span></div>
+      <pre class="resp-body err">{
+  "status": 409,
+  "error": "Conflict",
+  "message": "Este restaurante no acepta pedidos en este momento",
+  "path": "/api/pedidos"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET historial -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/usuarios/{id}/pedidos</span>
+    <span class="req-badge">Req. 4 — Historial de pedidos</span>
+  </div>
+  <div class="auth-note">Requiere autenticación. El cliente es el usuario autenticado.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/usuarios/4/pedidos HTTP/1.1
+Authorization: Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  {
+    "id": 1,
+    "estado": "ENTREGADO",
+    "total": 13.8,
+    "restauranteId": 1,
+    "restauranteNombre": "La Cafetería CUMe"
+  },
+  {
+    "id": 3,
+    "estado": "EN_PREPARACION",
+    "total": 23.5,
+    "restauranteId": 3,
+    "restauranteNombre": "Burger Palace"
+  }
+]</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Viendo historial de otro usuario</div>
+      <pre class="req-body">GET /api/usuarios/4/pedidos HTTP/1.1
+Authorization: Basic Y2FybG9zQHRlc3QuY29tOlRlc3QxMjM0IQ==</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s403">403 Forbidden</span></div>
+      <pre class="resp-body err">{
+  "status": 403,
+  "error": "Forbidden",
+  "message": "No puedes ver los pedidos de otro usuario",
+  "path": "/api/usuarios/4/pedidos"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- GET pedido detalle -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/pedidos/{id}</span>
+    <span class="req-badge">Req. 4 — Detalle del pedido</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/pedidos/1 HTTP/1.1
+Authorization: Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">{
+  "id": 1,
+  "estado": "ENTREGADO",
+  "total": 13.8,
+  "restauranteId": 1,
+  "restauranteNombre": "La Cafetería CUMe",
+  "lineas": [
+    { "nombrePlato": "Bocadillo de jamón ibérico", "cantidad": 2, "precio": 4.5, "subtotal": 9.0 },
+    { "nombrePlato": "Ensalada mixta",             "cantidad": 1, "precio": 5.5, "subtotal": 5.5 }
+  ]
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ SECCIÓN 5: VALORACIONES ════════════ -->
+<div class="page-break"></div>
+<div class="section-header">
+  <div>
+    <h2>Valoraciones</h2>
+    <p>Valorar restaurantes — máx. 1 por usuario — Req. mínimo 5</p>
+  </div>
+</div>
+
+<!-- GET valoraciones -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method GET">GET</span>
+    <span class="path">/api/restaurantes/{id}/valoraciones</span>
+    <span class="req-badge">Req. 5 — Listar valoraciones</span>
+    <span class="desc-tag">Público</span>
+  </div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Petición</div>
+      <pre class="req-body">GET /api/restaurantes/1/valoraciones HTTP/1.1</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s200">200 OK</span></div>
+      <pre class="resp-body">[
+  {
+    "id": 1,
+    "puntuacion": 5,
+    "comentario": "El menú del día está riquísimo, precio imbatible para el campus",
+    "usuarioNombre": "María Sánchez Vera",
+    "restauranteNombre": "La Cafetería CUMe"
+  },
+  {
+    "id": 6,
+    "puntuacion": 5,
+    "comentario": "El bocadillo de jamón ibérico es el mejor de Mérida",
+    "usuarioNombre": "Carlos Martín Ruiz",
+    "restauranteNombre": "La Cafetería CUMe"
+  }
+]</pre>
+    </div>
+  </div>
+</div>
+
+<!-- POST valoración -->
+<div class="endpoint">
+  <div class="endpoint-title">
+    <span class="method POST">POST</span>
+    <span class="path">/api/restaurantes/{id}/valoraciones</span>
+    <span class="req-badge">Req. 5 — Valorar restaurante</span>
+  </div>
+  <div class="auth-note">Requiere autenticación. Un usuario solo puede valorar una vez cada restaurante.</div>
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Primera valoración</div>
+      <pre class="req-body">POST /api/restaurantes/1/valoraciones HTTP/1.1
+Authorization: Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=
+Content-Type: application/json
+
+{
+  "puntuacion": 4,
+  "comentario": "Muy buen ambiente, la tostada con AOVE es increíble"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header">Respuesta <span class="status-pill s201">201 Created</span></div>
+      <pre class="resp-body">{
+  "id": 7,
+  "puntuacion": 4,
+  "comentario": "Muy buen ambiente, la tostada con AOVE es increíble",
+  "restauranteId": 1,
+  "restauranteNombre": "La Cafetería CUMe"
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Segunda valoración (mismo restaurante)</div>
+      <pre class="req-body">POST /api/restaurantes/1/valoraciones HTTP/1.1
+Authorization: Basic bWFyaWFAdGVzdC5jb206VGVzdDEyMzQh
+Content-Type: application/json
+
+{
+  "puntuacion": 3,
+  "comentario": "Segunda valoración no permitida"
+}</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header err">Respuesta <span class="status-pill s409">409 Conflict</span></div>
+      <pre class="resp-body err">{
+  "status": 409,
+  "error": "Conflict",
+  "message": "Ya has valorado este restaurante",
+  "path": "/api/restaurantes/1/valoraciones"
+}</pre>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="req-resp-grid">
+    <div class="box">
+      <div class="box-header req-header">Puntuación fuera de rango</div>
+      <pre class="req-body">POST /api/restaurantes/1/valoraciones HTTP/1.1
+Authorization: Basic YW5kaUBhbmRpLmNvbTpUZXN0MTIzNCE=
+Content-Type: application/json
+
+{ "puntuacion": 10, "comentario": "Demasiado alta" }</pre>
+    </div>
+    <div class="box">
+      <div class="box-header resp-header warn">Respuesta <span class="status-pill s400">400 Bad Request</span></div>
+      <pre class="resp-body warn">{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "La puntuación debe estar entre 1 y 5",
+  "path": "/api/restaurantes/1/valoraciones"
+}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ RESUMEN DE REQUISITOS ════════════ -->
+<div class="summary">
+  <h2>Resumen de Requisitos Cubiertos</h2>
+  <table class="req-table">
+    <tr>
+      <th>Req.</th>
+      <th>Descripción</th>
+      <th>Endpoints implementados</th>
+      <th>OK</th>
+    </tr>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>CRUD de Usuarios</td>
+      <td><code>POST /api/usuarios</code>, <code>GET /api/usuarios/{id}</code>, <code>PUT /api/usuarios/{id}</code>, <code>DELETE /api/usuarios/{id}</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>CRUD de Platos</td>
+      <td><code>GET /api/restaurantes/{id}/platos</code>, <code>POST</code>, <code>PUT /api/platos/{id}</code>, <code>DELETE /api/platos/{id}</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td>CRUD de Restaurantes + propietario</td>
+      <td><code>GET /all</code>, <code>GET /{id}</code>, <code>GET /</code> (mis rest.), <code>POST</code>, <code>PUT /{id}</code>, <code>DELETE /{id}</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td>Pedidos (crear, historial, detalle)</td>
+      <td><code>POST /api/pedidos</code>, <code>GET /api/usuarios/{id}/pedidos</code>, <code>GET /api/pedidos/{id}</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><strong>5</strong></td>
+      <td>Valoraciones + ordenar por media</td>
+      <td><code>GET /api/restaurantes/{id}/valoraciones</code>, <code>POST</code>, <code>GET /all?sort=valoracionMedia</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><strong>6</strong></td>
+      <td>Búsqueda por nombre/localidad</td>
+      <td><code>GET /api/restaurantes/all?q=texto</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><strong>7</strong></td>
+      <td>Filtrar y cambiar estado acepta pedidos</td>
+      <td><code>GET /all?estado=acepta</code>, <code>GET /all?estado=no-acepta</code>, <code>PUT /{id}/estado</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><span class="extra">Extra</span></td>
+      <td>POST /api/sesiones (+0.5 pts)</td>
+      <td><code>POST /api/sesiones</code> — Login con JSON, devuelve token Base64</td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td><span class="extra">Extra</span></td>
+      <td>Categorías</td>
+      <td><code>GET /api/categorias</code>, <code>POST /api/categorias</code> (admin)</td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td>Auth</td>
+      <td>HTTP Basic en todos los endpoints protegidos</td>
+      <td>Autenticación Basic con <code>Authorization: Basic &lt;base64&gt;</code></td>
+      <td class="check"></td>
+    </tr>
+    <tr>
+      <td>Errores</td>
+      <td>Respuestas de error JSON con código HTTP correcto</td>
+      <td>401, 403, 404, 409, 400 — todos con body <code>ErrorResponse</code></td>
+      <td class="check"></td>
+    </tr>
+  </table>
+
+  <div style="margin-top:2rem;background:#f0fff4;border:1px solid #9ae6b4;border-radius:10px;padding:1.25rem 1.5rem;">
+    <p style="font-weight:700;color:#276749;margin-bottom:0.5rem">Credenciales de prueba (todas con contraseña: <code style="background:rgba(0,0,0,0.06);padding:0.2rem 0.4rem;border-radius:3px">Test1234!</code>)</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;margin-top:0.75rem;font-size:0.82rem;">
+      <div><strong>laura@test.com</strong> — propietaria rest. 1 y 4</div>
+      <div><strong>carlos@test.com</strong> — propietario rest. 2 y 5</div>
+      <div><strong>maria@test.com</strong> — propietaria rest. 3</div>
+      <div><strong>pedro@test.com</strong> — cliente</div>
+      <div><strong>andi@andi.com</strong> — cliente</div>
+      <div><strong>admin@cume.es</strong> — administrador</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+

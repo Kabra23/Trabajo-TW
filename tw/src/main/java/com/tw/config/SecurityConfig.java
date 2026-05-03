@@ -65,6 +65,7 @@ public class SecurityConfig {
                 .requestMatchers("/", "/restaurantes", "/restaurantes/{id}").permitAll()
                 .requestMatchers("/busqueda").permitAll()
                 .requestMatchers("/login", "/registro", "/registro-exitoso").permitAll()
+                    .requestMatchers("/restaurantes/{id}/valoraciones", "/error-403").permitAll()
                 // Admin MVC
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/categorias").hasRole("ADMIN")

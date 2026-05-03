@@ -3,8 +3,12 @@ package com.tw.service;
 import com.tw.model.Categoria;
 import com.tw.model.Plato;
 import com.tw.model.Restaurante;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.Locale;
 import java.util.Set;
@@ -12,15 +16,16 @@ import java.util.Set;
 @Service
 public class VistaImagenService {
 
+    @Value("${app.upload.dir:uploads}")
+    private String uploadDir;
+
     public String categoria(Categoria categoria) {
         if (categoria == null) {
             return "/img/logo.png";
         }
 
-        String almacenada = categoria.getImagen();
-        if (tieneTexto(almacenada)) {
-            return resolverRuta(almacenada, "logo.png");
-        }
+        String ruta = resolverRuta(categoria.getImagen(), "logo.png");
+        if (ruta != null) return ruta;
 
         String n = normalizar(categoria.getNombre());
         if (contiene(n, "desayuno", "brunch", "tostada")) return "/img/tostada.jpg";
@@ -42,12 +47,10 @@ public class VistaImagenService {
             return "/img/banner.png";
         }
 
-        if (tieneTexto(restaurante.getImagen())) {
-            return resolverRuta(restaurante.getImagen(), "banner.png");
-        }
-        if (tieneTexto(restaurante.getImagenBanner())) {
-            return resolverRuta(restaurante.getImagenBanner(), "banner.png");
-        }
+        String ruta = resolverRuta(restaurante.getImagen(), "banner.png");
+        if (ruta != null) return ruta;
+        ruta = resolverRuta(restaurante.getImagenBanner(), "banner.png");
+        if (ruta != null) return ruta;
 
         String n = normalizar(restaurante.getNombre());
         if (contiene(n, "pizza", "pizzeria")) return "/img/pizza.png";
@@ -77,9 +80,8 @@ public class VistaImagenService {
             return "/img/pizza.png";
         }
 
-        if (tieneTexto(plato.getImagen())) {
-            return resolverRuta(plato.getImagen(), "pizza.png");
-        }
+        String ruta = resolverRuta(plato.getImagen(), "pizza.png");
+        if (ruta != null) return ruta;
 
         String n = normalizar(plato.getNombre());
         if (contiene(n, "tostada")) return "/img/tostada.jpg";
@@ -99,16 +101,27 @@ public class VistaImagenService {
 
     private String resolverRuta(String almacenada, String porDefecto) {
         if (!tieneTexto(almacenada)) {
-            return "/img/" + porDefecto;
+            return null; // sin imagen → usar fallback por nombre
         }
 
         String limpia = almacenada.trim();
-        if (limpia.startsWith("http://") || limpia.startsWith("https://") || limpia.startsWith("/img/") || limpia.startsWith("/uploads/")) {
+
+        // URLs absolutas o rutas ya prefijadas → devolver tal cual
+        if (limpia.startsWith("http://") || limpia.startsWith("https://")
+                || limpia.startsWith("/img/") || limpia.startsWith("/uploads/")) {
             return limpia;
         }
 
         if (limpia.contains("/")) {
-            return "/uploads/" + limpia;
+            // Ruta relativa dentro de uploads (ej: "platos/abc123.jpg")
+            // Verificar que el archivo existe físicamente antes de devolverla
+            try {
+                Path archivo = Paths.get(uploadDir).toAbsolutePath().normalize().resolve(limpia);
+                if (Files.exists(archivo)) {
+                    return "/uploads/" + limpia;
+                }
+            } catch (Exception ignored) { }
+            return null; // archivo no encontrado → usar fallback por nombre
         }
 
         return "/img/" + limpia;

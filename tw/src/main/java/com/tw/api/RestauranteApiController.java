@@ -32,10 +32,11 @@ import java.util.stream.Collectors;
  *   PUT    /api/restaurantes/{id}/estado      → Cambiar estado (solo propietario)
  *
  * Query params en GET /api/restaurantes/all:
- *   ?filtro=acepta|noAcepta    → filtrar por estado
- *   ?q=texto                   → buscar por nombre/localidad
- *   ?localidad=Merida          → filtrar por localidad
- *   ?sort=valoracionMedia      → ordenar por valoración
+ *   ?estado=acepta|no-acepta   → filtrar por estado (req. 7)
+ *   ?filtro=acepta|noAcepta    → alias de ?estado (compatibilidad)
+ *   ?q=texto                   → buscar por nombre o localidad (req. 6)
+ *   ?localidad=Merida          → filtrar exacto por localidad
+ *   ?sort=valoracionMedia      → ordenar por media de valoraciones (req. 5)
  */
 @RestController
 @RequestMapping("/api/restaurantes")
@@ -64,8 +65,12 @@ public class RestauranteApiController {
     public ResponseEntity<List<RestauranteDTO.RestauranteResponse>> listarTodos(
             @RequestParam(required = false) String q,
             @RequestParam(required = false) String localidad,
-            @RequestParam(required = false) String filtro,
+            @RequestParam(required = false) String filtro,   // alias legacy
+            @RequestParam(required = false) String estado,   // ?estado=acepta | no-acepta
             @RequestParam(required = false) String sort) {
+
+        // Normalizar: 'estado' tiene prioridad sobre 'filtro' (alias por compatibilidad)
+        String estadoEfectivo = (estado != null) ? estado : filtro;
 
         List<Restaurante> restaurantes;
 
@@ -76,9 +81,10 @@ public class RestauranteApiController {
         } else if (localidad != null && !localidad.isBlank()) {
             restaurantes = restauranteRepo
                     .findByNombreContainingIgnoreCaseOrLocalidadContainingIgnoreCase(localidad, localidad);
-        } else if ("acepta".equals(filtro)) {
+        } else if ("acepta".equalsIgnoreCase(estadoEfectivo)) {
             restaurantes = restauranteRepo.findByAceptaPedidos(true);
-        } else if ("no-acepta".equals(filtro) || "noAcepta".equals(filtro)) {
+        } else if ("no-acepta".equalsIgnoreCase(estadoEfectivo)
+                || "noAcepta".equalsIgnoreCase(estadoEfectivo)) {
             restaurantes = restauranteRepo.findByAceptaPedidos(false);
         } else if ("valoracionMedia".equals(sort)) {
             restaurantes = restauranteRepo.findAllByOrderByMediaValoracionesDesc();
