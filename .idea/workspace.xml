@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade ajustes responsivos en la interfaz de detalles del restaurante: mejora la disposición en pantallas pequeñas y añade mensajes claros para propietarios sobre la imposibilidad de realizar pedidos en su propio restaurante.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega.">
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/api/RestauranteApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/api/RestauranteApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/VistaImagenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/VistaImagenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/RestauranteApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/RestauranteApiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/WebMvcConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,15 +212,7 @@
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
       <workItem from="1777626649774" duration="10622000" />
-      <workItem from="1777712435277" duration="17633000" />
-    </task>
-    <task id="LOCAL-00007" summary="Comienza el proyecto">
-      <option name="closed" value="true" />
-      <created>1772183043646</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1772183043646</updated>
+      <workItem from="1777712435277" duration="18269000" />
     </task>
     <task id="LOCAL-00008" summary="Cambios en restaurante.css">
       <option name="closed" value="true" />
@@ -611,7 +598,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777734951344</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega.">
+      <option name="closed" value="true" />
+      <created>1777835595261</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1777835595262</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -629,7 +624,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Añade gestión de direcciones: crea el repositorio y modelo de Direccion, implementa controlador para añadir, marcar como principal y eliminar direcciones; actualiza el perfil de usuario para incluir direcciones." />
     <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para botones de logout, ajusta la disposición de formularios y mejora la responsividad de las páginas." />
     <MESSAGE value="Añade estilos y mejoras de diseño: actualiza el diseño de la gestión de cambios y mejora la estructura del proyecto." />
     <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas." />
@@ -654,7 +648,8 @@
     <MESSAGE value="Mejora la interfaz de usuario en varias páginas: actualiza fuentes, estilos y estructura para una experiencia más coherente y atractiva." />
     <MESSAGE value="Añade mensaje para propietarios en la sección de detalles del restaurante: informa que no pueden hacer pedidos en su propio restaurante, mejorando la claridad de la interfaz." />
     <MESSAGE value="Añade ajustes responsivos en la interfaz de detalles del restaurante: mejora la disposición en pantallas pequeñas y añade mensajes claros para propietarios sobre la imposibilidad de realizar pedidos en su propio restaurante." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade ajustes responsivos en la interfaz de detalles del restaurante: mejora la disposición en pantallas pequeñas y añade mensajes claros para propietarios sobre la imposibilidad de realizar pedidos en su propio restaurante." />
+    <MESSAGE value="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

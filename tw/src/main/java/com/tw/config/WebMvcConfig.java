@@ -23,6 +23,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        // ── Recursos estáticos del classpath ─────────────────────────────────
+        // Se registran explícitamente para garantizar que se sirven
+        // independientemente del orden de auto-configuración de Spring Boot.
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("classpath:/static/img/");
+
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("classpath:/static/css/");
+
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/static/js/");
+
+        // ── Archivos subidos por los usuarios ────────────────────────────────
         String uploadPath = Paths.get(uploadDir)
                 .toAbsolutePath()
                 .normalize()
