@@ -74,6 +74,7 @@ com\tw\controller\WebController.class
 com\tw\api\dto\RestauranteDTO$RestauranteResponse.class
 com\tw\config\SecurityConfig.class
 com\tw\controller\PedidoController.class
+com\tw\api\dto\RestauranteDTO$GlutenInfo.class
 com\tw\api\dto\UsuarioDTO$UsuarioResponse.class
 com\tw\model\Valoracion$ValoracionBuilder.class
 com\tw\api\dto\PlatoDTO$PlatoRequest.class

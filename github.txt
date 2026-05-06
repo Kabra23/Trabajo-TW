@@ -1,1 +1,153 @@
 https://github.com/Kabra23/Trabajo-TW.git
+ ---
+  Contexto de tu proyecto
+
+  Tu controlador REST está en RestauranteApiController.java con @RequestMapping("/api/restaurantes"). El enunciado dice /api/restaurants/count pero en tu proyecto todo está en español (/api/restaurantes), así que adapta la URI
+  según lo que pida el examen.
+
+  ---
+  Enunciado 1 — GET /api/restaurantes/count
+
+  Devuelve cuántos restaurantes tiene cada usuario. Necesitas 3 cosas:
+
+  1. Un nuevo DTO (dentro de RestauranteDTO.java)
+
+  // Añade esta clase estática dentro de RestauranteDTO
+  public static class ResumenUsuarioResponse {
+      private Long userId;
+      private String name;
+      private String surname;
+      private String email;
+      private int numberOfRestaurants;
+
+      public ResumenUsuarioResponse(Long userId, String name, String surname,
+                                     String email, int numberOfRestaurants) {
+          this.userId = userId;
+          this.name = name;
+          this.surname = surname;
+          this.email = email;
+          this.numberOfRestaurants = numberOfRestaurants;
+      }
+
+      public Long getUserId() { return userId; }
+      public String getName() { return name; }
+      public String getSurname() { return surname; }
+      public String getEmail() { return email; }
+      public int getNumberOfRestaurants() { return numberOfRestaurants; }
+  }
+
+  2. Inyectar UsuarioRepository en el controlador
+
+  Ya tienes usuarioRepo inyectado en el constructor de RestauranteApiController, así que ya puedes usarlo.
+
+  3. El endpoint en RestauranteApiController.java
+
+  @GetMapping("/count")
+  public ResponseEntity<List<RestauranteDTO.ResumenUsuarioResponse>> resumenPorUsuario() {
+
+      List<Usuario> usuarios = usuarioRepo.findAll();
+
+      List<RestauranteDTO.ResumenUsuarioResponse> resultado = usuarios.stream()
+          .map(u -> new RestauranteDTO.ResumenUsuarioResponse(
+              u.getId(),
+              u.getNombre(),
+              u.getApellidos(),
+              u.getEmail(),
+              u.getRestaurantes() != null ? u.getRestaurantes().size() : 0
+          ))
+          .collect(Collectors.toList());
+
+      return ResponseEntity.ok(resultado);
+  }
+
+  ▎ Clave: Usuario tiene List<Restaurante> restaurantes con FetchType.EAGER (línea 44 de Usuario.java), así que .getRestaurantes().size() funciona directamente sin query extra.
+
+  ---
+  Enunciado 2 — GET /api/restaurantes/bestlist
+
+  Lista todos los restaurantes ordenados de mayor a menor valoración. Ya tienes el método en el repositorio (findAllByOrderByMediaValoracionesDesc() en línea 17 de RestauranteRepository.java).
+
+  1. DTO (añadir en RestauranteDTO.java)
+
+  public static class BestListResponse {
+      private String nombre;
+      private Double mediaValoraciones;
+
+      public BestListResponse(String nombre, Double mediaValoraciones) {
+          this.nombre = nombre;
+          this.mediaValoraciones = mediaValoraciones;
+      }
+
+      public String getNombre() { return nombre; }
+      public Double getMediaValoraciones() { return mediaValoraciones; }
+  }
+
+  2. El endpoint
+
+  @GetMapping("/bestlist")
+  public ResponseEntity<List<RestauranteDTO.BestListResponse>> mejoresRestaurantes() {
+
+      List<RestauranteDTO.BestListResponse> resultado = restauranteRepo
+          .findAllByOrderByMediaValoracionesDesc()
+          .stream()
+          .map(r -> new RestauranteDTO.BestListResponse(
+              r.getNombre(),
+              r.getMediaValoraciones()
+          ))
+          .collect(Collectors.toList());
+
+      return ResponseEntity.ok(resultado);
+  }
+
+  ---
+  Enunciado 3 — GET /api/restaurantes/spending
+
+  Lista restaurantes ordenados por gasto medio (mayor a menor). gastoMedioEstimado es un String (ej: "20€"), pero tu entidad ya tiene el método getGastoMedioNumerico() (línea 64 de Restaurante.java) que lo convierte a Double.
+
+  1. DTO (añadir en RestauranteDTO.java)
+
+  public static class SpendingResponse {
+      private String nombre;
+      private String gastoMedioEstimado;
+
+      public SpendingResponse(String nombre, String gastoMedioEstimado) {
+          this.nombre = nombre;
+          this.gastoMedioEstimado = gastoMedioEstimado;
+      }
+
+      public String getNombre() { return nombre; }
+      public String getGastoMedioEstimado() { return gastoMedioEstimado; }
+  }
+
+  2. El endpoint
+
+  @GetMapping("/spending")
+  public ResponseEntity<List<RestauranteDTO.SpendingResponse>> porGastoMedio() {
+
+      List<RestauranteDTO.SpendingResponse> resultado = restauranteRepo.findAll()
+          .stream()
+          .sorted(Comparator.comparingDouble(
+              (Restaurante r) -> r.getGastoMedioNumerico() != null ? r.getGastoMedioNumerico() : 0.0
+          ).reversed())
+          .map(r -> new RestauranteDTO.SpendingResponse(
+              r.getNombre(),
+              r.getGastoMedioEstimado()
+          ))
+          .collect(Collectors.toList());
+
+      return ResponseEntity.ok(resultado);
+  }
+
+  ▎ Nota: El import de Comparator ya está disponible en Java. El .reversed() invierte para que vaya de mayor a menor.
+
+  ---
+  Resumen del patrón general
+
+  Todos los endpoints en tu proyecto siguen el mismo esquema:
+
+  1. Nuevo método con @GetMapping("/ruta") en RestauranteApiController
+  2. Llamar al repositorio (findAll, findAllByOrder..., etc.)
+  3. .stream().map(r -> new MiDTO(...)).collect(Collectors.toList())
+  4. return ResponseEntity.ok(lista)
+
+  Si en el examen te dan una URI diferente (ej: /api/restaurants/count con "restaurants" en inglés), simplemente cambia el String del @GetMapping. El resto del código es idéntico.

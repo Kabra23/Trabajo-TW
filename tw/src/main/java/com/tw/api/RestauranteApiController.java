@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  *   PUT    /api/restaurantes/{id}             → Editar (solo propietario)
  *   DELETE /api/restaurantes/{id}             → Eliminar (solo propietario)
  *   PUT    /api/restaurantes/{id}/estado      → Cambiar estado (solo propietario)
+ *   GET    /api/restaurantes/glutenfree       → Listar restaurantes gluten free (público)
  *
  * Query params en GET /api/restaurantes/all:
  *   ?estado=acepta|no-acepta   → filtrar por estado (req. 7)
@@ -94,6 +95,27 @@ public class RestauranteApiController {
 
         List<RestauranteDTO.RestauranteResponse> respuesta = restaurantes.stream()
                 .map(this::toResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // GET /api/restaurantes/glutenfree → Listar restaurantes gluten free (público)
+    // DEFENSA MAYO
+    // ─────────────────────────────────────────────────────────────────────────
+
+    @GetMapping("/glutenfree")
+    public ResponseEntity<List<RestauranteDTO.GlutenInfo>> listarGlutenFree() {
+        List<Restaurante> restaurantes = restauranteRepo.findByGlutenFreelyTrue();
+
+        List<RestauranteDTO.GlutenInfo> respuesta = restaurantes.stream()
+                .map(r -> new RestauranteDTO.GlutenInfo(
+                        r.getId(),
+                        r.getNombre(),
+                        r.getMediaValoraciones() != null ? r.getMediaValoraciones() : 0.0,
+                        "si"
+                ))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(respuesta);

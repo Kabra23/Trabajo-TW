@@ -392,6 +392,22 @@
                         </label>
                     </div>
                 </div>
+                <!-- DEFENSA MAYO -->
+                <div class="form-group">
+                    <label>Gluten Free</label>
+                    <div class="radio-row">
+                        <label class="radio-item">
+                            <input type="radio" name="glutenFreely" value="true"
+                                   th:checked="${restaurante.glutenFreely == true}">
+                            <span>Si</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="glutenFreely" value="false"
+                                   th:checked="${restaurante.glutenFreely != true}">
+                            <span>No</span>
+                        </label>
+                    </div>
+                </div>
 
                 <!-- Media valoraciones (solo lectura en edición) -->
                 <div class="form-group" th:if="${modo == 'editar' and restaurante.mediaValoraciones != null}">

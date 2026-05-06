@@ -16,6 +16,8 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>,
 
     List<Restaurante> findAllByOrderByMediaValoracionesDesc();
 
+    List<Restaurante> findByGlutenFreelyTrue();
+
     /**
      * Spring Data JPA genera automaticamente el JOIN por la relacion
      * @ManyToMany entre Restaurante y Categoria usando el nombre del campo
@@ -36,4 +38,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>,
     @Modifying
     @Query("delete from Restaurante r where r.id = :restauranteId")
     void deleteByIdDirect(Long restauranteId);
+
+
 }

@@ -46,10 +46,12 @@ public class RestauranteController {
             @RequestParam(required = false) Integer precio,
             @RequestParam(required = false) Boolean bikeFriendly,
             @RequestParam(required = false) String orden,
+            //DEFENSA MAYO
+            @RequestParam(required = false) Boolean glutenFreely,
             @AuthenticationPrincipal UserDetails userDetails,
             Model model) {
 
-        List<Restaurante> restaurantes = restauranteService.buscar(q, categoria, filtro, valoracion, precio, bikeFriendly, orden);
+        List<Restaurante> restaurantes = restauranteService.buscar(q, categoria, filtro, valoracion, precio, bikeFriendly, orden, glutenFreely);
 
         model.addAttribute("restaurantes", restaurantes);
         model.addAttribute("categorias", categoriaRepo.findAll());
@@ -60,6 +62,7 @@ public class RestauranteController {
         model.addAttribute("precio", precio);
         model.addAttribute("bikeFriendly", bikeFriendly);
         model.addAttribute("orden", orden);
+        model.addAttribute("glutenFreely", glutenFreely);
 
         if (userDetails != null) {
             try {

@@ -92,6 +92,9 @@
                             Precio: <span th:text="${#numbers.formatDecimal(restaurante.precioMin,1,2)}">0</span>€
                             - <span th:text="${#numbers.formatDecimal(restaurante.precioMax,1,2)}">0</span>€
                         </span>
+                        <span th:if="${restaurante.glutenFreely}" class="feature">
+                            Gluten Free
+                        </span>
                     </div>
 
                     <!-- ACCIONES PROPIETARIO -->

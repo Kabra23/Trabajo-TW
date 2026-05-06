@@ -79,7 +79,7 @@ public class RestauranteService {
     @Transactional(readOnly = true)
     public List<Restaurante> buscar(String q, Long categoriaId, String filtro,
                                     Integer valoracion, Integer precio,
-                                    Boolean bikeFriendly, String orden) {
+                                    Boolean bikeFriendly, String orden, Boolean glutenFreely) {
 
         // 1) Recuperar con filtros soportados por JPA
         List<Restaurante> resultado = restauranteRepo.findAll((root, query, cb) -> {
@@ -110,6 +110,10 @@ public class RestauranteService {
 
             if (bikeFriendly != null && bikeFriendly) {
                 predicates.add(cb.isTrue(root.get("bikeFriendly")));
+            }
+
+            if (glutenFreely != null && glutenFreely) {
+                predicates.add(cb.isTrue(root.get("glutenFreely")));
             }
 
             // Ordenación en BD para los campos numéricos
@@ -291,6 +295,7 @@ public class RestauranteService {
         existente.setPrecioMin(datos.getPrecioMin());
         existente.setPrecioMax(datos.getPrecioMax());
         existente.setBikeFriendly(datos.getBikeFriendly());
+        existente.setGlutenFreely(datos.getGlutenFreely());
         existente.setAceptaPedidos(datos.getAceptaPedidos() != null ? datos.getAceptaPedidos() : existente.getAceptaPedidos());
         existente.setGastoMedioEstimado(datos.getGastoMedioEstimado());
 

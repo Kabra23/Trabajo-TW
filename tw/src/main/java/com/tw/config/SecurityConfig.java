@@ -34,6 +34,7 @@ public class SecurityConfig {
             .securityMatcher("/api/**")
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("GET", "/api/restaurantes/all").permitAll()
+                .requestMatchers("GET", "/api/restaurantes/glutenfree").permitAll()
                 .requestMatchers("GET", "/api/restaurantes/{id}").permitAll()
                 .requestMatchers("GET", "/api/restaurantes/{id}/platos").permitAll()
                 .requestMatchers("GET", "/api/restaurantes/{id}/valoraciones").permitAll()

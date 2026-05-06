@@ -37,6 +37,7 @@ public class RestauranteDTO {
         private Double precioMax;
 
         private Boolean bikeFriendly;
+        private Boolean glutenFreely;
         private Boolean aceptaPedidos = true;
         private List<Long> categoriaIds;
 
@@ -56,6 +57,8 @@ public class RestauranteDTO {
         public void setPrecioMax(Double precioMax) { this.precioMax = precioMax; }
         public Boolean getBikeFriendly() { return bikeFriendly; }
         public void setBikeFriendly(Boolean bikeFriendly) { this.bikeFriendly = bikeFriendly; }
+        public Boolean getGlutenFreely() { return glutenFreely; }
+        public void setGlutenFreely(Boolean glutenFreely) { this.glutenFreely = glutenFreely; }
         public Boolean getAceptaPedidos() { return aceptaPedidos; }
         public void setAceptaPedidos(Boolean aceptaPedidos) { this.aceptaPedidos = aceptaPedidos; }
         public List<Long> getCategoriaIds() { return categoriaIds; }
@@ -84,6 +87,7 @@ public class RestauranteDTO {
         private Double precioMax;
         private Double mediaValoraciones;
         private Boolean bikeFriendly;
+        private boolean glutenFreely;
         private Boolean aceptaPedidos;
         private String imagen;
         private List<CategoriaInfo> categorias;
@@ -111,6 +115,8 @@ public class RestauranteDTO {
         public void setMediaValoraciones(Double mediaValoraciones) { this.mediaValoraciones = mediaValoraciones; }
         public Boolean getBikeFriendly() { return bikeFriendly; }
         public void setBikeFriendly(Boolean bikeFriendly) { this.bikeFriendly = bikeFriendly; }
+        public Boolean getGlutenFreely() { return glutenFreely; }
+        public void setGlutenFreely(Boolean glutenFreely) { this.glutenFreely = glutenFreely; }
         public Boolean getAceptaPedidos() { return aceptaPedidos; }
         public void setAceptaPedidos(Boolean aceptaPedidos) { this.aceptaPedidos = aceptaPedidos; }
         public String getImagen() { return imagen; }
@@ -152,5 +158,26 @@ public class RestauranteDTO {
         public void setNombre(String nombre) { this.nombre = nombre; }
         public String getApellidos() { return apellidos; }
         public void setApellidos(String apellidos) { this.apellidos = apellidos; }
+    }
+
+    public static class GlutenInfo {
+        private Long id;
+        private String name;
+        private double ratingAverage;
+        private String glutenFree;
+
+        public GlutenInfo() {}
+        public GlutenInfo(Long id, String name, double ratingAverage, String glutenFree) {
+            this.id = id; this.name = name; this.ratingAverage = ratingAverage; this.glutenFree = glutenFree;
+        }
+
+        public Long getId() { return id; }
+        public void setId(Long id) { this.id = id; }
+        public String getName() { return name; }
+        public void setName(String name) { this.name = name; }
+        public double getRatingAverage() { return ratingAverage; }
+        public void setRatingAverage(double ratingAverage) { this.ratingAverage = ratingAverage; }
+        public String getGlutenFree() { return glutenFree; }
+        public void setGlutenFree(String glutenFree) { this.glutenFree = glutenFree; }
     }
 }

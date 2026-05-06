@@ -53,6 +53,18 @@
         .card-budget .gasto-badge {
             background:#ede7f6;border-color:#ce93d8;color:#7b1fa2;
         }
+        .gluten-badge {
+            background:#ede7f6;border-color:#ce93d8;color:#7b1fa2;
+        }
+        /* ===== CARD GLUTEN FREE ===== */
+        .restaurant-card.card-gluten {
+            background: #e8f5e9;
+            border: 2px solid #ff9800 !important;
+        }
+        .restaurant-card.card-gluten:hover {
+            box-shadow: 0 8px 24px rgba(76,175,80,0.25);
+        }
+
     </style>
 </head>
 <body>
@@ -184,7 +196,7 @@
                 <div class="restaurants-grid">
                     <article th:each="r : ${restaurantes}"
                              class="restaurant-card"
-                             th:classappend="${r.gastoMedioNumerico != null and r.gastoMedioNumerico < 25} ? ' card-budget' : ''">
+                             th:classappend="${(r.gastoMedioNumerico != null and r.gastoMedioNumerico < 25 ? ' card-budget' : '') + (r.glutenFreely == true ? ' card-gluten' : '')}">
                         <a th:href="@{/restaurantes/{id}(id=${r.id})}" class="restaurant-link">
                             <div class="restaurant-image" style="position:relative;">
                                 <img th:src="@{${@vistaImagenService.restaurante(r)}}" th:alt="${r.nombre}"
@@ -212,13 +224,16 @@
                                           th:if="${r.precioMin != null}"
                                           th:text="${#numbers.formatDecimal(r.precioMin,1,2)} + ' € min.'"></span>
                                 </div>
-                                <!-- Gasto medio estimado -->
                                 <div th:if="${r.gastoMedioEstimado != null and !#strings.isEmpty(r.gastoMedioEstimado)}"
                                      class="gasto-badge">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
                                     </svg>
                                     Gasto medio: <strong th:text="${r.gastoMedioEstimado}">–</strong>
+                                </div>
+
+                                <div th:if="${r.glutenFreely == true}"
+                                     class="gluten-badge">
                                 </div>
                             </div>
                         </a>

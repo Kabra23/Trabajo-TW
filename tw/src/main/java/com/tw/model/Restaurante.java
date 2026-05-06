@@ -42,6 +42,8 @@ public class Restaurante {
 
     private Boolean bikeFriendly;
 
+    private Boolean glutenFreely;
+
     @Builder.Default
     private Boolean aceptaPedidos = true;
 

@@ -4,9 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega.">
+    <list default="true" id="5fc7a070-01b1-489b-96cd-98c0ab16fdcc" name="Changes" comment="Añade manejadores de recursos estáticos en la configuración de WebMvc: permite servir imágenes, CSS y JavaScript desde el classpath.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/github.txt" beforeDir="false" afterPath="$PROJECT_DIR$/github.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tw/TANI.db" beforeDir="false" afterPath="$PROJECT_DIR$/tw/TANI.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/WebMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/WebMvcConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/api/RestauranteApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/api/RestauranteApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/api/dto/RestauranteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/api/dto/RestauranteDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/controller/RestauranteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/model/Restaurante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/repository/RestauranteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/java/com/tw/service/RestauranteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/editar-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/form-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/src/main/resources/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/RestauranteApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/RestauranteApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$CategoriaInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$CategoriaInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$EstadoRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$EstadoRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$PropietarioInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$PropietarioInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$RestauranteRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$RestauranteRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$RestauranteResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO$RestauranteResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/api/dto/RestauranteDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/controller/RestauranteController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante$RestauranteBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/model/Restaurante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/RestauranteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/repository/RestauranteRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/com/tw/service/RestauranteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/detalle-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/editar-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/form-restaurante.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/classes/templates/restaurantes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/tw/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +152,7 @@
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/negro/OneDrive - Universidad de Extremadura/Escritorio/Tecnologias Web/tw",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "terminal",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -135,7 +165,7 @@
     <configuration name="crear_entrega" type="BatchConfigurationType" factoryName="Batch" temporary="true">
       <module name="tw" />
       <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\negro\OneDrive - Universidad de Extremadura\Escritorio\Tecnologias Web\tw\tw" />
+      <option name="WORKING_DIRECTORY" value="./tw" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SCRIPT_NAME" value="crear_entrega.bat" />
       <option name="PARAMETERS" value="" />
@@ -212,15 +242,10 @@
       <workItem from="1777478998931" duration="3869000" />
       <workItem from="1777569746629" duration="3719000" />
       <workItem from="1777626649774" duration="10622000" />
-      <workItem from="1777712435277" duration="18269000" />
-    </task>
-    <task id="LOCAL-00008" summary="Cambios en restaurante.css">
-      <option name="closed" value="true" />
-      <created>1772183073662</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1772183073662</updated>
+      <workItem from="1777712435277" duration="19031000" />
+      <workItem from="1777989567667" duration="2528000" />
+      <workItem from="1778004368957" duration="2344000" />
+      <workItem from="1778046310059" duration="9149000" />
     </task>
     <task id="LOCAL-00009" summary="Actualiza estilos de botón en restaurante.css y modifica configuración de workspace.xml">
       <option name="closed" value="true" />
@@ -606,7 +631,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777835595262</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Añade manejadores de recursos estáticos en la configuración de WebMvc: permite servir imágenes, CSS y JavaScript desde el classpath.">
+      <option name="closed" value="true" />
+      <created>1777836235536</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1777836235536</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para botones de logout, ajusta la disposición de formularios y mejora la responsividad de las páginas." />
     <MESSAGE value="Añade estilos y mejoras de diseño: actualiza el diseño de la gestión de cambios y mejora la estructura del proyecto." />
     <MESSAGE value="Añade estilos y mejoras de diseño: implementa un nuevo diseño para formularios, botones de logout y mejora la responsividad de las páginas." />
     <MESSAGE value="Añade gestión de mensajes: implementa el repositorio, servicio y controlador para la bandeja de entrada y mensajes enviados; incluye vistas para enviar y ver mensajes." />
@@ -649,7 +681,12 @@
     <MESSAGE value="Añade mensaje para propietarios en la sección de detalles del restaurante: informa que no pueden hacer pedidos en su propio restaurante, mejorando la claridad de la interfaz." />
     <MESSAGE value="Añade ajustes responsivos en la interfaz de detalles del restaurante: mejora la disposición en pantallas pequeñas y añade mensajes claros para propietarios sobre la imposibilidad de realizar pedidos en su propio restaurante." />
     <MESSAGE value="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega." />
-    <option name="LAST_COMMIT_MESSAGE" value="Añade nuevas rutas permitidas en la configuración de seguridad y crea un script para generar un archivo ZIP de entrega." />
+    <MESSAGE value="Añade manejadores de recursos estáticos en la configuración de WebMvc: permite servir imágenes, CSS y JavaScript desde el classpath." />
+    <option name="LAST_COMMIT_MESSAGE" value="Añade manejadores de recursos estáticos en la configuración de WebMvc: permite servir imágenes, CSS y JavaScript desde el classpath." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
